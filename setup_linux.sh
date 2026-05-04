@@ -117,7 +117,7 @@ print_step "Installing apt CLI tools"
 
 APT_PACKAGES=(
     # Shell/CLI
-    stow tmux bat ripgrep fd-find fzf jq tree htop
+    stow tmux bat ripgrep fd-find fzf jq tree htop neovim
     # Database
     libpq-dev pgformatter sqitch libdbd-pg-perl
     # Security
@@ -130,7 +130,7 @@ APT_PACKAGES=(
 
 # Install all at once for efficiency; skip only if every package is already installed
 ALL_PRESENT=true
-for pkg in stow tmux ripgrep fzf jq pass git-crypt python3 mpv; do
+for pkg in stow tmux ripgrep fzf jq pass git-crypt python3 mpv nvim; do
     if ! command_exists "$pkg" && ! dpkg -l "$pkg" &>/dev/null 2>&1; then
         ALL_PRESENT=false
         break
@@ -220,30 +220,17 @@ else
     INSTALLED+=("eza")
 fi
 
-# ─── Task 11: Install Neovim (GitHub binary release) ─────────────────────────
+# ─── Task 11: Install Neovim via apt ──────────────────────────────────────────
 
 print_step "Checking Neovim"
-if [[ -x /opt/nvim/bin/nvim && -L /usr/local/bin/nvim && "$(readlink /usr/local/bin/nvim 2>/dev/null || true)" == "/opt/nvim/bin/nvim" ]]; then
+if command_exists nvim; then
     print_skip "Neovim"
     SKIPPED+=("Neovim")
 else
-    print_step "Installing Neovim from GitHub release"
-    NVIM_TMP="$(mktemp -d)"
-    NVIM_TARBALL="nvim-linux-${ARCH}.tar.gz"
-    NVIM_URL="https://github.com/neovim/neovim/releases/latest/download/${NVIM_TARBALL}"
-
-    if curl -fsSL -o "$NVIM_TMP/$NVIM_TARBALL" "$NVIM_URL"; then
-        sudo rm -rf /opt/nvim
-        sudo mkdir -p /opt/nvim
-        sudo tar -xzf "$NVIM_TMP/$NVIM_TARBALL" -C /opt/nvim --strip-components=1
-        sudo ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim
-        print_success "Neovim installed to /opt/nvim"
-        INSTALLED+=("Neovim")
-    else
-        print_warn "Failed to download Neovim from $NVIM_URL — skipping"
-        WARNED+=("Neovim download failed")
-    fi
-    rm -rf "$NVIM_TMP"
+    print_step "Installing Neovim via apt"
+    sudo apt-get install -y neovim
+    print_success "Neovim installed"
+    INSTALLED+=("Neovim")
 fi
 
 # ─── Task 12: Install Go (official tarball) ───────────────────────────────────
