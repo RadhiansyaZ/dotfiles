@@ -14,6 +14,10 @@ setopt hist_find_no_dups
 ## Load completions
 autoload -Uz compinit && compinit
 
+# Platform helpers
+is_macos() { [[ "$(uname)" == "Darwin" ]]; }
+is_linux() { [[ "$(uname)" == "Linux" ]]; }
+
 ## Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
@@ -32,17 +36,29 @@ alias cat="bat --style=plain"
 alias ls="eza"
 alias curltime="curl -o /dev/null -s -w 'Establish Connection: %{time_connect}s\nTTFB: %{time_starttransfer}s\nTotal: %{time_total}s\n'"
 alias jqsanitize="jq -R . | jq -s . | jq -r 'join(\"\")'"
-alias pbpastejq="pbpaste | jq -R . | jq -s . | jq -r ."
+if is_macos && command -v pbpaste >/dev/null 2>&1; then
+  alias pbpastejq="pbpaste | jq -R . | jq -s . | jq -r ."
+fi
 alias gcleanup="git branch | egrep -v \"(^\*|master|main)\" | xargs git branch -D"
 
 
 # Function
-disappointed() { echo -n " ಠ_ಠ " |tee /dev/tty| xclip -selection clipboard; }
+# Clipboard helpers
+copy_to_clipboard() {
+  if is_macos && command -v pbcopy >/dev/null 2>&1; then
+    pbcopy
+  elif is_linux && command -v xclip >/dev/null 2>&1; then
+    xclip -selection clipboard
+  else
+    return 1
+  fi
+}
 
-flip() { echo -n "（╯°□°）╯ ┻━┻" |tee /dev/tty| xclip -selection clipboard; }
+disappointed() { echo -n " ಠ_ಠ " | tee /dev/tty | copy_to_clipboard; }
 
-shrug() { echo -n "¯\_(ツ)_/¯" |tee /dev/tty| xclip -selection clipboard; }
+flip() { echo -n "（╯°□°）╯ ┻━┻" | tee /dev/tty | copy_to_clipboard; }
 
+shrug() { echo -n "¯\\_(ツ)_/¯" | tee /dev/tty | copy_to_clipboard; }
 gdiff() {
   git log --graph --color=always \
       --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" \
@@ -73,12 +89,16 @@ fpath=("$HOME/.docker/completions" $fpath)
 # End of Docker CLI completions
 
 export PATH=$PATH:/usr/local/bin/python3
-export PATH=/Library/Frameworks/Python.framework/Versions/3.13/bin:$PATH
+if is_macos; then
+  export PATH=/Library/Frameworks/Python.framework/Versions/3.13/bin:$PATH
+fi
 
 export PATH="$PATH:$HOME/go/bin"
 
 # Added by Toolbox App
-export PATH="$PATH:$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
+if is_macos && [[ -d "$HOME/Library/Application Support/JetBrains/Toolbox/scripts" ]]; then
+  export PATH="$PATH:$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
+fi
 
 # Added by ForgeCode installer
 export PATH="$HOME/.local/bin:$PATH"
@@ -88,7 +108,7 @@ export PATH=/usr/local/bin/:$PATH
 # complete -C '/usr/local/bin/aws_completer' aws
 
 # Shell Integration
-source "$HOME/.homebrew.zshrc"
+[[ -f "$HOME/.homebrew.zshrc" ]] && source "$HOME/.homebrew.zshrc"
 
 source $HOME/.gdt.zshrc
 
