@@ -68,10 +68,6 @@ export XDG_STATE_HOME="$HOME/.local/state"
 
 export EDITOR="zed --wait"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && \. "$(brew --prefix)/opt/nvm/nvm.sh"
-[ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm"
-
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 fpath=("$HOME/.docker/completions" $fpath)
 # End of Docker CLI completions
@@ -80,22 +76,6 @@ export PATH=$PATH:/usr/local/bin/python3
 export PATH=/Library/Frameworks/Python.framework/Versions/3.13/bin:$PATH
 
 export PATH="$PATH:$HOME/go/bin"
-
-export PATH="$HOMEBREW_REPOSITORY/opt/libpq/bin:$PATH"
-export PATH="$HOMEBREW_REPOSITORY/opt/curl/bin:$PATH"
-
-# echo eval "$(/opt/homebrew/bin/brew shellenv)" eval export HOMEBREW_PREFIX="/opt/homebrew";
-# export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
-# export HOMEBREW_REPOSITORY="/opt/homebrew";
-# eval "$(/usr/bin/env PATH_HELPER_ROOT="/opt/homebrew" /usr/libexec/path_helper -s)"
-# [ -z "${MANPATH-}" ] || export MANPATH=":${MANPATH#:}";
-# export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
-# 
-# eval "$(/opt/homebrew/bin/brew shellenv)"
-# echo eval "$(/opt/homebrew/bin/brew shellenv)" eval 
-# 
-# eval "$(/opt/homebrew/bin/brew shellenv)"
-
 
 # Added by Toolbox App
 export PATH="$PATH:$HOME/Library/Application Support/JetBrains/Toolbox/scripts"
@@ -106,19 +86,15 @@ export PATH="$HOME/.local/bin:$PATH"
 # Binary
 export PATH=/usr/local/bin/:$PATH
 # complete -C '/usr/local/bin/aws_completer' aws
-complete -C '$HOMEBREW_REPOSITORY/bin/aws_completer' aws
 
 # Shell Integration
-# Set up Homebrew environment
-eval "$(/opt/homebrew/bin/brew shellenv)"
-# Optional: Set up MANPATH and INFOPATH if needed
-# export MANPATH=":${MANPATH#:}"
-# export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
+source "$HOME/.homebrew.zshrc"
+
+source $HOME/.gdt.zshrc
+
 eval "$(fzf --zsh)"
 eval "$(zoxide init zsh --cmd cd)"
 eval "$(starship init zsh)"
-
-source $HOME/.gdt.zshrc
 
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME=""
