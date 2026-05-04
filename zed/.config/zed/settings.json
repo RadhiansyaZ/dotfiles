@@ -1,0 +1,202 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "outline_panel": {
+    "dock": "right",
+  },
+  "collaboration_panel": {
+    "dock": "right",
+  },
+  "agent_servers": {
+    "github-copilot-cli": {
+      "type": "registry",
+    },
+    "opencode": {
+      "type": "registry",
+    },
+    "codex-acp": {
+      "type": "registry",
+    },
+  },
+  "edit_predictions": {
+    "disabled_globs": [
+      ".env",
+      "**/node_modules/**",
+      "**/vendor/**",
+      "**/__pycache__/**",
+      "**/mocks/**",
+    ],
+    "provider": "copilot",
+  },
+  "git_panel": {
+    "dock": "right",
+    "tree_view": true,
+  },
+  "agent": {
+    "dock": "left",
+    "profiles": {
+      "plan": {
+        "name": "Plan",
+        "tools": {},
+        "enable_all_context_servers": false,
+        "context_servers": {},
+      },
+    },
+    "favorite_models": [
+      {
+        "provider": "copilot_chat",
+        "model": "claude-sonnet-4.6",
+        "enable_thinking": false
+      },
+      {
+        "provider": "copilot_chat",
+        "model": "gpt-5.4",
+        "enable_thinking": false,
+        "effort": "high"
+      },
+      {
+        "provider": "copilot_chat",
+        "model": "gpt-5-mini",
+        "enable_thinking": false,
+        "effort": "high"
+      }
+    ],
+    "tool_permissions": {
+      "default": "allow",
+    },
+    "default_profile": "write",
+    "default_model": {
+      "effort": "high",
+      "enable_thinking": false,
+      "provider": "copilot_chat",
+      "model": "claude-sonnet-4.6",
+    },
+    "model_parameters": [],
+  },
+  "git": {
+    "inline_blame": {
+      "enabled": true,
+      "delay_ms": 500,
+      "show_commit_summary": true,
+    },
+  },
+  "jsx_tag_auto_close": {
+    "enabled": true,
+  },
+  "languages": {
+    "JavaScript": {
+      // "formatter": {
+      //   "external": {
+      //     "command": "prettier",
+      //     "arguments": ["--stdin-filepath", "{buffer_path}"]
+      //   }
+      // },
+      "tab_size": 2,
+    },
+    "Python": {
+      "tab_size": 4,
+      // "language_servers": ["pylsp", "!basedpyright", "!ty"],
+      // "preferred_line_length": 119,
+    },
+
+    "Shell Script": {
+      "tab_size": 4,
+      "hard_tabs": false,
+    },
+    // npm install -g sql-formatter
+    "SQL": {
+      "auto_indent_on_paste": false,
+      "tab_size": 5,
+      "formatter": {
+        "external": {
+          "command": "pg_format",
+          "arguments": ["-L", "-"],
+        },
+      },
+      "format_on_save": "on",
+      "ensure_final_newline_on_save": false,
+    },
+    "TypeScript": {
+      "tab_size": 2,
+    },
+    "YAML": {
+      "tab_size": 2,
+      "hard_tabs": false,
+    },
+  },
+  "lsp": {
+    // "pylsp": {
+    //   "settings": {
+    //     "plugins": {
+    //       // Explicitly enable flake8 and isort plugins
+    //       "flake8": {
+    //         "enabled": true,
+    //         "exclude": ["env", ".git", "__pycache__", "**/migrations/*"],
+    //         "ignore": ["W504", "W601"],
+    //         "maxLineLength": 119,
+    //       },
+    //       "isort": {
+    //         "enabled": true,
+    //         "combineAsImports": true,
+    //         "includeTrailingComma": true,
+    //         "lineLength": 79,
+    //         "multiLineOutput": 5,
+    //       },
+    //       "jedi_type_definition": false,
+    //       "pycodestyle": {
+    //         "enabled": true,
+    //         "maxLineLength": 119,
+    //       },
+    //     },
+    //   },
+    // },
+    "tailwindcss-language-server": {
+      "settings": {
+        "classFunctions": ["cva", "cx"],
+        "experimental": {
+          "classRegex": ["[cls|className]\\s\\:\\=\\s\"([^\"]*)"],
+        },
+      },
+    },
+  },
+  "project_panel": {
+    "dock": "right",
+    "git_status": true,
+  },
+  "tabs": {
+    "file_icons": true,
+    "git_status": true,
+    "show_close_button": "hover",
+    "show_diagnostics": "errors",
+  },
+  "telemetry": {
+    "diagnostics": true,
+    "metrics": false,
+  },
+  "terminal": {
+    "font_size": 12,
+    "font_family": "JetBrains Mono",
+    "option_as_meta": true,
+    "shell": {
+      "program": "/bin/zsh",
+    },
+  },
+  "base_keymap": "VSCode",
+  "buffer_font_size": 13,
+  "icon_theme": "Zed (Default)",
+  "ui_font_size": 14,
+  "theme": {
+    "mode": "dark",
+    "light": "Gruvbox Light",
+    "dark": "One Dark",
+  },
+  "show_completions_on_input": true,
+  "use_system_window_tabs": true,
+  "vim_mode": false,
+}

@@ -1,0 +1,28 @@
+# MacOS
+.DS_Store
+
+# tmux
+.config/tmux/plugins/*
+
+# Zed db
+**/*.mdb
+*.mdb/**
+
+# env file
+*.env
+.env.*
+.envrc
+
+# IDE
+**.vscode/
+*.code-workspace
+**.idea/
+**.zed/
+
+# AI 
+.claude
+.gitnexus
+.mcp.json
+AGENTS.local.md
+CLAUDE.local.md
+# **/plans/**.md

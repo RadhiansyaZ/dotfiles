@@ -1,0 +1,481 @@
+{
+  "version": 3,
+  "skills": {
+    "caveman": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "caveman/SKILL.md",
+      "skillFolderHash": "f524c391d466fe35e0bdbe9707854fcb2be52b26",
+      "installedAt": "2026-04-16T02:21:06.834Z",
+      "updatedAt": "2026-05-01T10:59:21.701Z"
+    },
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "skillFolderHash": "3013fdeb8a11b10b1eb795ec3ae8bfca38f7c26d",
+      "installedAt": "2026-04-16T02:21:35.678Z",
+      "updatedAt": "2026-04-27T03:16:05.823Z"
+    },
+    "postgres": {
+      "source": "planetscale/database-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/planetscale/database-skills.git",
+      "skillPath": "skills/postgres/SKILL.md",
+      "skillFolderHash": "d88c9e1d9ef50949b8ce4fde20629a31378afe8e",
+      "installedAt": "2026-04-23T04:11:29.492Z",
+      "updatedAt": "2026-04-23T04:11:29.492Z"
+    },
+    "skill-creator": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/skill-creator/SKILL.md",
+      "skillFolderHash": "3cf9a8db32597ba3e24b584a3d696f4e11c7d7b6",
+      "pluginName": "example-skills",
+      "installedAt": "2026-04-25T04:41:31.432Z",
+      "updatedAt": "2026-04-25T04:44:36.092Z"
+    },
+    "docx": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/docx/SKILL.md",
+      "skillFolderHash": "a0d216202f9793a78da44cf96aabe48f42e627ac",
+      "pluginName": "document-skills",
+      "installedAt": "2026-04-25T04:44:28.678Z",
+      "updatedAt": "2026-04-25T04:44:28.678Z"
+    },
+    "pdf": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/pdf/SKILL.md",
+      "skillFolderHash": "6369f4649de69bd6857c9bc3b058a77206009238",
+      "pluginName": "document-skills",
+      "installedAt": "2026-04-25T04:44:29.399Z",
+      "updatedAt": "2026-04-25T04:44:29.399Z"
+    },
+    "pptx": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/pptx/SKILL.md",
+      "skillFolderHash": "10b3d70962e489867ddfee7da92f7da6b0eccc4f",
+      "pluginName": "document-skills",
+      "installedAt": "2026-04-25T04:44:30.180Z",
+      "updatedAt": "2026-04-25T04:44:30.180Z"
+    },
+    "xlsx": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/xlsx/SKILL.md",
+      "skillFolderHash": "f5fb1cdb7993b2feee8367e983e9d4d58d2eedd4",
+      "pluginName": "document-skills",
+      "installedAt": "2026-04-25T04:44:31.327Z",
+      "updatedAt": "2026-04-25T04:44:31.327Z"
+    },
+    "claude-api": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/claude-api/SKILL.md",
+      "skillFolderHash": "6d12d690ffa6b91119e932e448f4437d9f197a53",
+      "pluginName": "claude-api",
+      "installedAt": "2026-04-25T04:44:32.123Z",
+      "updatedAt": "2026-04-25T04:44:32.123Z"
+    },
+    "canvas-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/canvas-design/SKILL.md",
+      "skillFolderHash": "95095faaee2ea943e85a5d1d562fde06841e835e",
+      "pluginName": "example-skills",
+      "installedAt": "2026-04-25T04:44:32.899Z",
+      "updatedAt": "2026-04-25T04:44:32.899Z"
+    },
+    "doc-coauthoring": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/doc-coauthoring/SKILL.md",
+      "skillFolderHash": "d9df960e61fe2bafe9183e37de6f9f6b73b74087",
+      "pluginName": "example-skills",
+      "installedAt": "2026-04-25T04:44:33.373Z",
+      "updatedAt": "2026-04-25T04:44:33.373Z"
+    },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "skillFolderHash": "928950704df8a8b885c03de5da626331e6f29cf8",
+      "pluginName": "example-skills",
+      "installedAt": "2026-04-25T04:44:34.097Z",
+      "updatedAt": "2026-04-25T04:44:34.097Z"
+    },
+    "internal-comms": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/internal-comms/SKILL.md",
+      "skillFolderHash": "9869687dcf6deb6802ca88ac11e67b6f7278017a",
+      "pluginName": "example-skills",
+      "installedAt": "2026-04-25T04:44:34.601Z",
+      "updatedAt": "2026-04-25T04:44:34.601Z"
+    },
+    "mcp-builder": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/mcp-builder/SKILL.md",
+      "skillFolderHash": "b866bcfb57b780c10b587c7b543e871a91661ce0",
+      "pluginName": "example-skills",
+      "installedAt": "2026-04-25T04:44:35.362Z",
+      "updatedAt": "2026-04-25T04:44:35.362Z"
+    },
+    "slack-gif-creator": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/slack-gif-creator/SKILL.md",
+      "skillFolderHash": "c61d2f7bb6334b68a6936ad3f41ebfc7cb76fe2a",
+      "pluginName": "example-skills",
+      "installedAt": "2026-04-25T04:44:36.979Z",
+      "updatedAt": "2026-04-25T04:44:36.979Z"
+    },
+    "template-skill": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "template/SKILL.md",
+      "skillFolderHash": "a38aa7fa73fd2835b9ce77a60274f7dc62d015a6",
+      "installedAt": "2026-04-25T04:44:38.073Z",
+      "updatedAt": "2026-04-25T04:44:38.073Z"
+    },
+    "algorithmic-art": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/algorithmic-art/SKILL.md",
+      "skillFolderHash": "4aef6bcad51d058ec32b1acb9da436851863e56e",
+      "pluginName": "example-skills",
+      "installedAt": "2026-04-25T04:44:38.883Z",
+      "updatedAt": "2026-04-25T04:44:38.883Z"
+    },
+    "brand-guidelines": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/brand-guidelines/SKILL.md",
+      "skillFolderHash": "1dc8bd3584b80568edae7da16382363e24ecf0f0",
+      "pluginName": "example-skills",
+      "installedAt": "2026-04-25T04:44:39.702Z",
+      "updatedAt": "2026-04-25T04:44:39.702Z"
+    },
+    "theme-factory": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/theme-factory/SKILL.md",
+      "skillFolderHash": "e05534d132fb1b21f9917840874758e30f0a9b1a",
+      "pluginName": "example-skills",
+      "installedAt": "2026-04-25T04:44:40.422Z",
+      "updatedAt": "2026-04-25T04:44:40.422Z"
+    },
+    "web-artifacts-builder": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/web-artifacts-builder/SKILL.md",
+      "skillFolderHash": "821b94f16c123d5f12e4e72eda9f7a162e2698f6",
+      "pluginName": "example-skills",
+      "installedAt": "2026-04-25T04:44:41.155Z",
+      "updatedAt": "2026-04-25T04:44:41.155Z"
+    },
+    "webapp-testing": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
+      "skillPath": "skills/webapp-testing/SKILL.md",
+      "skillFolderHash": "5ffb7dc66b9fd4c25c3e400a4c00da99a349b714",
+      "pluginName": "example-skills",
+      "installedAt": "2026-04-25T04:44:41.860Z",
+      "updatedAt": "2026-04-25T04:44:41.860Z"
+    },
+    "cli-creator": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/cli-creator/SKILL.md",
+      "skillFolderHash": "4f534f22c18693e327ea79e6d429f454a5c0059b",
+      "installedAt": "2026-04-25T07:02:15.642Z",
+      "updatedAt": "2026-04-25T07:02:15.642Z"
+    },
+    "cloudflare-deploy": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/cloudflare-deploy/SKILL.md",
+      "skillFolderHash": "8701e01cf9b253cbbf8801bc49d12944178c12ec",
+      "installedAt": "2026-04-25T07:02:16.599Z",
+      "updatedAt": "2026-04-25T07:02:16.599Z"
+    },
+    "figma": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/figma/SKILL.md",
+      "skillFolderHash": "b61e723c00a0757daf549ac6d8835ef1c3a7ed10",
+      "installedAt": "2026-04-25T07:02:17.315Z",
+      "updatedAt": "2026-04-25T07:02:17.315Z"
+    },
+    "figma-code-connect-components": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/figma-code-connect-components/SKILL.md",
+      "skillFolderHash": "34ad487c3a2724be6eb7edb9a8f49dd7e069e117",
+      "installedAt": "2026-04-25T07:02:18.051Z",
+      "updatedAt": "2026-04-25T07:02:18.051Z"
+    },
+    "figma-create-design-system-rules": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/figma-create-design-system-rules/SKILL.md",
+      "skillFolderHash": "b1ab9259fd28ebdb2dabe2b6cb1a60cdc5818ef1",
+      "installedAt": "2026-04-25T07:02:18.761Z",
+      "updatedAt": "2026-04-25T07:02:18.761Z"
+    },
+    "figma-create-new-file": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/figma-create-new-file/SKILL.md",
+      "skillFolderHash": "ac6099387a8afe79683df3bf1653ba9aee148e7a",
+      "installedAt": "2026-04-25T07:02:19.475Z",
+      "updatedAt": "2026-04-25T07:02:19.475Z"
+    },
+    "figma-generate-design": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/figma-generate-design/SKILL.md",
+      "skillFolderHash": "3757315661817cdc6ea1c4594f5451abfd5dfd92",
+      "installedAt": "2026-04-25T07:02:20.250Z",
+      "updatedAt": "2026-04-25T07:02:20.250Z"
+    },
+    "figma-generate-library": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/figma-generate-library/SKILL.md",
+      "skillFolderHash": "2625f882909ac47b7d33ddd046d1a6892c70c38d",
+      "installedAt": "2026-04-25T07:02:21.220Z",
+      "updatedAt": "2026-04-25T07:02:21.220Z"
+    },
+    "figma-implement-design": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/figma-implement-design/SKILL.md",
+      "skillFolderHash": "122e36f32ef3fc85374d70c4fb62a83861816e40",
+      "installedAt": "2026-04-25T07:02:22.206Z",
+      "updatedAt": "2026-04-25T07:02:22.206Z"
+    },
+    "figma-use": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/figma-use/SKILL.md",
+      "skillFolderHash": "f000d36e453fa13afa731c920ebf7f9dee8da07c",
+      "installedAt": "2026-04-25T07:02:22.962Z",
+      "updatedAt": "2026-04-25T07:02:22.962Z"
+    },
+    "gh-address-comments": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/gh-address-comments/SKILL.md",
+      "skillFolderHash": "042316bece4a9f832145dcff7d5506e99fe3ecf1",
+      "installedAt": "2026-04-25T07:02:23.703Z",
+      "updatedAt": "2026-04-25T07:02:23.703Z"
+    },
+    "gh-fix-ci": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/gh-fix-ci/SKILL.md",
+      "skillFolderHash": "3f99938c9464393f27cc4cc00e4ba17387517803",
+      "installedAt": "2026-04-25T07:02:24.651Z",
+      "updatedAt": "2026-04-25T07:02:24.651Z"
+    },
+    "jupyter-notebook": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/jupyter-notebook/SKILL.md",
+      "skillFolderHash": "ed23a98404260af659ef6bae9cb734bcfb0ca6c2",
+      "installedAt": "2026-04-25T07:02:25.639Z",
+      "updatedAt": "2026-04-25T07:02:25.639Z"
+    },
+    "linear": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/linear/SKILL.md",
+      "skillFolderHash": "31c1648f2d1a4d05d32eab4bdfb2ed89a5541e06",
+      "installedAt": "2026-04-25T07:02:26.560Z",
+      "updatedAt": "2026-04-25T07:02:26.560Z"
+    },
+    "notion-knowledge-capture": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/notion-knowledge-capture/SKILL.md",
+      "skillFolderHash": "844c91327ff8746ffe08b034c60d781de893247b",
+      "installedAt": "2026-04-25T07:02:27.477Z",
+      "updatedAt": "2026-04-25T07:02:27.477Z"
+    },
+    "notion-meeting-intelligence": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/notion-meeting-intelligence/SKILL.md",
+      "skillFolderHash": "9ad7df8f10c20bbb95d5b165b05f1272bf6c558c",
+      "installedAt": "2026-04-25T07:02:28.082Z",
+      "updatedAt": "2026-04-25T07:02:28.082Z"
+    },
+    "notion-research-documentation": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/notion-research-documentation/SKILL.md",
+      "skillFolderHash": "e4260c6e8cd79bef35127cfb4aefe8e5f74280ac",
+      "installedAt": "2026-04-25T07:02:28.996Z",
+      "updatedAt": "2026-04-25T07:02:28.996Z"
+    },
+    "notion-spec-to-implementation": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/notion-spec-to-implementation/SKILL.md",
+      "skillFolderHash": "0992413c821cf9d2f4fcbe165474bc896509491f",
+      "installedAt": "2026-04-25T07:02:29.935Z",
+      "updatedAt": "2026-04-25T07:02:29.935Z"
+    },
+    "plugin-creator": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.system/plugin-creator/SKILL.md",
+      "skillFolderHash": "7be91ca65d463da971db11034621e735b9dbe633",
+      "installedAt": "2026-04-25T07:02:30.448Z",
+      "updatedAt": "2026-04-25T07:02:30.448Z"
+    },
+    "render-deploy": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/render-deploy/SKILL.md",
+      "skillFolderHash": "f14885c4c082870b8b77791eb4eebe59fed2f33e",
+      "installedAt": "2026-04-25T07:02:31.347Z",
+      "updatedAt": "2026-04-25T07:02:31.347Z"
+    },
+    "security-best-practices": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/security-best-practices/SKILL.md",
+      "skillFolderHash": "349d45885fd3e432e7d0e5c6e21a2a712db158ef",
+      "installedAt": "2026-04-25T07:02:31.977Z",
+      "updatedAt": "2026-04-25T07:02:31.977Z"
+    },
+    "security-ownership-map": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/security-ownership-map/SKILL.md",
+      "skillFolderHash": "59e92b875f9213d0efe8881071978cca4cac54f1",
+      "installedAt": "2026-04-25T07:02:32.902Z",
+      "updatedAt": "2026-04-25T07:02:32.902Z"
+    },
+    "security-threat-model": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/security-threat-model/SKILL.md",
+      "skillFolderHash": "455ed2d898ef7d1e8836898f07be3a7d2c3f38d2",
+      "installedAt": "2026-04-25T07:02:33.914Z",
+      "updatedAt": "2026-04-25T07:02:33.914Z"
+    },
+    "sentry": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/sentry/SKILL.md",
+      "skillFolderHash": "0a0202af79d3485fbf71fec52c71a6c4def45fca",
+      "installedAt": "2026-04-25T07:02:34.846Z",
+      "updatedAt": "2026-04-25T07:02:34.846Z"
+    },
+    "transcribe": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/transcribe/SKILL.md",
+      "skillFolderHash": "5a9cab05591b6b36131c2cf1d7df257df6901e14",
+      "installedAt": "2026-04-25T07:02:35.339Z",
+      "updatedAt": "2026-04-25T07:02:35.339Z"
+    },
+    "winui-app": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/winui-app/SKILL.md",
+      "skillFolderHash": "977c395bb7f3e8362e608a3977edaff2247eddac",
+      "installedAt": "2026-04-25T07:02:36.268Z",
+      "updatedAt": "2026-04-25T07:02:36.268Z"
+    },
+    "yeet": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/openai/skills.git",
+      "skillPath": "skills/.curated/yeet/SKILL.md",
+      "skillFolderHash": "57cbd4e5e51c504f2acdf82b6dd85aa90314aa3f",
+      "installedAt": "2026-04-25T07:02:37.015Z",
+      "updatedAt": "2026-04-25T07:02:37.015Z"
+    },
+    "web-design-guidelines": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/agent-skills.git",
+      "skillPath": "skills/web-design-guidelines/SKILL.md",
+      "skillFolderHash": "3116f3e62dbd02b44a598b1aa690d2a8938e8f89",
+      "installedAt": "2026-04-27T03:15:25.651Z",
+      "updatedAt": "2026-04-27T03:15:25.651Z"
+    }
+  },
+  "dismissed": {
+    "findSkillsPrompt": true
+  },
+  "lastSelectedAgents": [
+    "amp",
+    "antigravity",
+    "cline",
+    "codex",
+    "cursor",
+    "deepagents",
+    "firebender",
+    "gemini-cli",
+    "github-copilot",
+    "kimi-cli",
+    "opencode",
+    "warp",
+    "claude-code"
+  ]
+}

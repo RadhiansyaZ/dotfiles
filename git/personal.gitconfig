@@ -1,0 +1,9 @@
+[user]
+	name = Radhiansya Zain Antriksa Putra
+	email = 58207190+RadhiansyaZ@users.noreply.github.com
+
+[url "git@github-personal"]
+	insteadOf = git@github.com
+
+[url "ssh://git@github.com/RadhiansyaZ/*"]
+    insteadOf = https://github.com/RadhiansyaZ/*

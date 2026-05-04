@@ -1,0 +1,16 @@
+[includeIf "gitdir:~/"]
+  path = ~/dotfiles/git/personal.gitconfig
+
+[includeIf "gitdir:~/Codes/"]
+  path = ~/dotfiles/git/gdt.gitconfig
+
+[includeIf "gitdir:~/Codes/personal/"]
+  path = ~/dotfiles/git/personal.gitconfig
+
+[core]
+  editor = zed --wait
+  excludesfile = ~/.gitignore
+
+[alias]
+  s = status
+  l = log --graph --abbrev-commit --decorate
