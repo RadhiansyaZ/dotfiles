@@ -7,6 +7,3 @@
 
 [url "ssh://git@github-gdt/radhiansya-gdt/*"]
 	insteadOf = https://github.com/radhiansya-gdt/*
-
-[url "git@github.com:"]
-	insteadOf = https://github.com/
