@@ -118,7 +118,7 @@ APT_PACKAGES=(
     # Shell/CLI
     stow tmux bat ripgrep fd-find fzf jq tree htop neovim
     # Database
-    libpq-dev pgformatter sqitch libdbd-pg-perl
+    postgresql-client pgformatter sqitch libdbd-pg-perl
     # Security
     pass git-crypt
     # Python
