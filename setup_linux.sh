@@ -472,7 +472,8 @@ get_github_release_url() {
         | grep -E "$pattern" \
         | head -1 \
         | sed 's/.*"browser_download_url": "\(.*\)"/\1/' \
-        | tr -d '"'
+        | tr -d '"' \
+        || true
 }
 
 print_step "Installing GitHub binary tools"
