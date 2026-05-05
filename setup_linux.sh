@@ -71,7 +71,6 @@ sudo apt-get install -y --no-install-recommends \
     xz-utils \
     gpg \
     ca-certificates \
-    software-properties-common \
     build-essential \
     fontconfig
 print_success "Base apt dependencies installed"
