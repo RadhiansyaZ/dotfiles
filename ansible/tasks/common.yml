@@ -59,25 +59,14 @@
 
 - name: Run stow dry-run validation
   ansible.builtin.command:
-    argv:
-      - stow
-      - -nv
-      - --restow
-      - --target={{ ansible_facts.env.HOME }}
-      - --dir={{ dotfiles_dir }}
-      - "{{ item }}"
+    argv: "{{ stow_common_args + ['-nv', '--restow', item] }}"
   loop: "{{ stow_packages }}"
   changed_when: false
   tags: [stow]
 
 - name: Stow dotfile packages
   ansible.builtin.command:
-    argv:
-      - stow
-      - --target={{ ansible_facts.env.HOME }}
-      - --restow
-      - --dir={{ dotfiles_dir }}
-      - "{{ item }}"
+    argv: "{{ stow_common_args + ['--restow', item] }}"
   loop: "{{ stow_packages }}"
   changed_when: true
   tags: [stow]
