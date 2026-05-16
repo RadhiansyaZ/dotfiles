@@ -1,0 +1,68 @@
+---
+- name: Check Xcode Command Line Tools
+  ansible.builtin.command: xcode-select -p
+  register: xcode_clt
+  changed_when: false
+  failed_when: false
+  tags: [macos, packages]
+
+- name: Start Xcode Command Line Tools installer when missing
+  ansible.builtin.command: xcode-select --install
+  when: xcode_clt.rc != 0
+  changed_when: true
+  failed_when: false
+  tags: [macos, packages]
+
+- name: Stop when Xcode Command Line Tools must be installed manually
+  ansible.builtin.fail:
+    msg: "Xcode Command Line Tools installer launched. Complete install, then rerun setup.sh."
+  when: xcode_clt.rc != 0
+  tags: [macos, packages]
+
+- name: Check Go
+  ansible.builtin.command: go version
+  register: macos_go_check
+  changed_when: false
+  failed_when: false
+  tags: [macos, go]
+
+- name: Fetch latest Go version
+  ansible.builtin.uri:
+    url: https://go.dev/VERSION?m=text
+    return_content: true
+  register: macos_go_version_response
+  when: macos_go_check.rc != 0
+  tags: [macos, go]
+
+- name: Set Go version
+  ansible.builtin.set_fact:
+    macos_go_version: "{{ (macos_go_version_response.content.splitlines() | first | default('go1.23.0')) | regex_replace('^go', '') }}"
+  when: macos_go_check.rc != 0
+  tags: [macos, go]
+
+- name: Select Go architecture
+  ansible.builtin.set_fact:
+    macos_goarch: "{{ 'arm64' if ansible_facts.architecture == 'arm64' else 'amd64' }}"
+  when: macos_go_check.rc != 0
+  tags: [macos, go]
+
+- name: Download Go package
+  ansible.builtin.get_url:
+    url: "https://go.dev/dl/go{{ macos_go_version }}.darwin-{{ macos_goarch }}.pkg"
+    dest: "/tmp/go{{ macos_go_version }}.darwin-{{ macos_goarch }}.pkg"
+    mode: "0644"
+  when: macos_go_check.rc != 0
+  tags: [macos, go]
+
+- name: Install Go package
+  become: true
+  ansible.builtin.command:
+    argv:
+      - installer
+      - -pkg
+      - "/tmp/go{{ macos_go_version }}.darwin-{{ macos_goarch }}.pkg"
+      - -target
+      - /
+  changed_when: true
+  when: macos_go_check.rc != 0
+  tags: [macos, go]

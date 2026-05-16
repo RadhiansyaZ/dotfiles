@@ -1,0 +1,124 @@
+---
+# Shared dotfiles setup variables.
+
+dotfiles_dir: "{{ playbook_dir | dirname }}"
+local_bin_dir: "{{ ansible_facts.env.HOME }}/.local/bin"
+
+stow_packages:
+  - agents
+  - ghostty
+  - git
+  - gnupg
+  - nvim
+  - opencode
+  - postgresql
+  - ssh
+  - tmux
+  - zed
+  - zsh
+
+stow_conflict_files:
+  - "{{ ansible_facts.env.HOME }}/.zshrc"
+  - "{{ ansible_facts.env.HOME }}/.homebrew.zshrc"
+  - "{{ ansible_facts.env.HOME }}/.gdt.zshrc"
+
+omz_plugins:
+  - name: zsh-autosuggestions
+    repo: https://github.com/zsh-users/zsh-autosuggestions
+  - name: zsh-syntax-highlighting
+    repo: https://github.com/zsh-users/zsh-syntax-highlighting
+
+nerd_fonts_version: v3.2.1
+nerd_fonts:
+  - FiraCode
+  - JetBrainsMono
+
+go_tools:
+  - module: github.com/go-delve/delve/cmd/dlv
+    binary: dlv
+  - module: github.com/jandelgado/gcov2lcov
+    binary: gcov2lcov
+  - module: mvdan.cc/gofumpt
+    binary: gofumpt
+  - module: golang.org/x/tools/cmd/goimports
+    binary: goimports
+  - module: github.com/golangci/golangci-lint/v2/cmd/golangci-lint
+    binary: golangci-lint
+  - module: github.com/haya14busa/goplay/cmd/goplay
+    binary: goplay
+  - module: golang.org/x/tools/gopls
+    binary: gopls
+  - module: github.com/cweill/gotests/gotests
+    binary: gotests
+  - module: github.com/josharian/impl
+    binary: impl
+  - module: github.com/vektra/mockery/v2
+    binary: mockery
+  - module: github.com/mgechev/revive
+    binary: revive
+  - module: honnef.co/go/tools/cmd/staticcheck
+    binary: staticcheck
+
+linux_base_packages:
+  - curl
+  - wget
+  - unzip
+  - xz-utils
+  - gpg
+  - ca-certificates
+  - build-essential
+  - fontconfig
+
+linux_cli_packages:
+  - stow
+  - tmux
+  - bat
+  - ripgrep
+  - fd-find
+  - fzf
+  - jq
+  - tree
+  - htop
+  - neovim
+  - postgresql-client
+  - pgformatter
+  - sqitch
+  - libdbd-pg-perl
+  - pass
+  - git-crypt
+  - python3
+  - python3-pip
+  - mpv
+  - zsh
+
+linux_github_binaries:
+  - name: lazygit
+    repo: jesseduffield/lazygit
+    asset_pattern: "lazygit_.*_Linux_{{ linux_arch }}\\.tar\\.gz"
+    skip: false
+  - name: lazysql
+    repo: jorgerojas26/lazysql
+    asset_pattern: "lazysql_linux_{{ linux_arch }}\\.tar\\.gz"
+    skip: false
+  - name: act
+    repo: nektos/act
+    asset_pattern: "act_Linux_{{ linux_arch }}\\.tar\\.gz"
+    skip: false
+  - name: actionlint
+    repo: rhysd/actionlint
+    asset_pattern: "actionlint_.*_linux_{{ linux_arch }}\\.tar\\.gz"
+    skip: false
+  - name: htmlq
+    repo: mgdm/htmlq
+    asset_pattern: "htmlq-x86_64-linux\\.tar\\.gz"
+    skip: "{{ linux_arch != 'amd64' }}"
+  - name: saml2aws
+    repo: Versent/saml2aws
+    asset_pattern: "saml2aws_.*_linux_{{ linux_arch }}\\.tar\\.gz"
+    skip: "{{ linux_arch != 'amd64' }}"
+
+linux_direct_binaries:
+  - name: dbmate
+    url: "https://github.com/amacneil/dbmate/releases/latest/download/dbmate-linux-{{ linux_arch }}"
+  - name: opencode
+    url: "https://github.com/sst/opencode/releases/latest/download/opencode-linux-{{ linux_arch }}"

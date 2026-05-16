@@ -1,0 +1,99 @@
+---
+- name: Install Linux GitHub binary from latest release
+  when: not (github_binary.skip | default(false) | bool)
+  block:
+    - name: Check {{ github_binary.name }}
+      ansible.builtin.command: "command -v {{ github_binary.name }}"
+      register: github_binary_check
+      changed_when: false
+      failed_when: false
+
+    - name: Fetch latest release for {{ github_binary.name }}
+      ansible.builtin.uri:
+        url: "https://api.github.com/repos/{{ github_binary.repo }}/releases/latest"
+        return_content: true
+      register: github_release
+      when: github_binary_check.rc != 0
+
+    - name: Select release asset URL for {{ github_binary.name }}
+      ansible.builtin.set_fact:
+        github_binary_url: >-
+          {{ (github_release.json.assets
+              | selectattr('browser_download_url', 'search', github_binary.asset_pattern)
+              | map(attribute='browser_download_url')
+              | list
+              | first) | default('') }}
+      when: github_binary_check.rc != 0
+
+    - name: Skip release asset when no match for {{ github_binary.name }}
+      ansible.builtin.debug:
+        msg: "No matching release asset for {{ github_binary.name }} pattern={{ github_binary.asset_pattern }}"
+      when:
+        - github_binary_check.rc != 0
+        - github_binary_url | length == 0
+
+    - name: Create temp directory for {{ github_binary.name }}
+      ansible.builtin.tempfile:
+        state: directory
+        suffix: "-{{ github_binary.name }}"
+      register: github_binary_tmp
+      when:
+        - github_binary_check.rc != 0
+        - github_binary_url | length > 0
+
+    - name: Download release asset for {{ github_binary.name }}
+      ansible.builtin.get_url:
+        url: "{{ github_binary_url }}"
+        dest: "{{ github_binary_tmp.path }}/asset"
+        mode: "0644"
+      when:
+        - github_binary_check.rc != 0
+        - github_binary_url | length > 0
+
+    - name: Extract release asset for {{ github_binary.name }}
+      ansible.builtin.unarchive:
+        src: "{{ github_binary_tmp.path }}/asset"
+        dest: "{{ github_binary_tmp.path }}"
+        remote_src: true
+      when:
+        - github_binary_check.rc != 0
+        - github_binary_url | length > 0
+
+    - name: Find binary in release asset for {{ github_binary.name }}
+      ansible.builtin.find:
+        paths: "{{ github_binary_tmp.path }}"
+        patterns: "{{ github_binary.name }}"
+        file_type: file
+        recurse: true
+      register: github_binary_found
+      when:
+        - github_binary_check.rc != 0
+        - github_binary_url | length > 0
+
+    - name: Install binary for {{ github_binary.name }}
+      become: true
+      ansible.builtin.copy:
+        src: "{{ github_binary_found.files[0].path }}"
+        dest: "/usr/local/bin/{{ github_binary.name }}"
+        mode: "0755"
+        remote_src: true
+      when:
+        - github_binary_check.rc != 0
+        - github_binary_url | length > 0
+        - github_binary_found.files | length > 0
+
+    - name: Skip install when binary not found for {{ github_binary.name }}
+      ansible.builtin.debug:
+        msg: "Could not locate {{ github_binary.name }} binary in downloaded asset."
+      when:
+        - github_binary_check.rc != 0
+        - github_binary_url | length > 0
+        - github_binary_found.files | length == 0
+
+    - name: Remove temp directory for {{ github_binary.name }}
+      ansible.builtin.file:
+        path: "{{ github_binary_tmp.path }}"
+        state: absent
+      when:
+        - github_binary_tmp is defined
+        - github_binary_tmp.path is defined

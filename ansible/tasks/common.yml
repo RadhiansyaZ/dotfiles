@@ -1,0 +1,151 @@
+---
+- name: Ensure local bin directory exists
+  ansible.builtin.file:
+    path: "{{ local_bin_dir }}"
+    state: directory
+    mode: "0755"
+  tags: [common]
+
+- name: Ensure default shell is zsh
+  become: true
+  ansible.builtin.user:
+    name: "{{ ansible_facts.user_id }}"
+    shell: "{{ lookup('ansible.builtin.pipe', 'command -v zsh') }}"
+  when: lookup('ansible.builtin.pipe', 'command -v zsh') | length > 0
+  tags: [shell]
+
+- name: Check Oh My Zsh install
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.env.HOME }}/.oh-my-zsh"
+  register: omz_dir
+  tags: [shell]
+
+- name: Install Oh My Zsh
+  ansible.builtin.shell: |
+    set -euo pipefail
+    RUNZSH=no CHSH=no /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  args:
+    executable: /bin/bash
+    creates: "{{ ansible_facts.env.HOME }}/.oh-my-zsh"
+  when: not omz_dir.stat.exists
+  tags: [shell]
+
+- name: Clone Oh My Zsh custom plugins
+  ansible.builtin.git:
+    repo: "{{ item.repo }}"
+    dest: "{{ ansible_facts.env.HOME }}/.oh-my-zsh/custom/plugins/{{ item.name }}"
+    version: master
+    update: false
+  loop: "{{ omz_plugins }}"
+  tags: [shell]
+
+- name: Find plain-file stow conflicts
+  ansible.builtin.stat:
+    path: "{{ item }}"
+  loop: "{{ stow_conflict_files }}"
+  register: stow_conflict_stats
+  tags: [stow]
+
+- name: Remove plain-file stow conflicts
+  ansible.builtin.file:
+    path: "{{ item.item }}"
+    state: absent
+  loop: "{{ stow_conflict_stats.results }}"
+  when:
+    - item.stat.exists
+    - item.stat.isreg
+    - not item.stat.islnk
+  tags: [stow]
+
+- name: Run stow dry-run validation
+  ansible.builtin.command:
+    argv:
+      - stow
+      - -nv
+      - --restow
+      - --target={{ ansible_facts.env.HOME }}
+      - --dir={{ dotfiles_dir }}
+      - "{{ item }}"
+  loop: "{{ stow_packages }}"
+  changed_when: false
+  tags: [stow]
+
+- name: Stow dotfile packages
+  ansible.builtin.command:
+    argv:
+      - stow
+      - --target={{ ansible_facts.env.HOME }}
+      - --restow
+      - --dir={{ dotfiles_dir }}
+      - "{{ item }}"
+  loop: "{{ stow_packages }}"
+  changed_when: true
+  tags: [stow]
+
+- name: Select font directory
+  ansible.builtin.set_fact:
+    font_dir: "{{ ansible_facts.env.HOME }}/Library/Fonts"
+  when: ansible_facts.system == 'Darwin'
+  tags: [fonts]
+
+- name: Select Linux font directory
+  ansible.builtin.set_fact:
+    font_dir: "{{ ansible_facts.env.HOME }}/.local/share/fonts"
+  when: ansible_facts.system == 'Linux'
+  tags: [fonts]
+
+- name: Ensure font directory exists
+  ansible.builtin.file:
+    path: "{{ font_dir }}"
+    state: directory
+    mode: "0755"
+  tags: [fonts]
+
+- name: Install Nerd Fonts
+  ansible.builtin.unarchive:
+    src: "https://github.com/ryanoasis/nerd-fonts/releases/download/{{ nerd_fonts_version }}/{{ item }}.zip"
+    dest: "{{ font_dir }}"
+    remote_src: true
+    creates: "{{ font_dir }}/{{ item }}NerdFontMono-Regular.ttf"
+  loop: "{{ nerd_fonts }}"
+  tags: [fonts]
+
+- name: Remove macOS font metadata files
+  ansible.builtin.shell: "find {{ font_dir | quote }} -name '._*' -delete"
+  changed_when: false
+  tags: [fonts]
+
+- name: Refresh Linux font cache
+  ansible.builtin.command: "fc-cache -f {{ font_dir }}"
+  changed_when: false
+  when: ansible_facts.system == 'Linux'
+  tags: [fonts]
+
+- name: Clone Tmux Plugin Manager
+  ansible.builtin.git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: "{{ ansible_facts.env.HOME }}/.tmux/plugins/tpm"
+    version: master
+    update: false
+  tags: [tmux]
+
+- name: Install tmux plugins
+  ansible.builtin.shell: |
+    set -euo pipefail
+    tmux start-server
+    "{{ ansible_facts.env.HOME }}/.tmux/plugins/tpm/bin/install_plugins"
+  args:
+    executable: /bin/bash
+  changed_when: false
+  failed_when: false
+  tags: [tmux]
+
+- name: Install Go tools
+  ansible.builtin.command: "go install {{ item.module }}@latest"
+  environment:
+    PATH: "/usr/local/go/bin:{{ ansible_facts.env.HOME }}/go/bin:{{ ansible_facts.env.PATH }}"
+  loop: "{{ go_tools }}"
+  args:
+    creates: "{{ ansible_facts.env.HOME }}/go/bin/{{ item.binary }}"
+  when: lookup('ansible.builtin.pipe', 'command -v go || true') | length > 0
+  tags: [go]

@@ -1,0 +1,48 @@
+---
+- name: Replayable dotfiles setup
+  hosts: localhost
+  gather_facts: true
+
+  pre_tasks:
+    - name: Reject unsupported operating systems
+      ansible.builtin.fail:
+        msg: "Unsupported operating system: {{ ansible_facts.system }}. Supported: Darwin, Linux."
+      when: ansible_facts.system not in ['Darwin', 'Linux']
+
+    - name: Warn when Linux is not Debian family
+      ansible.builtin.debug:
+        msg: "This playbook targets Debian/Ubuntu Linux. Detected os_family={{ ansible_facts.os_family }}. Package names may differ."
+      when:
+        - ansible_facts.system == 'Linux'
+        - ansible_facts.os_family != 'Debian'
+
+  tasks:
+    - name: Load architecture mapping
+      ansible.builtin.include_tasks: tasks/arch.yml
+      when: ansible_facts.system == 'Linux'
+      tags: [always]
+
+    - name: Run macOS setup tasks
+      ansible.builtin.include_tasks: tasks/macos.yml
+      when: ansible_facts.system == 'Darwin'
+      tags: [macos, packages]
+
+    - name: Run Linux setup tasks
+      ansible.builtin.include_tasks: tasks/linux.yml
+      when: ansible_facts.system == 'Linux'
+      tags: [linux, packages]
+
+    - name: Run shared setup tasks
+      ansible.builtin.include_tasks: tasks/common.yml
+      tags: [common]
+
+    - name: Verify critical commands
+      ansible.builtin.command: "{{ item }} --version"
+      loop:
+        - zsh
+        - stow
+        - tmux
+        - nvim
+      changed_when: false
+      failed_when: false
+      tags: [verify]

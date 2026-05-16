@@ -1,0 +1,257 @@
+---
+- name: Update apt cache
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  when: ansible_facts.os_family == 'Debian'
+  tags: [linux, packages]
+
+- name: Install base Linux dependencies
+  become: true
+  ansible.builtin.apt:
+    name: "{{ linux_base_packages }}"
+    state: present
+    install_recommends: false
+  when: ansible_facts.os_family == 'Debian'
+  tags: [linux, packages]
+
+- name: Install Linux CLI packages
+  become: true
+  ansible.builtin.apt:
+    name: "{{ linux_cli_packages }}"
+    state: present
+  when: ansible_facts.os_family == 'Debian'
+  tags: [linux, packages]
+
+- name: Create bat symlink
+  ansible.builtin.file:
+    src: "{{ lookup('ansible.builtin.pipe', 'command -v batcat || true') }}"
+    dest: "{{ local_bin_dir }}/bat"
+    state: link
+    force: true
+  when: lookup('ansible.builtin.pipe', 'command -v batcat || true') | length > 0
+  tags: [linux, packages]
+
+- name: Create fd symlink
+  ansible.builtin.file:
+    src: "{{ lookup('ansible.builtin.pipe', 'command -v fdfind || true') }}"
+    dest: "{{ local_bin_dir }}/fd"
+    state: link
+    force: true
+  when: lookup('ansible.builtin.pipe', 'command -v fdfind || true') | length > 0
+  tags: [linux, packages]
+
+- name: Add GitHub CLI key
+  become: true
+  ansible.builtin.shell: |
+    set -euo pipefail
+    mkdir -p /etc/apt/keyrings
+    curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+      | gpg --dearmor -o /etc/apt/keyrings/githubcli-archive-keyring.gpg
+    chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
+  args:
+    executable: /bin/bash
+    creates: /etc/apt/keyrings/githubcli-archive-keyring.gpg
+  when: ansible_facts.os_family == 'Debian'
+  tags: [linux, packages]
+
+- name: Add GitHub CLI apt repository
+  become: true
+  ansible.builtin.apt_repository:
+    repo: "deb [arch={{ linux_arch }} signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main"
+    filename: github-cli
+    state: present
+  when: ansible_facts.os_family == 'Debian'
+  tags: [linux, packages]
+
+- name: Add eza key
+  become: true
+  ansible.builtin.shell: |
+    set -euo pipefail
+    mkdir -p /etc/apt/keyrings
+    wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc \
+      | gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+    chmod 644 /etc/apt/keyrings/gierens.gpg
+  args:
+    executable: /bin/bash
+    creates: /etc/apt/keyrings/gierens.gpg
+  when: ansible_facts.os_family == 'Debian'
+  tags: [linux, packages]
+
+- name: Add eza apt repository
+  become: true
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main"
+    filename: gierens
+    state: present
+  when: ansible_facts.os_family == 'Debian'
+  tags: [linux, packages]
+
+- name: Install gh and eza
+  become: true
+  ansible.builtin.apt:
+    name:
+      - gh
+      - eza
+    state: present
+    update_cache: true
+  when: ansible_facts.os_family == 'Debian'
+  tags: [linux, packages]
+
+- name: Check Go installation
+  ansible.builtin.command: which go
+  register: linux_go_check
+  changed_when: false
+  failed_when: false
+  tags: [linux, go]
+
+- name: Fetch latest Go version
+  ansible.builtin.uri:
+    url: https://go.dev/VERSION?m=text
+    return_content: true
+  register: go_version_response
+  when: linux_go_check.rc != 0
+  tags: [linux, go]
+
+- name: Set Go version
+  ansible.builtin.set_fact:
+    go_version: "{{ (go_version_response.content.splitlines() | first | default('go1.23.0')) | regex_replace('^go', '') }}"
+  when: linux_go_check.rc != 0
+  tags: [linux, go]
+
+- name: Download Go tarball
+  ansible.builtin.get_url:
+    url: "https://go.dev/dl/go{{ go_version }}.linux-{{ linux_goarch }}.tar.gz"
+    dest: "/tmp/go{{ go_version }}.linux-{{ linux_goarch }}.tar.gz"
+    mode: "0644"
+  when: linux_go_check.rc != 0
+  tags: [linux, go]
+
+- name: Remove old Go installation
+  become: true
+  ansible.builtin.file:
+    path: /usr/local/go
+    state: absent
+  when: linux_go_check.rc != 0
+  tags: [linux, go]
+
+- name: Install Go tarball
+  become: true
+  ansible.builtin.unarchive:
+    src: "/tmp/go{{ go_version }}.linux-{{ linux_goarch }}.tar.gz"
+    dest: /usr/local
+    remote_src: true
+    creates: /usr/local/go/bin/go
+  when: linux_go_check.rc != 0
+  tags: [linux, go]
+
+- name: Download starship installer
+  ansible.builtin.get_url:
+    url: https://starship.rs/install.sh
+    dest: /tmp/starship-install.sh
+    mode: "0755"
+  tags: [linux, packages]
+
+- name: Install starship
+  become: true
+  ansible.builtin.command:
+    cmd: /tmp/starship-install.sh --yes
+    creates: /usr/local/bin/starship
+  tags: [linux, packages]
+
+- name: Download zoxide installer
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh
+    dest: /tmp/zoxide-install.sh
+    mode: "0755"
+  tags: [linux, packages]
+
+- name: Install zoxide
+  ansible.builtin.command:
+    cmd: /tmp/zoxide-install.sh
+    creates: "{{ local_bin_dir }}/zoxide"
+  tags: [linux, packages]
+
+- name: Download nvm installer
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/nvm-sh/nvm/HEAD/install.sh
+    dest: /tmp/nvm-install.sh
+    mode: "0755"
+  tags: [linux, node]
+
+- name: Install nvm
+  ansible.builtin.command:
+    cmd: bash /tmp/nvm-install.sh
+    creates: "{{ ansible_facts.env.HOME }}/.nvm/nvm.sh"
+  tags: [linux, node]
+
+- name: Download pnpm installer
+  ansible.builtin.get_url:
+    url: https://get.pnpm.io/install.sh
+    dest: /tmp/pnpm-install.sh
+    mode: "0755"
+  tags: [linux, node]
+
+- name: Install pnpm
+  ansible.builtin.command:
+    cmd: sh /tmp/pnpm-install.sh
+    creates: "{{ ansible_facts.env.HOME }}/.local/share/pnpm/pnpm"
+  tags: [linux, node]
+
+- name: Download uv installer
+  ansible.builtin.get_url:
+    url: https://astral.sh/uv/install.sh
+    dest: /tmp/uv-install.sh
+    mode: "0755"
+  tags: [linux, python]
+
+- name: Install uv
+  ansible.builtin.command:
+    cmd: sh /tmp/uv-install.sh
+    creates: "{{ local_bin_dir }}/uv"
+  tags: [linux, python]
+
+- name: Check AWS CLI installation
+  ansible.builtin.command: which aws
+  register: aws_check
+  changed_when: false
+  failed_when: false
+  tags: [linux, packages]
+
+- name: Download AWS CLI v2
+  ansible.builtin.unarchive:
+    src: "https://awscli.amazonaws.com/awscli-exe-linux-{{ linux_aws_arch }}.zip"
+    dest: /tmp
+    remote_src: true
+    creates: /tmp/aws/install
+  when: aws_check.rc != 0
+  tags: [linux, packages]
+
+- name: Install AWS CLI v2
+  become: true
+  ansible.builtin.command: /tmp/aws/install
+  changed_when: aws_check.rc != 0
+  when: aws_check.rc != 0
+  tags: [linux, packages]
+
+- name: Install GitHub release binaries
+  ansible.builtin.include_tasks: linux_github_binary.yml
+  loop: "{{ linux_github_binaries }}"
+  loop_control:
+    loop_var: github_binary
+  tags: [linux, packages]
+
+- name: Install direct binary downloads
+  ansible.builtin.include_tasks: linux_direct_binary.yml
+  loop: "{{ linux_direct_binaries }}"
+  loop_control:
+    loop_var: direct_binary
+  tags: [linux, packages]
+
+- name: Install pre-commit
+  ansible.builtin.pip:
+    name: pre-commit
+    executable: pip3
+    extra_args: --user
+  tags: [linux, python]
