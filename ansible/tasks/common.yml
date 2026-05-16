@@ -14,29 +14,20 @@
   when: lookup('ansible.builtin.pipe', 'command -v zsh') | length > 0
   tags: [shell]
 
-- name: Check Oh My Zsh install
-  ansible.builtin.stat:
-    path: "{{ ansible_facts.env.HOME }}/.oh-my-zsh"
-  register: omz_dir
+- name: Ensure manual zsh plugin directory exists
+  ansible.builtin.file:
+    path: "{{ zsh_plugin_dir }}"
+    state: directory
+    mode: "0755"
   tags: [shell]
 
-- name: Install Oh My Zsh
-  ansible.builtin.shell: |
-    set -euo pipefail
-    RUNZSH=no CHSH=no /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  args:
-    executable: /bin/bash
-    creates: "{{ ansible_facts.env.HOME }}/.oh-my-zsh"
-  when: not omz_dir.stat.exists
-  tags: [shell]
-
-- name: Clone Oh My Zsh custom plugins
+- name: Clone manual zsh plugins
   ansible.builtin.git:
     repo: "{{ item.repo }}"
-    dest: "{{ ansible_facts.env.HOME }}/.oh-my-zsh/custom/plugins/{{ item.name }}"
+    dest: "{{ zsh_plugin_dir }}/{{ item.name }}"
     version: master
     update: false
-  loop: "{{ omz_plugins }}"
+  loop: "{{ zsh_plugins }}"
   tags: [shell]
 
 - name: Find plain-file stow conflicts

@@ -3,6 +3,7 @@
 
 dotfiles_dir: "{{ playbook_dir | dirname }}"
 local_bin_dir: "{{ ansible_facts.env.HOME }}/.local/bin"
+zsh_plugin_dir: "{{ ansible_facts.env.HOME }}/.local/share/zsh/plugins"
 
 stow_packages:
   - agents
@@ -28,7 +29,7 @@ stow_conflict_files:
   - "{{ ansible_facts.env.HOME }}/.homebrew.zshrc"
   - "{{ ansible_facts.env.HOME }}/.gdt.zshrc"
 
-omz_plugins:
+zsh_plugins:
   - name: zsh-autosuggestions
     repo: https://github.com/zsh-users/zsh-autosuggestions
   - name: zsh-syntax-highlighting
