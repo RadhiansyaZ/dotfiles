@@ -11,6 +11,9 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
+# Docker CLI completions must be on fpath before compinit runs.
+fpath=("$HOME/.docker/completions" $fpath)
+
 ## Load completions
 autoload -Uz compinit && compinit
 
@@ -84,10 +87,6 @@ export XDG_STATE_HOME="$HOME/.local/state"
 
 export EDITOR="zed --wait"
 
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=("$HOME/.docker/completions" $fpath)
-# End of Docker CLI completions
-
 export PATH=$PATH:/usr/local/bin/python3
 if is_macos; then
   export PATH=/Library/Frameworks/Python.framework/Versions/3.13/bin:$PATH
@@ -116,9 +115,28 @@ eval "$(fzf --zsh)"
 eval "$(zoxide init zsh --cmd cd)"
 eval "$(starship init zsh)"
 
+ZSH_PLUGIN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins"
+
+if [[ -f "$ZSH_PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
+  source "$ZSH_PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh"
+fi
+
+if [[ -f "$ZSH_PLUGIN_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
+  source "$ZSH_PLUGIN_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
+
 # >>> forge initialize >>>
 # !! Contents within this block are managed by 'forge zsh setup' !!
 # !! Do not edit manually - changes will be overwritten !!
+
+# Add required zsh plugins if not already present
+# if [[ ! " ${plugins[@]} " =~ " zsh-autosuggestions " ]]; then
+#     plugins+=(zsh-autosuggestions)
+# fi
+# if [[ ! " ${plugins[@]} " =~ " zsh-syntax-highlighting " ]]; then
+#     plugins+=(zsh-syntax-highlighting)
+# fi
+# ^ We are not using ohmyzsh, so we commented out the code above.
 
 # Load forge shell plugin (commands, completions, keybindings) if not already loaded
 if [[ -z "$_FORGE_PLUGIN_LOADED" ]]; then
@@ -130,13 +148,3 @@ if [[ -z "$_FORGE_THEME_LOADED" ]]; then
     eval "$(forge zsh theme)"
 fi
 # <<< forge initialize <<<
-
-ZSH_PLUGIN_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins"
-
-if [[ -f "$ZSH_PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
-  source "$ZSH_PLUGIN_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh"
-fi
-
-if [[ -f "$ZSH_PLUGIN_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
-  source "$ZSH_PLUGIN_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-fi
