@@ -26,8 +26,8 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 ## Keybindings
-# bindkey -e
-bindkey -v
+bindkey -e
+# bindkey -v
 
 # CLI Alias 
 
