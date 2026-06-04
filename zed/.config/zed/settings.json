@@ -14,6 +14,9 @@
     "dock": "right",
   },
   "agent_servers": {
+    "pi-acp": {
+      "type": "registry"
+    },
     "github-copilot-cli": {
       "type": "registry",
     },
@@ -52,7 +55,8 @@
       {
         "provider": "copilot_chat",
         "model": "claude-sonnet-4.6",
-        "enable_thinking": false
+        "enable_thinking": true,
+        "effort": "medium"
       },
       {
         "provider": "copilot_chat",
@@ -75,7 +79,7 @@
       "effort": "high",
       "enable_thinking": false,
       "provider": "copilot_chat",
-      "model": "claude-sonnet-4.6",
+      "model": "gpt-5.4",
     },
     "model_parameters": [],
   },
