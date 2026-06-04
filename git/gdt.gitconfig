@@ -2,7 +2,7 @@
 	email = 136307393+radhiansya-gdt@users.noreply.github.com
 	name = Radhiansya
 
-[url "ssh://git@github-gdt"]
+[url "ssh://git@github-gdt/"]
 	insteadOf = https://github.com/
 
 [url "ssh://git@github-gdt/radhiansya-gdt/*"]

@@ -7,6 +7,9 @@
 [includeIf "gitdir:~/Codes/personal/"]
   path = ~/dotfiles/git/personal.gitconfig
 
+[url "ssh://git@github-gdt/good-doctor-technology/"]
+  insteadOf = https://github.com/good-doctor-technology/
+
 [core]
   editor = zed --wait
   excludesfile = ~/.gitignore

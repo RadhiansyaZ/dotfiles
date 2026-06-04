@@ -19,8 +19,8 @@
 **.idea/
 **.zed/
 
-# AI 
-.claude
+# AI
+.claude/**.local.**
 .gitnexus
 .mcp.json
 AGENTS.local.md
