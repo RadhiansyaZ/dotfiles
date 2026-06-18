@@ -61,8 +61,8 @@
       {
         "provider": "copilot_chat",
         "model": "gpt-5.4",
-        "enable_thinking": false,
-        "effort": "high"
+        "enable_thinking": true,
+        "effort": "medium"
       },
       {
         "provider": "copilot_chat",
@@ -76,8 +76,8 @@
     },
     "default_profile": "write",
     "default_model": {
-      "effort": "high",
-      "enable_thinking": false,
+      "effort": "medium",
+      "enable_thinking": true,
       "provider": "copilot_chat",
       "model": "gpt-5.4",
     },
