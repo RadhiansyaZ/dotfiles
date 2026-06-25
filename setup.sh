@@ -22,6 +22,12 @@ OS_NAME="$(uname)"
 case "$OS_NAME" in
     Darwin|Linux)
         ;;
+    MINGW*|MSYS*|CYGWIN*)
+        print_error "Native Windows detected (running under $OS_NAME)."
+        print_error "Use the PowerShell bootstrap instead: open an elevated PowerShell and run:"
+        print_error "    .\\setup.ps1"
+        exit 1
+        ;;
     *)
         print_error "Unsupported operating system: $OS_NAME"
         print_error "Supported operating systems: macOS and Debian/Ubuntu Linux"
@@ -87,6 +93,13 @@ fi
 if [[ -z "$ANSIBLE_PLAYBOOK_BIN" ]]; then
     print_error "ansible-playbook was not found after bootstrap"
     exit 1
+fi
+
+REQUIREMENTS="$ANSIBLE_DIR/requirements.yml"
+ANSIBLE_GALAXY_BIN="$(dirname "$ANSIBLE_PLAYBOOK_BIN")/ansible-galaxy"
+if [[ -f "$REQUIREMENTS" && -x "$ANSIBLE_GALAXY_BIN" ]]; then
+    print_step "Installing Ansible collections"
+    "$ANSIBLE_GALAXY_BIN" collection install -r "$REQUIREMENTS"
 fi
 
 print_step "Running Ansible dotfiles playbook"

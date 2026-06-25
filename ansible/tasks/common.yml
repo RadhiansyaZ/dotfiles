@@ -6,6 +6,19 @@
     mode: "0755"
   tags: [common]
 
+- name: Detect WSL
+  ansible.builtin.set_fact:
+    is_wsl: "{{ 'microsoft' in (ansible_facts.kernel | default('') | lower) }}"
+  tags: [always]
+
+- name: Compute effective stow packages
+  # On WSL, ssh config is deployed natively (0600 real file) instead of stowed off /mnt/c,
+  # where DrvFs reports world-writable perms that OpenSSH rejects. Native Linux/macOS keep
+  # stowing it as before.
+  ansible.builtin.set_fact:
+    effective_stow_packages: "{{ stow_packages | difference(['ssh']) if is_wsl else stow_packages }}"
+  tags: [stow]
+
 - name: Ensure default shell is zsh
   become: true
   ansible.builtin.user:
@@ -51,16 +64,44 @@
 - name: Run stow dry-run validation
   ansible.builtin.command:
     argv: "{{ stow_common_args + ['-nv', '--restow', item] }}"
-  loop: "{{ stow_packages }}"
+  loop: "{{ effective_stow_packages }}"
   changed_when: false
   tags: [stow]
 
 - name: Stow dotfile packages
   ansible.builtin.command:
     argv: "{{ stow_common_args + ['--restow', item] }}"
-  loop: "{{ stow_packages }}"
+  loop: "{{ effective_stow_packages }}"
   changed_when: true
   tags: [stow]
+
+- name: Deploy ssh config natively on WSL
+  # WSL only: install ~/.ssh/config as a real 0600 file sourced from the repo, replacing any
+  # prior /mnt/c symlink. Keeps WSL and Windows ssh configs independent — the Windows play
+  # still deploys its own. "if any": skip silently when the repo has no ssh config.
+  when: is_wsl
+  block:
+    - name: Check repo ssh config exists
+      ansible.builtin.stat:
+        path: "{{ dotfiles_dir }}/ssh/.ssh/config"
+      register: wsl_ssh_config_src
+
+    - name: Ensure ~/.ssh exists (0700)
+      ansible.builtin.file:
+        path: "{{ ansible_facts.env.HOME }}/.ssh"
+        state: directory
+        mode: "0700"
+      when: wsl_ssh_config_src.stat.exists
+
+    - name: Install ssh config as a native 0600 file
+      ansible.builtin.copy:
+        src: "{{ dotfiles_dir }}/ssh/.ssh/config"
+        dest: "{{ ansible_facts.env.HOME }}/.ssh/config"
+        mode: "0600"
+        remote_src: true
+        follow: false
+      when: wsl_ssh_config_src.stat.exists
+  tags: [stow, ssh]
 
 - name: Select font directory
   ansible.builtin.set_fact:
@@ -127,5 +168,8 @@
   loop: "{{ go_tools }}"
   args:
     creates: "{{ ansible_facts.env.HOME }}/go/bin/{{ item.binary }}"
-  when: lookup('ansible.builtin.pipe', 'command -v go || true') | length > 0
+  # Go was just installed to /usr/local/go in the Linux play and may not be on the controller
+  # PATH yet, so also probe that known location — otherwise these tools are silently skipped
+  # on a fresh host. (The task itself prepends /usr/local/go/bin to PATH via `environment`.)
+  when: lookup('ansible.builtin.pipe', 'command -v go 2>/dev/null || (test -x /usr/local/go/bin/go && echo found) || true') | length > 0
   tags: [go]

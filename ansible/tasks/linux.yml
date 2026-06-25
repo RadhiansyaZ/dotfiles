@@ -24,6 +24,15 @@
   when: ansible_facts.os_family == 'Debian'
   tags: [linux, packages]
 
+- name: Ensure local bin directory exists
+  # Created here (not only in common.yml, which runs later) because the symlink tasks below
+  # write into it. On a fresh host ~/.local/bin does not pre-exist, so this must come first.
+  ansible.builtin.file:
+    path: "{{ local_bin_dir }}"
+    state: directory
+    mode: "0755"
+  tags: [linux, packages]
+
 - name: Create bat symlink
   ansible.builtin.file:
     src: "{{ lookup('ansible.builtin.pipe', 'command -v batcat || true') }}"
@@ -250,8 +259,12 @@
   tags: [linux, packages]
 
 - name: Install pre-commit
+  # Debian 12+/Ubuntu 24.04+ mark the system Python as externally managed (PEP 668), so a
+  # plain `pip install --user` fails with "externally-managed-environment".
+  # --break-system-packages bypasses that guard; combined with --user the install still lands
+  # in ~/.local and never touches system site-packages.
   ansible.builtin.pip:
     name: pre-commit
     executable: pip3
-    extra_args: --user
+    extra_args: --user --break-system-packages
   tags: [linux, python]

@@ -1,0 +1,45 @@
+---
+# Variables for the native Windows host (group `windows`).
+# Connection vars (ansible_host/user/etc.) are injected at runtime by the localhost play's
+# add_host task, sourced from the DOTFILES_WIN_* env vars that setup.ps1 exports.
+#
+# `dotfiles_win_dir` is the Windows path of this repo (e.g. C:\Users\me\dotfiles), also set
+# via add_host. Reused below to build native symlink sources.
+
+windows_winget_manifest: "{{ dotfiles_win_dir }}\\windows\\packages\\packages.winget.json"
+
+# PowerShell modules that are not built in.
+windows_ps_modules:
+  - PSFzf
+
+# Config deployment map — native Windows symlinks (Stow replacement).
+# `dest` may use %ENV% tokens; they are expanded on the Windows host.
+windows_symlinks:
+  - name: powershell-profile
+    src: "{{ dotfiles_win_dir }}\\windows\\powershell\\Microsoft.PowerShell_profile.ps1"
+    dest: "%USERPROFILE%\\Documents\\PowerShell\\Microsoft.PowerShell_profile.ps1"
+    type: file
+  - name: starship
+    src: "{{ dotfiles_win_dir }}\\starship\\starship.toml"
+    dest: "%USERPROFILE%\\.config\\starship.toml"
+    type: file
+  - name: nvim
+    src: "{{ dotfiles_win_dir }}\\nvim\\.config\\nvim"
+    dest: "%LOCALAPPDATA%\\nvim"
+    type: dir
+  - name: gitconfig
+    src: "{{ dotfiles_win_dir }}\\git\\.gitconfig"
+    dest: "%USERPROFILE%\\.gitconfig"
+    type: file
+  - name: gitignore
+    src: "{{ dotfiles_win_dir }}\\git\\.gitignore"
+    dest: "%USERPROFILE%\\.gitignore"
+    type: file
+  - name: ssh-config
+    src: "{{ dotfiles_win_dir }}\\ssh\\.ssh\\config"
+    dest: "%USERPROFILE%\\.ssh\\config"
+    type: file
+  - name: zed-settings
+    src: "{{ dotfiles_win_dir }}\\zed\\.config\\zed\\settings.json"
+    dest: "%APPDATA%\\Zed\\settings.json"
+    type: file

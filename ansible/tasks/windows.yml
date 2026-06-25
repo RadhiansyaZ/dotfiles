@@ -1,0 +1,124 @@
+---
+# Provision the native Windows host (runs over SSH from the WSL controller).
+# Requires collections: ansible.windows, community.windows.
+
+# --------------------------------------------------------------------------- packages
+- name: Install winget packages from manifest
+  ansible.windows.win_shell: >-
+    winget import --import-file "{{ windows_winget_manifest }}"
+    --accept-package-agreements --accept-source-agreements --ignore-versions --no-upgrade
+  register: winget_import
+  changed_when: "'Successfully installed' in winget_import.stdout"
+  # winget returns non-zero when some packages are already installed / not upgraded; tolerate it.
+  failed_when: false
+  tags: [windows, packages]
+
+# --------------------------------------------------------------------------- PS modules
+- name: Ensure NuGet package provider (for PSGallery installs)
+  ansible.windows.win_shell: |
+    if (-not (Get-PackageProvider -Name NuGet -ErrorAction SilentlyContinue)) {
+      Install-PackageProvider -Name NuGet -Force -Scope CurrentUser | Out-Null
+      Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+    }
+  changed_when: false
+  tags: [windows, shell]
+
+- name: Install PowerShell modules
+  # Use Install-Module directly instead of community.windows.win_psmodule: under SSH the modules
+  # run in pwsh 7, which loads the legacy PowerShellGet 1.0.0.1 from the WindowsPowerShell module
+  # path. win_psmodule passes -AcceptLicense, which that old PowerShellGet does not support. A
+  # plain Install-Module works with old or new PowerShellGet; -Force bypasses the trust prompt.
+  ansible.windows.win_shell: |
+    $ErrorActionPreference = 'Stop'
+    if (-not (Get-Module -ListAvailable -Name '{{ item }}')) {
+      Install-Module -Name '{{ item }}' -Scope CurrentUser -Force
+      Write-Output 'CHANGED'
+    } else {
+      Write-Output 'OK'
+    }
+  register: win_psmodule_result
+  changed_when: "'CHANGED' in win_psmodule_result.stdout"
+  loop: "{{ windows_ps_modules }}"
+  tags: [windows, shell]
+
+# --------------------------------------------------------------------------- fonts
+- name: Ensure temp font download directory
+  ansible.windows.win_file:
+    path: C:\Windows\Temp\nerdfonts
+    state: directory
+  tags: [windows, fonts]
+
+- name: Download Nerd Font archives
+  ansible.windows.win_get_url:
+    url: "https://github.com/ryanoasis/nerd-fonts/releases/download/{{ nerd_fonts_version }}/{{ item }}.zip"
+    dest: "C:\\Windows\\Temp\\nerdfonts\\{{ item }}.zip"
+  loop: "{{ nerd_fonts }}"
+  tags: [windows, fonts]
+
+- name: Extract Nerd Font archives
+  community.windows.win_unzip:
+    src: "C:\\Windows\\Temp\\nerdfonts\\{{ item }}.zip"
+    dest: "C:\\Windows\\Temp\\nerdfonts\\{{ item }}"
+    creates: "C:\\Windows\\Temp\\nerdfonts\\{{ item }}"
+  loop: "{{ nerd_fonts }}"
+  tags: [windows, fonts]
+
+- name: Install Nerd Fonts (per-user) and register them
+  ansible.windows.win_shell: |
+    $ErrorActionPreference = 'Stop'
+    $dest = "$env:LOCALAPPDATA\Microsoft\Windows\Fonts"
+    New-Item -ItemType Directory -Force -Path $dest | Out-Null
+    $regPath = 'HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Fonts'
+    $changed = $false
+    Get-ChildItem -Path "C:\Windows\Temp\nerdfonts\{{ item }}" -Recurse -Include *.ttf,*.otf |
+      Where-Object { $_.Name -notlike '._*' } | ForEach-Object {
+        $target = Join-Path $dest $_.Name
+        if (-not (Test-Path $target)) {
+          Copy-Item $_.FullName $target -Force
+          New-ItemProperty -Path $regPath -Name ("$($_.BaseName) (TrueType)") -Value $_.Name -PropertyType String -Force | Out-Null
+          $changed = $true
+        }
+      }
+    if ($changed) { Write-Output 'CHANGED' } else { Write-Output 'OK' }
+  register: font_install
+  changed_when: "'CHANGED' in font_install.stdout"
+  loop: "{{ nerd_fonts }}"
+  tags: [windows, fonts]
+
+# --------------------------------------------------------------------------- config symlinks
+- name: Deploy config symlinks (Stow replacement)
+  ansible.windows.win_shell: |
+    $ErrorActionPreference = 'Stop'
+    $src  = "{{ item.src }}"
+    $dest = [Environment]::ExpandEnvironmentVariables("{{ item.dest }}")
+    if (-not (Test-Path $src)) { Write-Output "SKIP-missing-src"; return }
+    $parent = Split-Path -Parent $dest
+    if (-not (Test-Path $parent)) { New-Item -ItemType Directory -Path $parent -Force | Out-Null }
+    $needsLink = $true
+    if (Test-Path $dest) {
+      $li = Get-Item $dest -Force
+      if ($li.LinkType -eq 'SymbolicLink' -and ($li.Target -contains $src)) { $needsLink = $false }
+    }
+    if ($needsLink) {
+      if (Test-Path $dest) { Remove-Item $dest -Recurse -Force }
+      New-Item -ItemType SymbolicLink -Path $dest -Target $src | Out-Null
+      Write-Output 'CHANGED'
+    } else { Write-Output 'OK' }
+  register: symlink_result
+  changed_when: "'CHANGED' in symlink_result.stdout"
+  loop: "{{ windows_symlinks }}"
+  loop_control:
+    label: "{{ item.name }}"
+  tags: [windows, stow]
+
+# --------------------------------------------------------------------------- verify
+- name: Verify critical Windows commands
+  ansible.windows.win_shell: "{{ item }} --version"
+  loop:
+    - git
+    - nvim
+    - rg
+    - starship
+  changed_when: false
+  failed_when: false
+  tags: [windows, verify]

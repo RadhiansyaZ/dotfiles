@@ -1,0 +1,40 @@
+{
+  "$schema": "https://aka.ms/winget-packages.schema.2.0.json",
+  "WinGetVersion": "1.7.0",
+  "Sources": [
+    {
+      "SourceDetails": {
+        "Argument": "https://cdn.winget.microsoft.com/cache",
+        "Identifier": "Microsoft.Winget.Source_8wekyb3d8bbwe",
+        "Name": "winget",
+        "Type": "Microsoft.PreIndexed.Package"
+      },
+      "Packages": [
+        { "PackageIdentifier": "Microsoft.PowerShell" },
+        { "PackageIdentifier": "Microsoft.WindowsTerminal" },
+        { "PackageIdentifier": "Git.Git" },
+        { "PackageIdentifier": "GitHub.cli" },
+        { "PackageIdentifier": "Neovim.Neovim" },
+        { "PackageIdentifier": "BurntSushi.ripgrep.MSVC" },
+        { "PackageIdentifier": "sharkdp.fd" },
+        { "PackageIdentifier": "sharkdp.bat" },
+        { "PackageIdentifier": "junegunn.fzf" },
+        { "PackageIdentifier": "eza-community.eza" },
+        { "PackageIdentifier": "jqlang.jq" },
+        { "PackageIdentifier": "ajeetdsouza.zoxide" },
+        { "PackageIdentifier": "Starship.Starship" },
+        { "PackageIdentifier": "JesseDuffield.lazygit" },
+        { "PackageIdentifier": "GoLang.Go" },
+        { "PackageIdentifier": "Python.Python.3.12" },
+        { "PackageIdentifier": "astral-sh.uv" },
+        { "PackageIdentifier": "CoreyButler.NVMforWindows" },
+        { "PackageIdentifier": "pnpm.pnpm" },
+        { "PackageIdentifier": "Amazon.AWSCLI" },
+        { "PackageIdentifier": "DBeaver.DBeaver.Community" },
+        { "PackageIdentifier": "Bruno.Bruno" },
+        { "PackageIdentifier": "Hashicorp.Terraform" },
+        { "PackageIdentifier": "Zed.Zed" }
+      ]
+    }
+  ]
+}

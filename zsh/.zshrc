@@ -20,6 +20,7 @@ autoload -Uz compinit && compinit
 # Platform helpers
 is_macos() { [[ "$(uname)" == "Darwin" ]]; }
 is_linux() { [[ "$(uname)" == "Linux" ]]; }
+is_wsl()   { [[ -n "${WSL_DISTRO_NAME:-}" ]] || grep -qi microsoft /proc/version 2>/dev/null; }
 
 ## Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
@@ -32,7 +33,7 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 bindkey -e
 # bindkey -v
 
-# CLI Alias 
+# CLI Alias
 
 ## Rust utility: bat eza fd fzf ripgrep tree zoxide
 alias cat="bat --style=plain"
@@ -50,6 +51,8 @@ alias gcleanup="git branch | egrep -v \"(^\*|master|main)\" | xargs git branch -
 copy_to_clipboard() {
   if is_macos && command -v pbcopy >/dev/null 2>&1; then
     pbcopy
+  elif is_wsl && command -v clip.exe >/dev/null 2>&1; then
+    clip.exe
   elif is_linux && command -v xclip >/dev/null 2>&1; then
     xclip -selection clipboard
   else
@@ -85,7 +88,12 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
-export EDITOR="zed --wait"
+# Prefer zed when present (keeps prior behavior); fall back to nvim on hosts without zed (e.g. WSL/Linux).
+if command -v zed >/dev/null 2>&1; then
+  export EDITOR="zed --wait"
+elif command -v nvim >/dev/null 2>&1; then
+  export EDITOR="nvim"
+fi
 
 export PATH=$PATH:/usr/local/bin/python3
 if is_macos; then
@@ -148,3 +156,11 @@ fi
 #     eval "$(forge zsh theme)"
 # fi
 # <<< forge initialize <<<
+
+# pnpm
+export PNPM_HOME="/home/RadhiansyaPutra/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end

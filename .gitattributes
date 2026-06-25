@@ -1,1 +1,22 @@
-postgresql/** filter=git-crypt diff=git-crypt
+# Line-ending policy: this repo is Unix-first and the same checkout is used from
+# WSL (via /mnt/c), so all text files are LF in the working tree by default.
+# .gitattributes is authoritative; it overrides core.autocrlf on every platform.
+* text=auto eol=lf
+
+# Windows-native scripts must stay CRLF.
+*.ps1   text eol=crlf
+*.psm1  text eol=crlf
+*.psd1  text eol=crlf
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+
+# Shell / rc files explicitly LF (belt-and-suspenders, incl. extensionless rc).
+*.sh    text eol=lf
+*.bash  text eol=lf
+*.zsh   text eol=lf
+.zshrc  text eol=lf
+.bashrc text eol=lf
+.profile text eol=lf
+
+# git-crypt encrypted secrets — keep as binary, no EOL/text normalization.
+postgresql/** filter=git-crypt diff=git-crypt -text

@@ -86,7 +86,6 @@ linux_cli_packages:
   - jq
   - tree
   - htop
-  - neovim
   - postgresql-client
   - pgformatter
   - sqitch
@@ -99,6 +98,10 @@ linux_cli_packages:
   - zsh
 
 linux_github_binaries:
+  - name: nvim
+    repo: neovim/neovim
+    asset_pattern: "nvim-linux-{{ linux_nvim_arch }}\\.tar\\.gz"
+    skip: false
   - name: lazygit
     repo: jesseduffield/lazygit
     asset_pattern: "lazygit_.*_Linux_{{ linux_arch }}\\.tar\\.gz"
@@ -127,5 +130,3 @@ linux_github_binaries:
 linux_direct_binaries:
   - name: dbmate
     url: "https://github.com/amacneil/dbmate/releases/latest/download/dbmate-linux-{{ linux_arch }}"
-  - name: opencode
-    url: "https://github.com/sst/opencode/releases/latest/download/opencode-linux-{{ linux_arch }}"
