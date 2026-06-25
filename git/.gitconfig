@@ -10,6 +10,9 @@
 [url "ssh://git@github-gdt/good-doctor-technology/"]
   insteadOf = https://github.com/good-doctor-technology/
 
+[includeIf "gitdir:~/aetosky/"]
+  path = ~/dotfiles/git/aetosky.gitconfig
+
 [core]
   editor = zed --wait
   excludesfile = ~/.gitignore
