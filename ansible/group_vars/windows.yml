@@ -42,7 +42,10 @@ windows_symlinks:
     src: "{{ dotfiles_win_dir }}\\ssh\\.ssh\\config"
     dest: "%USERPROFILE%\\.ssh\\config"
     type: file
-  - name: zed-settings
-    src: "{{ dotfiles_win_dir }}\\zed\\.config\\zed\\settings.json"
-    dest: "%APPDATA%\\Zed\\settings.json"
-    type: file
+
+# Zed is the one config that is NOT symlinked. Zed's "zed: open settings" command-palette
+# action silently fails when settings.json is a symlink to a \\wsl.localhost UNC target, so we
+# keep a real local copy and re-sync it from the WSL repo with windows/sync-zed-settings.ps1.
+# Sourced from the WSL repo over the \\wsl.localhost share (never the Windows repo copy).
+wsl_distro: Debian
+wsl_repo_unc: "\\\\wsl.localhost\\{{ wsl_distro }}{{ dotfiles_dir | replace('/', '\\') }}"

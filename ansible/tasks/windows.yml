@@ -176,6 +176,17 @@
     label: "{{ item.name }}"
   tags: [windows, stow]
 
+# --------------------------------------------------------------------------- zed settings (copy)
+# Zed is deliberately NOT symlinked: its "open settings" palette action breaks on a symlink to
+# a \\wsl.localhost target. Run the repo's sync script (from the WSL repo over the UNC share) to
+# drop a real local copy in %APPDATA%\Zed instead.
+- name: Sync Zed settings from the WSL repo (local copy; symlink breaks Zed's settings UI)
+  ansible.windows.win_shell: |
+    & "{{ wsl_repo_unc }}\windows\sync-zed-settings.ps1" -Source "{{ wsl_repo_unc }}\zed\.config\zed\settings.json"
+  register: zed_sync
+  changed_when: "'CHANGED' in zed_sync.stdout"
+  tags: [windows, stow]
+
 # --------------------------------------------------------------------------- verify
 # Mirrors windows/setup-windows.ps1: refresh PATH from the registry (so binaries installed
 # this run are resolvable in this task's shell), then check each shell tool and report any

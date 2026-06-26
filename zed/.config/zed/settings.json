@@ -7,6 +7,31 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "ssh_connections": [
+    {
+      "host": "gitlab.aetosky.com",
+      "args": [],
+      "projects": [],
+    },
+  ],
+  "wsl_connections": [
+    {
+      "distro_name": "Debian",
+      "user": null,
+      "projects": [
+        {
+          "paths": ["/home/RadhiansyaPutra"],
+        },
+        {
+          "paths": ["/home/RadhiansyaPutra/aetosky/specter-prototype"],
+        },
+        {
+          "paths": ["/home/RadhiansyaPutra/dotfiles"],
+        },
+      ],
+    },
+  ],
+  "cli_default_open_behavior": "existing_window",
   "outline_panel": {
     "dock": "right",
   },
@@ -24,6 +49,9 @@
       "type": "registry",
     },
     "codex-acp": {
+      "type": "registry",
+    },
+    "claude-acp": {
       "type": "registry",
     },
   },
@@ -182,6 +210,7 @@
   "telemetry": {
     "diagnostics": true,
     "metrics": false,
+    "anthropic_retention": false,
   },
   "terminal": {
     "font_size": 12,

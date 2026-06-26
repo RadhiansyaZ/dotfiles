@@ -81,6 +81,19 @@ function jqsanitize {
     $input | jq -R . | jq -s . | jq -r 'join("")'
 }
 
+# Re-sync Zed's settings from the WSL dotfiles repo. Zed can't use a symlinked settings.json
+# (its "open settings" palette action breaks on a \\wsl.localhost symlink), so it gets a real
+# local copy that windows/sync-zed-settings.ps1 refreshes. One-way: WSL repo -> %APPDATA%\Zed.
+# Run this after changing the repo's Zed settings. Pass-through args override -Source / -Dest.
+function Sync-ZedSettings {
+    $syncScript = "\\wsl.localhost\Debian\home\RadhiansyaPutra\dotfiles\windows\sync-zed-settings.ps1"
+    if (-not (Test-Path -LiteralPath $syncScript)) {
+        Write-Warning "Zed sync script not reachable: $syncScript (is the WSL distro running?)"
+        return
+    }
+    & $syncScript @args
+}
+
 # ---------------------------------------------------------------------------
 # Cached tool initialisation
 # `starship init` / `zoxide init` print a deterministic script that only
