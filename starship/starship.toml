@@ -2,6 +2,10 @@
 # Default lookup path is $XDG_CONFIG_HOME/starship.toml (~/.config/starship.toml) on every
 # platform, so this single file is used by zsh (macOS/Linux/WSL) and PowerShell (Windows).
 # Native Windows symlinks this to %USERPROFILE%\.config\starship.toml.
+#
+# Host and OS are surfaced on every prompt so the active environment is always obvious.
+# The `os` module renders the distro glyph inside WSL but the Windows glyph on native
+# Windows, so WSL and native Windows sessions stay visually distinct.
 
 "$schema" = 'https://starship.rs/config-schema.json'
 
@@ -9,6 +13,8 @@ add_newline = true
 command_timeout = 1000
 
 format = """
+$os\
+$hostname\
 $directory\
 $git_branch\
 $git_status\
@@ -22,6 +28,28 @@ $character"""
 [character]
 success_symbol = "[❯](bold green)"
 error_symbol = "[❯](bold red)"
+
+# OS glyph — disabled by default in starship, enabled here so the platform is always shown.
+[os]
+disabled = false
+format = "[$symbol]($style) "
+style = "bold blue"
+
+[os.symbols]
+Macos = ""
+Linux = ""
+Debian = ""
+Ubuntu = ""
+Arch = ""
+Fedora = ""
+Alpine = ""
+Windows = ""
+
+# Always show the host (not just over SSH) so each environment is identifiable.
+[hostname]
+ssh_only = false
+format = "[$hostname]($style) "
+style = "bold green"
 
 [directory]
 truncation_length = 3

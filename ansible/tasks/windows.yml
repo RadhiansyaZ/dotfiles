@@ -20,11 +20,17 @@
 - name: Install Node.js LTS via nvm-windows
   ansible.windows.win_shell: |
     $ErrorActionPreference = 'Stop'
+    # Refresh PATH from the registry: nvm-windows was just installed by winget, but the SSH
+    # session's PATH was captured at connect time and predates it. Read both scopes (MSI
+    # installs write Machine PATH; portable packages write User PATH).
+    $env:PATH = (@(
+      [Environment]::GetEnvironmentVariable('Path', 'Machine'),
+      [Environment]::GetEnvironmentVariable('Path', 'User')
+    ) | Where-Object { $_ }) -join ';'
     nvm install lts
     nvm use lts
   register: nvm_win_lts
   changed_when: "'is already installed' not in nvm_win_lts.stdout"
-  # nvm-windows may not be on PATH until a fresh session after the winget install; tolerate that.
   failed_when: false
   tags: [windows, packages]
 
@@ -171,13 +177,28 @@
   tags: [windows, stow]
 
 # --------------------------------------------------------------------------- verify
-- name: Verify critical Windows commands
-  ansible.windows.win_shell: "{{ item }} --version"
-  loop:
-    - git
-    - nvim
-    - rg
-    - starship
+# Mirrors windows/setup-windows.ps1: refresh PATH from the registry (so binaries installed
+# this run are resolvable in this task's shell), then check each shell tool and report any
+# that are missing instead of failing the play.
+- name: Verify shell tools are on PATH
+  ansible.windows.win_shell: |
+    $env:PATH = (@(
+      [Environment]::GetEnvironmentVariable('Path', 'Machine'),
+      [Environment]::GetEnvironmentVariable('Path', 'User')
+    ) | Where-Object { $_ }) -join ';'
+    $tools = 'starship','fzf','zoxide','git','nvim','rg','eza','bat'
+    $missing = @()
+    foreach ($t in $tools) {
+      if (Get-Command $t -ErrorAction SilentlyContinue) { Write-Output "OK   $t" }
+      else { Write-Output "MISS $t"; $missing += $t }
+    }
+    if ($missing.Count -gt 0) { Write-Output ("MISSING: " + ($missing -join ', ')) }
+  register: verify_tools
   changed_when: false
   failed_when: false
+  tags: [windows, verify]
+
+- name: Show tool verification result
+  ansible.builtin.debug:
+    var: verify_tools.stdout_lines
   tags: [windows, verify]

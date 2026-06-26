@@ -30,19 +30,40 @@ Windows side (winget packages, config symlinks, PowerShell profile, fonts).
 > (`windows/powershell/Microsoft.PowerShell_profile.ps1`) mirroring `zsh/.zshrc`.
 > tmux and Ghostty have no native Windows support — use Windows Terminal + WSL for those.
 
-### Windows symlinks (standalone, no Ansible)
+### Windows setup (standalone, no Ansible)
 
-After WSL and dotfiles are set up, run this from a normal PowerShell with Developer Mode
-enabled (or from an elevated shell) to wire up Windows config files:
+Once WSL and the dotfiles repo are in place, run this to install all winget packages and
+wire up the Windows config files. Run it from **any** PowerShell — it self-elevates via UAC:
 
 ```powershell
 Set-ExecutionPolicy -Scope Process Bypass -Force
 .\windows\setup-windows.ps1
 ```
 
-This installs winget packages and creates symlinks from `%USERPROFILE%` into the WSL
-dotfiles repo via `\\wsl$\<distro>`. Pass `-SkipPackages` to skip winget on re-runs.
-Pass `-Distro Ubuntu` if your distro isn't Debian.
+Approve the UAC prompt. An elevated window opens and stays open so you can read the output.
+The script:
+
+1. **Installs winget packages** from `windows/packages/packages.winget.json`. Elevation is
+   required because some packages are machine-scoped MSIs (e.g. `Starship.Starship`).
+2. **Refreshes the session PATH** from the registry, so tools installed this run — both MSI
+   (`C:\Program Files\…`, Machine PATH) and portable (`…\WinGet\Links`, User PATH) — are
+   immediately resolvable without opening a new shell.
+3. **Symlinks Windows config** from `%USERPROFILE%` into the WSL dotfiles repo via
+   `\\wsl$\<distro>` — including the PowerShell 7 profile (`Documents\PowerShell\`), which is
+   what loads starship, zoxide, and the aliases. Without it, the prompt stays bare.
+4. **Verifies** that the key shell tools (`starship`, `fzf`, `zoxide`, `git`, `nvim`, `eza`,
+   `bat`) resolve, and warns about any that don't.
+
+Then open a **new** PowerShell 7 window — starship renders with the host/OS prompt and fzf
+key bindings (Ctrl+T / Ctrl+R) are active.
+
+**Flags:** `-SkipPackages` skips the winget step on re-runs (symlinks + verify still run).
+`-Distro Ubuntu` if your distro isn't Debian.
+
+**Verify manually:**
+```powershell
+Get-Command starship, fzf
+```
 
 ### SSH key import (WSL)
 

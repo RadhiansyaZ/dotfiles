@@ -5,9 +5,11 @@
 
 .DESCRIPTION
     Creates Windows config symlinks that point into the dotfiles repo on the WSL filesystem
-    via the \\wsl$\<distro> UNC path. Optionally installs winget packages.
+    via the \\wsl$\<distro> UNC path, and installs winget packages.
 
-    Requires Developer Mode (Settings > System > For developers) OR an elevated shell.
+    The script self-elevates: if not already running as Administrator it re-launches itself
+    via UAC, forwarding its parameters. Admin is required because machine-scoped MSI packages
+    (e.g. Starship.Starship) cannot install otherwise.
 
 .PARAMETER Distro
     WSL distro name. Default: "Debian".
@@ -16,14 +18,12 @@
     Skip winget package installation. Useful on re-runs when packages are already present.
 
 .NOTES
-    Developer Mode (recommended — no elevation needed):
+    Run from any PowerShell session (it elevates itself):
         Set-ExecutionPolicy -Scope Process Bypass -Force
         .\windows\setup-windows.ps1
 
-    Elevated shell (alternative):
-        # Open PowerShell as Administrator, then:
-        Set-ExecutionPolicy -Scope Process Bypass -Force
-        .\windows\setup-windows.ps1
+    Approve the UAC prompt when it appears. An elevated window opens and stays open (-NoExit)
+    so you can read the package install and tool-verification output.
 #>
 [CmdletBinding()]
 param(
@@ -89,6 +89,32 @@ function Set-Symlink {
     Write-Ok "     ->  $Source"
 }
 
+# Reload PATH from the registry into the current session. winget drops shims into
+# %LOCALAPPDATA%\Microsoft\WinGet\Links, but the running shell's $env:PATH is a stale
+# snapshot — without this, tools installed this run aren't resolvable until a new shell.
+function Update-SessionPath {
+    $machine = [Environment]::GetEnvironmentVariable("Path", "Machine")
+    $user    = [Environment]::GetEnvironmentVariable("Path", "User")
+    $env:PATH = (@($machine, $user) | Where-Object { $_ }) -join ';'
+}
+
+# --------------------------------------------------------------------------- 0. self-elevate
+# Machine-scoped MSI packages (e.g. Starship.Starship) require admin. Re-launch elevated if
+# we aren't already, forwarding the original parameters, so the whole run is reproducible.
+if (-not (Test-Admin)) {
+    Write-Step "Re-launching elevated (required for machine-scoped MSI packages)"
+    $launcher = if (Get-Command pwsh -ErrorAction SilentlyContinue) { "pwsh" } else { "powershell" }
+    $argList  = @("-NoExit", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "`"$PSCommandPath`"")
+    if ($Distro)       { $argList += @("-Distro", $Distro) }
+    if ($SkipPackages) { $argList += "-SkipPackages" }
+    try {
+        Start-Process -FilePath $launcher -Verb RunAs -ArgumentList $argList -ErrorAction Stop
+    } catch {
+        Fail "Elevation declined. Approve the UAC prompt, or re-run from an Administrator PowerShell."
+    }
+    exit
+}
+
 # --------------------------------------------------------------------------- 1. symlink capability
 Write-Step "Checking symlink capability"
 if (-not (Test-Admin) -and -not (Test-DeveloperMode)) {
@@ -117,11 +143,16 @@ if ($SkipPackages) {
     } elseif (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
         Write-Warn "winget is not available — skipping package installation."
     } else {
+        if (-not (Test-Admin)) {
+            Write-Warn "Not elevated: machine-scoped MSI packages (e.g. Starship.Starship) will trigger a UAC"
+            Write-Warn "prompt and won't install if it's declined. The verify step below reports what's missing."
+        }
         winget import --import-file $manifest `
             --accept-package-agreements `
             --accept-source-agreements `
             --ignore-versions
-        Write-Ok "Winget import complete."
+        Update-SessionPath
+        Write-Ok "Winget import complete; PATH refreshed for this session."
     }
 }
 
@@ -158,6 +189,12 @@ Set-Symlink `
     -Target "$env:USERPROFILE\.gitignore" `
     -Source "$UNCBase\git\.gitignore"
 
+# PowerShell 7 profile — without this the starship/zoxide/alias init never runs.
+# Documents\PowerShell\ parent is created by Set-Symlink if absent.
+Set-Symlink `
+    -Target "$env:USERPROFILE\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" `
+    -Source "$UNCBase\windows\powershell\Microsoft.PowerShell_profile.ps1"
+
 Set-Symlink `
     -Target "$env:APPDATA\Zed\settings.json" `
     -Source "$UNCBase\zed\.config\zed\settings.json"
@@ -171,6 +208,24 @@ Set-Symlink `
 Set-Symlink `
     -Target "$env:USERPROFILE\.config\starship.toml" `
     -Source "$UNCBase\starship\starship.toml"
+
+# --------------------------------------------------------------------------- 5. verify tools
+Write-Step "Verifying shell tools are on PATH"
+Update-SessionPath
+$critical = @("starship", "fzf", "zoxide", "git", "nvim", "eza", "bat")
+$missing = @()
+foreach ($tool in $critical) {
+    if (Get-Command $tool -ErrorAction SilentlyContinue) {
+        Write-Ok $tool
+    } else {
+        Write-Warn "$tool not found on PATH"
+        $missing += $tool
+    }
+}
+if ($missing.Count -gt 0) {
+    Write-Warn "Missing: $($missing -join ', ')."
+    Write-Warn "Re-run without -SkipPackages to install them, then open a new PowerShell session."
+}
 
 # --------------------------------------------------------------------------- done
 Write-Step "Done"
