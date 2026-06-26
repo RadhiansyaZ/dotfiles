@@ -13,6 +13,21 @@
   failed_when: false
   tags: [windows, packages]
 
+# --------------------------------------------------------------------------- node (nvm-windows)
+# nvm-windows is installed by the winget manifest (CoreyButler.NVMforWindows). Install the LTS
+# Node.js and activate it. Unlike unix nvm, `nvm use` flips a symlink that is permanently on
+# PATH, so `node --version` works directly in any new shell afterwards.
+- name: Install Node.js LTS via nvm-windows
+  ansible.windows.win_shell: |
+    $ErrorActionPreference = 'Stop'
+    nvm install lts
+    nvm use lts
+  register: nvm_win_lts
+  changed_when: "'is already installed' not in nvm_win_lts.stdout"
+  # nvm-windows may not be on PATH until a fresh session after the winget install; tolerate that.
+  failed_when: false
+  tags: [windows, packages]
+
 # --------------------------------------------------------------------------- C/C++ toolchain
 # tree-sitter / nvim-treesitter compile parsers with a C/C++ compiler. Install the MSVC build
 # tools. The winget import manifest can only list package IDs, so it cannot request the C++

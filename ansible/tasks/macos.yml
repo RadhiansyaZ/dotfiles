@@ -66,3 +66,54 @@
   changed_when: true
   when: macos_go_check.rc != 0
   tags: [macos, go]
+
+- name: Check Homebrew (required for nvm)
+  ansible.builtin.command: command -v brew
+  register: macos_brew_check
+  changed_when: false
+  failed_when: false
+  tags: [macos, node]
+
+- name: Warn when Homebrew is missing
+  ansible.builtin.debug:
+    msg: "Homebrew not found; skipping nvm/Node.js. Install Homebrew (or run `brew bundle`) and rerun."
+  when: macos_brew_check.rc != 0
+  tags: [macos, node]
+
+- name: Check Homebrew nvm
+  ansible.builtin.command: brew list nvm
+  register: macos_nvm_check
+  changed_when: false
+  failed_when: false
+  when: macos_brew_check.rc == 0
+  tags: [macos, node]
+
+- name: Install nvm via Homebrew
+  ansible.builtin.command: brew install nvm
+  when:
+    - macos_brew_check.rc == 0
+    - macos_nvm_check.rc != 0
+  tags: [macos, node]
+
+- name: Ensure NVM_DIR exists
+  # Homebrew nvm does not create its working dir; zsh/.homebrew.zshrc sources from ~/.nvm.
+  ansible.builtin.file:
+    path: "{{ ansible_facts.env.HOME }}/.nvm"
+    state: directory
+    mode: "0755"
+  when: macos_brew_check.rc == 0
+  tags: [macos, node]
+
+- name: Install Node.js LTS and set as default (nvm)
+  ansible.builtin.shell: |
+    set -e
+    export NVM_DIR="$HOME/.nvm"
+    . "$(brew --prefix nvm)/nvm.sh"
+    nvm install --lts
+    nvm alias default 'lts/*'
+  args:
+    executable: /bin/zsh
+  register: macos_nvm_lts
+  changed_when: "'is already installed' not in macos_nvm_lts.stderr"
+  when: macos_brew_check.rc == 0
+  tags: [macos, node]

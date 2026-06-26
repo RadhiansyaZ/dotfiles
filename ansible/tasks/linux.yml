@@ -192,7 +192,25 @@
 - name: Install nvm
   ansible.builtin.command:
     cmd: bash /tmp/nvm-install.sh
-    creates: "{{ ansible_facts.env.HOME }}/.nvm/nvm.sh"
+    creates: "{{ ansible_facts.env.HOME }}/.config/nvm/nvm.sh"
+  environment:
+    # zsh/.zshrc sources nvm from ~/.config/nvm, so install there (not the default ~/.nvm).
+    NVM_DIR: "{{ ansible_facts.env.HOME }}/.config/nvm"
+    # ~/.zshrc is a stow symlink into this repo; stop the installer appending source lines to it.
+    PROFILE: /dev/null
+  tags: [linux, node]
+
+- name: Install Node.js LTS and set as default (nvm)
+  ansible.builtin.shell: |
+    set -e
+    export NVM_DIR="$HOME/.config/nvm"
+    . "$NVM_DIR/nvm.sh"
+    nvm install --lts
+    nvm alias default 'lts/*'
+  args:
+    executable: /bin/bash
+  register: linux_nvm_lts
+  changed_when: "'is already installed' not in linux_nvm_lts.stderr"
   tags: [linux, node]
 
 - name: Download pnpm installer
