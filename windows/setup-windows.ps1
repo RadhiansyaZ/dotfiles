@@ -209,6 +209,12 @@ Set-Symlink `
     -Target "$env:USERPROFILE\.config\starship.toml" `
     -Source "$UNCBase\starship\starship.toml"
 
+# WezTerm reads $HOME\.config\wezterm\wezterm.lua on Windows (HOME = %USERPROFILE%).
+# .config\wezterm\ parent is created by Set-Symlink if absent.
+Set-Symlink `
+    -Target "$env:USERPROFILE\.config\wezterm\wezterm.lua" `
+    -Source "$UNCBase\wezterm\.config\wezterm\wezterm.lua"
+
 # --------------------------------------------------------------------------- 5. verify tools
 Write-Step "Verifying shell tools are on PATH"
 Update-SessionPath
