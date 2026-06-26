@@ -47,7 +47,7 @@
 - name: Set installed Neovim version
   ansible.builtin.set_fact:
     nvim_installed_version: >-
-      {{ (nvim_installed.stdout_lines | first | default('') | regex_search('NVIM v([0-9.]+)', '\\1') | first)
+      {{ (nvim_installed.stdout | regex_search('NVIM v[0-9.]+') | default('', true) | regex_replace('^NVIM v', ''))
          if nvim_installed.rc == 0 else '' }}
   tags: [linux, nvim, packages]
 
