@@ -13,6 +13,22 @@
   failed_when: false
   tags: [windows, packages]
 
+# --------------------------------------------------------------------------- C/C++ toolchain
+# tree-sitter / nvim-treesitter compile parsers with a C/C++ compiler. Install the MSVC build
+# tools. The winget import manifest can only list package IDs, so it cannot request the C++
+# workload — hence this dedicated install with --override to add the VCTools workload.
+- name: Install Visual Studio Build Tools (MSVC C++)
+  ansible.windows.win_shell: >-
+    winget install --id Microsoft.VisualStudio.2022.BuildTools --exact --silent
+    --accept-package-agreements --accept-source-agreements
+    --override "--quiet --wait --norestart --nocache
+    --add Microsoft.VisualStudio.Workload.VCTools --includeRecommended"
+  register: msvc_install
+  # winget returns non-zero when already installed / no applicable upgrade; tolerate it.
+  changed_when: "'Successfully installed' in msvc_install.stdout"
+  failed_when: false
+  tags: [windows, packages]
+
 # --------------------------------------------------------------------------- tree-sitter
 # No winget package exists for the tree-sitter CLI, so pull the latest release binary directly.
 - name: Ensure tree-sitter install directory
