@@ -8,6 +8,9 @@
 
 windows_winget_manifest: "{{ dotfiles_win_dir }}\\windows\\packages\\packages.winget.json"
 
+# tree-sitter CLI install dir (no winget package exists; binary is pulled from GitHub releases).
+windows_treesitter_dir: "{{ ansible_env.LOCALAPPDATA }}\\Programs\\tree-sitter"
+
 # PowerShell modules that are not built in.
 windows_ps_modules:
   - PSFzf

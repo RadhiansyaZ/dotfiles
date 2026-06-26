@@ -244,6 +244,10 @@
   when: aws_check.rc != 0
   tags: [linux, packages]
 
+- name: Install Neovim from latest release
+  ansible.builtin.include_tasks: linux_nvim.yml
+  tags: [linux, nvim, packages]
+
 - name: Install GitHub release binaries
   ansible.builtin.include_tasks: linux_github_binary.yml
   loop: "{{ linux_github_binaries }}"

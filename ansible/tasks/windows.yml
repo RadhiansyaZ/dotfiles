@@ -13,6 +13,34 @@
   failed_when: false
   tags: [windows, packages]
 
+# --------------------------------------------------------------------------- tree-sitter
+# No winget package exists for the tree-sitter CLI, so pull the latest release binary directly.
+- name: Ensure tree-sitter install directory
+  ansible.windows.win_file:
+    path: "{{ windows_treesitter_dir }}"
+    state: directory
+  tags: [windows, packages]
+
+- name: Download tree-sitter CLI
+  ansible.windows.win_get_url:
+    url: "https://github.com/tree-sitter/tree-sitter/releases/latest/download/tree-sitter-cli-windows-x64.zip"
+    dest: C:\Windows\Temp\tree-sitter-cli-windows-x64.zip
+  tags: [windows, packages]
+
+- name: Extract tree-sitter CLI
+  community.windows.win_unzip:
+    src: C:\Windows\Temp\tree-sitter-cli-windows-x64.zip
+    dest: "{{ windows_treesitter_dir }}"
+    creates: "{{ windows_treesitter_dir }}\\tree-sitter.exe"
+  tags: [windows, packages]
+
+- name: Add tree-sitter to user PATH
+  ansible.windows.win_path:
+    elements: "{{ windows_treesitter_dir }}"
+    scope: user
+    state: present
+  tags: [windows, packages]
+
 # --------------------------------------------------------------------------- PS modules
 - name: Ensure NuGet package provider (for PSGallery installs)
   ansible.windows.win_shell: |

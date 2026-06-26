@@ -98,9 +98,11 @@ linux_cli_packages:
   - zsh
 
 linux_github_binaries:
-  - name: nvim
-    repo: neovim/neovim
-    asset_pattern: "nvim-linux-{{ linux_nvim_arch }}\\.tar\\.gz"
+  # nvim is installed by tasks/linux_nvim.yml (the generic single-binary task drops nvim's
+  # runtime/ tree, which Neovim requires). Keep it out of this loop.
+  - name: tree-sitter
+    repo: tree-sitter/tree-sitter
+    asset_pattern: "tree-sitter-cli-linux-{{ linux_ts_arch }}\\.zip"
     skip: false
   - name: lazygit
     repo: jesseduffield/lazygit

@@ -17,6 +17,10 @@
       {{ 'x86_64' if ansible_facts.architecture == 'x86_64'
          else 'arm64' if ansible_facts.architecture in ['aarch64', 'arm64']
          else 'unsupported' }}
+    linux_ts_arch: >-
+      {{ 'x64' if ansible_facts.architecture == 'x86_64'
+         else 'arm64' if ansible_facts.architecture in ['aarch64', 'arm64']
+         else 'unsupported' }}
 
 - name: Reject unsupported Linux architecture
   ansible.builtin.fail:
