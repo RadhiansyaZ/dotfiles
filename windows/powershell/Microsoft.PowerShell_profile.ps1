@@ -4,24 +4,27 @@
 
 # ---------------------------------------------------------------------------
 # History + line editing (PSReadLine replaces zsh-autosuggestions / -syntax-highlighting)
+# PS7 autoloads PSReadLine; only import if it isn't already loaded (avoids a
+# Get-Module -ListAvailable filesystem scan on every start).
 # ---------------------------------------------------------------------------
-if (Get-Module -ListAvailable -Name PSReadLine) {
-    Import-Module PSReadLine
+if (-not (Get-Module PSReadLine)) { Import-Module PSReadLine -ErrorAction SilentlyContinue }
+if (Get-Module PSReadLine) {
     Set-PSReadLineOption -EditMode Emacs
     Set-PSReadLineOption -HistoryNoDuplicates
     Set-PSReadLineOption -HistorySearchCursorMovesToEnd
     # Inline + list autosuggestions from history (and plugins when available).
-    try { Set-PSReadLineOption -PredictionSource HistoryAndPlugin } catch { Set-PSReadLineOption -PredictionSource History }
+    try { Set-PSReadLineOption -PredictionSource HistoryAndPlugin } catch { try { Set-PSReadLineOption -PredictionSource History } catch {} }
     try { Set-PSReadLineOption -PredictionViewStyle ListView } catch {}
 }
 
 # ---------------------------------------------------------------------------
 # PATH (parity with .zshrc: ~/.local/bin and ~/go/bin)
+# Guarded so re-sourcing the profile (. $PROFILE) doesn't keep growing PATH.
 # ---------------------------------------------------------------------------
 $localBin = Join-Path $HOME ".local\bin"
-if (Test-Path $localBin) { $env:PATH = "$localBin;$env:PATH" }
+if ((Test-Path $localBin) -and ($env:PATH -notlike "*$localBin*")) { $env:PATH = "$localBin;$env:PATH" }
 $goBin = Join-Path $HOME "go\bin"
-if (Test-Path $goBin) { $env:PATH = "$env:PATH;$goBin" }
+if ((Test-Path $goBin) -and ($env:PATH -notlike "*$goBin*")) { $env:PATH = "$env:PATH;$goBin" }
 
 # ---------------------------------------------------------------------------
 # EDITOR — prefer zed, fall back to nvim (mirrors the intent of .zshrc but guarded)
@@ -79,18 +82,75 @@ function jqsanitize {
 }
 
 # ---------------------------------------------------------------------------
-# Tool initialisation (all guarded so a missing tool never breaks the shell)
+# Cached tool initialisation
+# `starship init` / `zoxide init` print a deterministic script that only
+# changes when the binary is upgraded. Spawning those processes on every shell
+# start (plus Defender scanning them cold) is the dominant startup cost, so we
+# cache the generated script to disk and regenerate only when the binary is
+# newer than the cache. Run `Reset-ShellCache` if a cache ever goes stale.
 # ---------------------------------------------------------------------------
-if (Get-Command starship -ErrorAction SilentlyContinue) {
-    # Config is symlinked from WSL dotfiles via setup-windows-symlinks.ps1.
-    $env:STARSHIP_CONFIG = Join-Path $HOME ".config\starship.toml"
-    Invoke-Expression (& starship init powershell)
+$script:ShellCacheDir = Join-Path $HOME ".cache\pwsh-init"
+
+function Invoke-CachedInit {
+    param(
+        [Parameter(Mandatory)][string]$Tool,
+        [Parameter(Mandatory)][scriptblock]$Generate
+    )
+    $cmd = Get-Command $Tool -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
+    if (-not $cmd) { return }
+
+    $cacheFile = Join-Path $script:ShellCacheDir "$Tool.ps1"
+    $binTime   = (Get-Item -LiteralPath $cmd.Source).LastWriteTimeUtc
+    $fresh     = (Test-Path -LiteralPath $cacheFile) -and
+                 ((Get-Item -LiteralPath $cacheFile).LastWriteTimeUtc -ge $binTime)
+
+    if (-not $fresh) {
+        if (-not (Test-Path -LiteralPath $script:ShellCacheDir)) {
+            New-Item -ItemType Directory -Force -Path $script:ShellCacheDir | Out-Null
+        }
+        (& $Generate | Out-String) | Set-Content -LiteralPath $cacheFile -Encoding UTF8
+    }
+    . $cacheFile
 }
-if (Get-Command zoxide -ErrorAction SilentlyContinue) {
-    Invoke-Expression (& { (zoxide init powershell --cmd cd | Out-String) })
+
+# Wipe the init cache so the next shell (or `. $PROFILE`) regenerates it.
+function Reset-ShellCache {
+    if (Test-Path -LiteralPath $script:ShellCacheDir) {
+        Remove-Item -LiteralPath $script:ShellCacheDir -Recurse -Force
+        Write-Host "Cleared shell init cache: $script:ShellCacheDir"
+    } else {
+        Write-Host "No shell init cache to clear ($script:ShellCacheDir)."
+    }
+    Write-Host "Open a new shell or run '. `$PROFILE' to regenerate."
 }
-# PSFzf's Import-Module throws if the fzf binary is missing, so require both.
-if ((Get-Command fzf -ErrorAction SilentlyContinue) -and (Get-Module -ListAvailable -Name PSFzf)) {
-    Import-Module PSFzf
-    Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
+
+# starship reads STARSHIP_CONFIG at prompt-render time (not baked into the init
+# script), so caching the init output is safe regardless of starship.toml.
+# Config is symlinked from WSL dotfiles via setup-windows-symlinks.ps1.
+$env:STARSHIP_CONFIG = Join-Path $HOME ".config\starship.toml"
+Invoke-CachedInit -Tool starship -Generate { & starship init powershell }
+Invoke-CachedInit -Tool zoxide   -Generate { & zoxide init powershell --cmd cd }
+
+# ---------------------------------------------------------------------------
+# PSFzf — lazy loaded. Importing it costs ~270ms, so defer until the first
+# Ctrl+t / Ctrl+r press. The first press imports the module and calls
+# Set-PsFzfOption, which rebinds these chords to PSFzf's own handlers; later
+# presses hit PSFzf directly.
+# ---------------------------------------------------------------------------
+if ((Get-Command fzf -ErrorAction SilentlyContinue) -and (Get-Module PSReadLine)) {
+    $script:PSFzfLoaded = $false
+    function Import-PSFzfLazy {
+        if ($script:PSFzfLoaded) { return $true }
+        if (-not (Get-Module -ListAvailable -Name PSFzf)) { return $false }
+        Import-Module PSFzf
+        Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
+        $script:PSFzfLoaded = $true
+        return $true
+    }
+    Set-PSReadLineKeyHandler -Chord 'Ctrl+t' -ScriptBlock {
+        if (Import-PSFzfLazy) { Invoke-FzfPsReadlineHandlerProvider }
+    }
+    Set-PSReadLineKeyHandler -Chord 'Ctrl+r' -ScriptBlock {
+        if (Import-PSFzfLazy) { Invoke-FzfPsReadlineHandlerHistory }
+    }
 }
