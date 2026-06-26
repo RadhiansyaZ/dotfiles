@@ -66,6 +66,16 @@ go_tools:
   - module: honnef.co/go/tools/cmd/staticcheck
     binary: staticcheck
 
+# Global npm packages (installed via the nvm-managed Node.js). On macOS these previously lived
+# in the Brewfile as `npm "..."` lines, which `brew bundle` does not support.
+npm_packages:
+  - "@earendil-works/pi-coding-agent"
+  - "@openai/codex"
+  - context-mode
+  - corepack
+  - gitnexus
+  - tree-sitter-cli
+
 linux_base_packages:
   - curl
   - wget
