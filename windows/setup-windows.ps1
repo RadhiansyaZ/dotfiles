@@ -215,6 +215,12 @@ Set-Symlink `
     -Target "$env:USERPROFILE\.config\wezterm\wezterm.lua" `
     -Source "$UNCBase\wezterm\.config\wezterm\wezterm.lua"
 
+# Pi coding agent is deliberately NOT symlinked: Pi writes its own settings.json (version
+# bumps, `pi install`), and a symlink to a \\wsl.localhost target is the same fragile pattern
+# that breaks Zed. Drop real local copies of settings.json + mcp.json from the WSL repo instead
+# (auth.json, sessions, npm\, git\, bin\*.exe stay machine-local). Re-run to refresh.
+& "$UNCBase\windows\sync-pi-settings.ps1" -SourceDir "$UNCBase\pi\.pi\agent"
+
 # --------------------------------------------------------------------------- 5. verify tools
 Write-Step "Verifying shell tools are on PATH"
 Update-SessionPath

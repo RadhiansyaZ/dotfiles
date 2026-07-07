@@ -12,6 +12,7 @@ stow_packages:
   - gnupg
   - nvim
   - opencode
+  - pi
   - postgresql
   - ssh
   - tmux
@@ -28,6 +29,10 @@ stow_conflict_files:
   - "{{ ansible_facts.env.HOME }}/.zshrc"
   - "{{ ansible_facts.env.HOME }}/.homebrew.zshrc"
   - "{{ ansible_facts.env.HOME }}/.gdt.zshrc"
+  # Pi writes real settings.json/mcp.json on first run; clear them so stow can
+  # symlink the repo copies. auth.json/sessions/npm/git/bin stay machine-local.
+  - "{{ ansible_facts.env.HOME }}/.pi/agent/settings.json"
+  - "{{ ansible_facts.env.HOME }}/.pi/agent/mcp.json"
 
 zsh_plugins:
   - name: zsh-autosuggestions

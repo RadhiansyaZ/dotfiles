@@ -187,6 +187,17 @@
   changed_when: "'CHANGED' in zed_sync.stdout"
   tags: [windows, stow]
 
+# --------------------------------------------------------------------------- pi settings (copy)
+# Pi is deliberately NOT symlinked: it writes its own settings.json, and a symlink to a
+# \\wsl.localhost target is the fragile pattern that breaks Zed. Sync real local copies of
+# settings.json + mcp.json from the WSL repo (auth.json/sessions/npm/git/bin stay machine-local).
+- name: Sync Pi coding agent config from the WSL repo (local copy; symlink risks Pi writes)
+  ansible.windows.win_shell: |
+    & "{{ wsl_repo_unc }}\windows\sync-pi-settings.ps1" -SourceDir "{{ wsl_repo_unc }}\pi\.pi\agent"
+  register: pi_sync
+  changed_when: "'CHANGED' in pi_sync.stdout"
+  tags: [windows, stow]
+
 # --------------------------------------------------------------------------- verify
 # Mirrors windows/setup-windows.ps1: refresh PATH from the registry (so binaries installed
 # this run are resolvable in this task's shell), then check each shell tool and report any

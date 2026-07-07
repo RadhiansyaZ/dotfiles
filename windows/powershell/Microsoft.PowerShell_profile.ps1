@@ -94,6 +94,19 @@ function Sync-ZedSettings {
     & $syncScript @args
 }
 
+# Re-sync Pi's config from the WSL dotfiles repo. Pi can't use a symlinked settings.json (it
+# writes the file itself, and a \\wsl.localhost symlink is the fragile pattern that breaks Zed),
+# so settings.json + mcp.json get real local copies that windows/sync-pi-settings.ps1 refreshes.
+# One-way: WSL repo -> %USERPROFILE%\.pi\agent. Run after changing the repo's Pi config.
+function Sync-PiSettings {
+    $syncScript = "\\wsl.localhost\Debian\home\RadhiansyaPutra\dotfiles\windows\sync-pi-settings.ps1"
+    if (-not (Test-Path -LiteralPath $syncScript)) {
+        Write-Warning "Pi sync script not reachable: $syncScript (is the WSL distro running?)"
+        return
+    }
+    & $syncScript @args
+}
+
 # ---------------------------------------------------------------------------
 # Cached tool initialisation
 # `starship init` / `zoxide init` print a deterministic script that only
