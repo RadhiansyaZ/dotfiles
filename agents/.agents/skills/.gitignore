@@ -1,0 +1,10 @@
+# Skills directory policy
+#
+# Only local/hand-written skills are tracked here. Everything else is
+# github-sourced and restored on demand by the skills CLI from the
+# repo-tracked lockfile (../.skill-lock.json), so it is not committed.
+#
+# Ignore every skill folder...
+*/
+# ...then re-include the local/hand-written ones (absent from .skill-lock.json).
+!gitnexus-*/

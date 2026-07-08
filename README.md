@@ -76,6 +76,26 @@ To bring SSH keys from the Windows user profile into WSL:
 Auto-detects your Windows username, copies `id_*`, `*.pub`, and `known_hosts` (skips
 `config` — that comes from the stow package), and sets correct permissions. Safe to re-run.
 
+## Claude Code skills
+
+Skills live in the `agents` stow package under `agents/.agents/skills/`. Only
+**local/hand-written** skills are committed (the `gitnexus-*` set). Third-party
+skills pulled from GitHub are **not** tracked — `agents/.agents/skills/.gitignore`
+ignores every skill folder and re-includes only `gitnexus-*/`.
+
+The GitHub-sourced skills are restored on demand by the skills CLI from the
+repo-tracked lockfile `agents/.agents/.skill-lock.json`, which records each
+skill's `sourceUrl` and folder hash. The lockfile is symlinked to
+`~/.local/state/skills/.skill-lock.json` (via stow) so one lock stays in sync
+across machines. To restore third-party skills on a new machine, run the skills
+CLI install/sync against that lockfile.
+
+Adding a new local skill: name it so it is tracked (e.g. drop it under a tracked
+prefix, or extend the `!` allowlist in `agents/.agents/skills/.gitignore`).
+
+> Caveat: a GitHub-only skill is unrecoverable if its upstream repo is deleted or
+> moved. Vendor (commit) the folder if the source is fragile.
+
 ## Layout
 
 | Path | Purpose |
