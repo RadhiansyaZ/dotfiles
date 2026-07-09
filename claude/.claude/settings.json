@@ -1,5 +1,5 @@
 {
-  "model": "opus[1m]",
+  "model": "sonnet",
   "statusLine": {
     "type": "command",
     "command": "bash ~/.claude/statusline-command.sh"
@@ -19,6 +19,28 @@
       }
     }
   },
-  "effortLevel": "medium",
-  "theme": "dark"
+  "effortLevel": "high",
+  "theme": "dark",
+  "permissions": {
+    "allow": ["Bash(*)", "Edit"],
+    "ask": [
+      "Bash(rm:*)",
+      "Bash(git push:*)",
+      "Bash(git rebase:*)",
+      "Bash(git reset:*)",
+      "Bash(chown:*)"
+    ],
+    "deny": [
+      "Bash(git reset --hard:*)",
+      "Bash(git clean:*)",
+      "Bash(git push --force:*)",
+      "Bash(rm -rf *:*)",
+      "Bash(sudo:*)",
+      "Bash(mkfs:*)",
+      "Bash(docker push:*)",
+      "Bash(npm publish:*)",
+      "Bash(terraform destroy:*)",
+      "Bash(aws s3 rm:*)"
+    ]
+  }
 }

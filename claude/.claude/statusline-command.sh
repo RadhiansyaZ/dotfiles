@@ -31,6 +31,9 @@ fi
 
 model="$(printf '%s' "$input" | jq -r '.model.display_name // empty')"
 
+cost="$(printf '%s' "$input" | jq -r '.cost.total_cost_usd // empty')"
+[ -n "$cost" ] && cost="$(printf '$%.2f' "$cost" 2>/dev/null)"
+
 # Context window remaining percentage, computed from available fields.
 remaining="$(printf '%s' "$input" | jq -r '
   .context_window.remaining_percentage as $r
@@ -59,4 +62,20 @@ printf '\n'
 if [ -n "$remaining" ]; then
   [ -n "$model" ] && printf ' \033[00;90m|\033[00m '
   printf '\033[00;90mContext: %s%% remaining\033[00m' "$remaining"
+fi
+if [ -n "$cost" ]; then
+  { [ -n "$model" ] || [ -n "$remaining" ]; } && printf ' \033[00;90m|\033[00m '
+  printf '\033[00;33m%s\033[00m' "$cost"
+fi
+
+# 5-hour and weekly (7-day) rate limit usage. Only present for Pro/Max
+# subscribers, and each window may be independently absent.
+five_hour="$(printf '%s' "$input" | jq -r '.rate_limits.five_hour.used_percentage // empty')"
+seven_day="$(printf '%s' "$input" | jq -r '.rate_limits.seven_day.used_percentage // empty')"
+
+if [ -n "$five_hour" ] || [ -n "$seven_day" ]; then
+  printf '\n'
+  [ -n "$five_hour" ] && printf '\033[00;90m5h limit: %s%% used\033[00m' "$five_hour"
+  { [ -n "$five_hour" ] && [ -n "$seven_day" ]; } && printf ' \033[00;90m|\033[00m '
+  [ -n "$seven_day" ] && printf '\033[00;90mWeekly limit: %s%% used\033[00m' "$seven_day"
 fi
