@@ -24,18 +24,18 @@
   "permissions": {
     "allow": ["Bash(*)", "Edit"],
     "ask": [
-      "Bash(rm:*)",
+      "Bash(chown:*)",
       "Bash(git push:*)",
       "Bash(git rebase:*)",
       "Bash(git reset:*)",
-      "Bash(chown:*)"
+      "Bash(rm:*)",
+      "Bash(sudo:*)"
     ],
     "deny": [
       "Bash(git reset --hard:*)",
       "Bash(git clean:*)",
       "Bash(git push --force:*)",
       "Bash(rm -rf *:*)",
-      "Bash(sudo:*)",
       "Bash(mkfs:*)",
       "Bash(docker push:*)",
       "Bash(npm publish:*)",
