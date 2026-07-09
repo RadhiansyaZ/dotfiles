@@ -39,6 +39,7 @@ stow_conflict_files:
   # sessions and other state stay machine-local (not in the claude package).
   - "{{ ansible_facts.env.HOME }}/.claude/settings.json"
   - "{{ ansible_facts.env.HOME }}/.claude/statusline-command.sh"
+  - "{{ ansible_facts.env.HOME }}/.claude/CLAUDE.md"
   # skills CLI writes a real lockfile at $XDG_STATE_HOME/skills on first run
   # (set in zsh/.zshrc); clear it so stow can symlink it to the repo-tracked
   # agents/.agents/.skill-lock.json instead, keeping one lockfile in sync.
