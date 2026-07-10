@@ -1,12 +1,11 @@
 {
-  "lastChangelogVersion": "0.80.2",
+  "lastChangelogVersion": "0.80.6",
   "theme": "dark",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.4",
   "defaultThinkingLevel": "medium",
   "packages": [
     "npm:pi-ask-user",
-    "https://github.com/pankajudhas81/pi-claude-auth",
     "npm:pi-web-access",
     "npm:context-mode"
   ]
