@@ -12,6 +12,44 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 local config = wezterm.config_builder()
+local wsl_color_scheme = "Catppuccin Macchiato"
+
+local function is_wsl_pane(pane)
+	local cwd = pane:get_current_working_dir()
+	if cwd then
+		local cwd_str = tostring(cwd):lower()
+		if cwd_str:find("wsl%.localhost") or cwd_str:find("wsl%%24") then
+			return true
+		end
+	end
+
+	local proc = pane:get_foreground_process_name()
+	if proc then
+		local proc_l = proc:lower()
+		if proc_l:find("wsl.exe", 1, true) or proc_l:find("wslhost.exe", 1, true) then
+			return true
+		end
+	end
+
+	return false
+end
+
+wezterm.on("update-status", function(window, pane)
+	local overrides = window:get_config_overrides() or {}
+	local wanted_scheme = is_wsl_pane(pane) and wsl_color_scheme or nil
+
+	if overrides.color_scheme ~= wanted_scheme then
+		overrides.color_scheme = wanted_scheme
+		window:set_config_overrides(overrides)
+	end
+end)
+
+-- On Windows, default to a native WSL domain so new tabs/splits inherit the
+-- Linux environment and land in the distro's home directory instead of
+-- C:\Users\<user>.
+if wezterm.target_triple:find("windows") then
+	config.default_domain = "WSL:Debian"
+end
 
 -- --------------------------------------------------------------------------- leader
 -- Ctrl+A, matching tmux `set -g prefix C-a`. A 1s window matches tmux's feel of
