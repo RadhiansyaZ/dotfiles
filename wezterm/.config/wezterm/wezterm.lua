@@ -13,6 +13,7 @@ local wezterm = require("wezterm")
 local act = wezterm.action
 local config = wezterm.config_builder()
 local wsl_color_scheme = "Catppuccin Macchiato"
+local spawn_domain = "CurrentPaneDomain"
 
 local function is_wsl_pane(pane)
 	local cwd = pane:get_current_working_dir()
@@ -49,6 +50,10 @@ end)
 -- C:\Users\<user>.
 if wezterm.target_triple:find("windows") then
 	config.default_domain = "WSL:Debian"
+	-- Force new splits/tabs to use the configured WSL domain even if the current
+	-- pane is still a local Windows pane; otherwise CurrentPaneDomain can keep
+	-- spawning under C:\Users\<user>.
+	spawn_domain = "DefaultDomain"
 end
 
 -- --------------------------------------------------------------------------- leader
@@ -68,11 +73,11 @@ config.keys = {
 	-- tmux splits are named by the divider orientation: % = vertical divider
 	-- (side-by-side panes) = WezTerm SplitHorizontal; " = horizontal divider
 	-- (stacked panes) = WezTerm SplitVertical.
-	{ key = "%", mods = "LEADER|SHIFT", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-	{ key = '"', mods = "LEADER|SHIFT", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
+	{ key = "%", mods = "LEADER|SHIFT", action = act.SplitHorizontal({ domain = spawn_domain }) },
+	{ key = '"', mods = "LEADER|SHIFT", action = act.SplitVertical({ domain = spawn_domain }) },
 	-- Convenience aliases keyed to the divider you draw: | side-by-side, - stacked.
-	{ key = "|", mods = "LEADER|SHIFT", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-	{ key = "-", mods = "LEADER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
+	{ key = "|", mods = "LEADER|SHIFT", action = act.SplitHorizontal({ domain = spawn_domain }) },
+	{ key = "-", mods = "LEADER", action = act.SplitVertical({ domain = spawn_domain }) },
 
 	-- tmux: prefix + arrow keys switch to the adjacent pane.
 	{ key = "LeftArrow", mods = "LEADER", action = act.ActivatePaneDirection("Left") },
@@ -96,7 +101,7 @@ config.keys = {
 
 	-- ------------------------------------------------------- windows (= tabs)
 	-- tmux: prefix + c new, & kill, n/p next/prev, l last, w list, , rename.
-	{ key = "c", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
+	{ key = "c", mods = "LEADER", action = act.SpawnTab(spawn_domain) },
 	{ key = "&", mods = "LEADER|SHIFT", action = act.CloseCurrentTab({ confirm = true }) },
 	{ key = "n", mods = "LEADER", action = act.ActivateTabRelative(1) },
 	{ key = "p", mods = "LEADER", action = act.ActivateTabRelative(-1) },
@@ -153,8 +158,8 @@ local ghostty_keys = {
 	{ key = "v", mods = "CTRL|SHIFT", action = act.PasteFrom("Clipboard") },
 
 	-- Splits (Ghostty: ctrl+shift+o = split right, ctrl+shift+e = split down).
-	{ key = "o", mods = "CTRL|SHIFT", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-	{ key = "e", mods = "CTRL|SHIFT", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
+	{ key = "o", mods = "CTRL|SHIFT", action = act.SplitHorizontal({ domain = spawn_domain }) },
+	{ key = "e", mods = "CTRL|SHIFT", action = act.SplitVertical({ domain = spawn_domain }) },
 	-- Navigate splits (Ghostty: ctrl+alt+arrows = goto_split <dir>).
 	{ key = "LeftArrow", mods = "CTRL|ALT", action = act.ActivatePaneDirection("Left") },
 	{ key = "RightArrow", mods = "CTRL|ALT", action = act.ActivatePaneDirection("Right") },
@@ -163,7 +168,7 @@ local ghostty_keys = {
 
 	-- Tabs (Ghostty: ctrl+shift+t new, ctrl+shift+w close, ctrl+(shift+)tab cycle,
 	-- ctrl+pgup/pgdn cycle, ctrl+shift+left/right cycle).
-	{ key = "t", mods = "CTRL|SHIFT", action = act.SpawnTab("CurrentPaneDomain") },
+	{ key = "t", mods = "CTRL|SHIFT", action = act.SpawnTab(spawn_domain) },
 	{ key = "w", mods = "CTRL|SHIFT", action = act.CloseCurrentPane({ confirm = true }) },
 	{ key = "Tab", mods = "CTRL", action = act.ActivateTabRelative(1) },
 	{ key = "Tab", mods = "CTRL|SHIFT", action = act.ActivateTabRelative(-1) },
