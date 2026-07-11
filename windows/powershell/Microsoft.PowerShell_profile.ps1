@@ -81,31 +81,26 @@ function jqsanitize {
     $input | jq -R . | jq -s . | jq -r 'join("")'
 }
 
-# Re-sync Zed's settings from the WSL dotfiles repo. Zed can't use a symlinked settings.json
-# (its "open settings" palette action breaks on a \\wsl.localhost symlink), so it gets a real
-# local copy that windows/sync-zed-settings.ps1 refreshes. One-way: WSL repo -> %APPDATA%\Zed.
-# Run this after changing the repo's Zed settings. Pass-through args override -Source / -Dest.
-function Sync-ZedSettings {
-    $syncScript = "\\wsl.localhost\Debian\home\RadhiansyaPutra\dotfiles\windows\sync-zed-settings.ps1"
+# Re-sync copy-based Windows configuration from the repository. The profile itself is a
+# symlink, so derive the repository root from its target instead of hard-coding a distro/user.
+function Get-DotfilesSyncScript {
+    $profileItem = Get-Item -LiteralPath $PROFILE -Force -ErrorAction SilentlyContinue
+    $profileSource = if ($profileItem -and $profileItem.Target) { [string] $profileItem.Target } else { $PSCommandPath }
+    $repoRoot = Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $profileSource))
+    Join-Path $repoRoot "sync-win.ps1"
+}
+
+function Sync-WindowsSettings {
+    $syncScript = Get-DotfilesSyncScript
     if (-not (Test-Path -LiteralPath $syncScript)) {
-        Write-Warning "Zed sync script not reachable: $syncScript (is the WSL distro running?)"
+        Write-Warning "Windows sync script not reachable: $syncScript"
         return
     }
     & $syncScript @args
 }
 
-# Re-sync Pi's config from the WSL dotfiles repo. Pi can't use a symlinked settings.json (it
-# writes the file itself, and a \\wsl.localhost symlink is the fragile pattern that breaks Zed),
-# so settings.json + mcp.json get real local copies that windows/sync-pi-settings.ps1 refreshes.
-# One-way: WSL repo -> %USERPROFILE%\.pi\agent. Run after changing the repo's Pi config.
-function Sync-PiSettings {
-    $syncScript = "\\wsl.localhost\Debian\home\RadhiansyaPutra\dotfiles\windows\sync-pi-settings.ps1"
-    if (-not (Test-Path -LiteralPath $syncScript)) {
-        Write-Warning "Pi sync script not reachable: $syncScript (is the WSL distro running?)"
-        return
-    }
-    & $syncScript @args
-}
+function Sync-ZedSettings { Sync-WindowsSettings -SkipPi @args }
+function Sync-PiSettings  { Sync-WindowsSettings -SkipZed @args }
 
 # ---------------------------------------------------------------------------
 # Cached tool initialisation
@@ -152,7 +147,7 @@ function Reset-ShellCache {
 
 # starship reads STARSHIP_CONFIG at prompt-render time (not baked into the init
 # script), so caching the init output is safe regardless of starship.toml.
-# Config is symlinked from WSL dotfiles via setup-windows-symlinks.ps1.
+# Config is symlinked from the dotfiles repository via setup-windows.ps1.
 $env:STARSHIP_CONFIG = Join-Path $HOME ".config\starship.toml"
 Invoke-CachedInit -Tool starship -Generate { & starship init powershell }
 Invoke-CachedInit -Tool zoxide   -Generate { & zoxide init powershell --cmd cd }

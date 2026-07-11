@@ -23,7 +23,7 @@
 
 .PARAMETER SourceDir
     Directory holding the canonical Pi config in the WSL repo, reached over the \\wsl.localhost
-    share. Defaults to the Debian distro. Override for a different distro/user/path.
+    share. By default it is derived from this script's repository location. Override it when needed.
 
 .PARAMETER DestDir
     Destination directory on the Windows host. Defaults to %USERPROFILE%\.pi\agent.
@@ -36,7 +36,7 @@
 #>
 [CmdletBinding()]
 param(
-    [string] $SourceDir = "\\wsl.localhost\Debian\home\RadhiansyaPutra\dotfiles\pi\.pi\agent",
+    [string] $SourceDir = (Join-Path (Split-Path -Parent $PSScriptRoot) "pi\.pi\agent"),
     [string] $DestDir   = (Join-Path $env:USERPROFILE ".pi\agent")
 )
 

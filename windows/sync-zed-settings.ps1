@@ -20,7 +20,7 @@
 
 .PARAMETER Source
     Path to the canonical settings.json in the WSL repo, reached over the \\wsl.localhost
-    share. Defaults to the Debian distro. Override for a different distro/user/path, e.g.
+    share. By default it is derived from this script's repository location. Override it when needed, e.g.
         -Source "\\wsl.localhost\Ubuntu\home\me\dotfiles\zed\.config\zed\settings.json"
 
 .PARAMETER Dest
@@ -34,7 +34,7 @@
 #>
 [CmdletBinding()]
 param(
-    [string] $Source = "\\wsl.localhost\Debian\home\RadhiansyaPutra\dotfiles\zed\.config\zed\settings.json",
+    [string] $Source = (Join-Path (Split-Path -Parent $PSScriptRoot) "zed\.config\zed\settings.json"),
     [string] $Dest   = (Join-Path $env:APPDATA "Zed\settings.json")
 )
 

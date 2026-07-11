@@ -1,18 +1,18 @@
 #Requires -Version 5.1
 <#
 .SYNOPSIS
-    Standalone Windows setup: winget packages + WSL-dotfiles symlinks.
+    Standalone native Windows setup: winget packages + dotfiles symlinks.
 
 .DESCRIPTION
-    Creates Windows config symlinks that point into the dotfiles repo on the WSL filesystem
-    via the \\wsl$\<distro> UNC path, and installs winget packages.
+    Installs winget packages and creates Windows config symlinks from this repository.
+    It works whether the repository is opened through a WSL UNC path or from a Windows clone.
 
     The script self-elevates: if not already running as Administrator it re-launches itself
     via UAC, forwarding its parameters. Admin is required because machine-scoped MSI packages
     (e.g. Starship.Starship) cannot install otherwise.
 
 .PARAMETER Distro
-    WSL distro name. Default: "Debian".
+    WSL distro name retained for compatibility with existing invocations. It is not otherwise needed.
 
 .PARAMETER SkipPackages
     Skip winget package installation. Useful on re-runs when packages are already present.
@@ -20,7 +20,7 @@
 .NOTES
     Run from any PowerShell session (it elevates itself):
         Set-ExecutionPolicy -Scope Process Bypass -Force
-        .\windows\setup-windows.ps1
+        .\setup-windows.ps1
 
     Approve the UAC prompt when it appears. An elevated window opens and stays open (-NoExit)
     so you can read the package install and tool-verification output.
@@ -137,7 +137,7 @@ if ($SkipPackages) {
     Write-Ok "SkipPackages set — skipping winget import."
 } else {
     Write-Step "Installing winget packages from packages.winget.json"
-    $manifest = Join-Path $PSScriptRoot "packages\packages.winget.json"
+    $manifest = Join-Path $PSScriptRoot "windows\packages\packages.winget.json"
     if (-not (Test-Path $manifest)) {
         Write-Warn "Manifest not found at $manifest — skipping package installation."
     } elseif (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
@@ -156,70 +156,48 @@ if ($SkipPackages) {
     }
 }
 
-# --------------------------------------------------------------------------- 3. resolve WSL home
-Write-Step "Resolving WSL home in distro: $Distro"
-if (-not (Get-Command wsl.exe -ErrorAction SilentlyContinue)) {
-    Fail "wsl.exe not found. WSL2 is required to locate the dotfiles repo."
-}
-
-$wslHome = ""
-try {
-    $wslHome = (wsl.exe -d $Distro -e bash -c 'echo $HOME' | Out-String).Trim()
-} catch {
-    Fail "Failed to query WSL for distro '$Distro'. Is it installed? Run: wsl -l -v"
-}
-
-if ([string]::IsNullOrWhiteSpace($wslHome)) {
-    Fail "Got an empty home path from distro '$Distro'."
-}
-
-# Convert /home/user -> home\user for the UNC path
-$wslHomeUNC = $wslHome.TrimStart('/').Replace('/', '\')
-$UNCBase = "\\wsl$\$Distro\$wslHomeUNC\dotfiles"
-Write-Ok "UNC base: $UNCBase"
+# --------------------------------------------------------------------------- 3. repository source
+# PSScriptRoot is the canonical source for all links/copies. It may be a \\wsl$ UNC
+# path when the repo lives in WSL, or a normal Windows path when it is cloned locally.
+$RepoRoot = $PSScriptRoot
+Write-Ok "Repository source: $RepoRoot"
 
 # --------------------------------------------------------------------------- 4. symlinks
 Write-Step "Creating config symlinks"
 
 Set-Symlink `
     -Target "$env:USERPROFILE\.gitconfig" `
-    -Source "$UNCBase\git\.gitconfig"
+    -Source "$RepoRoot\git\.gitconfig"
 
 Set-Symlink `
     -Target "$env:USERPROFILE\.gitignore" `
-    -Source "$UNCBase\git\.gitignore"
+    -Source "$RepoRoot\git\.gitignore"
 
 # PowerShell 7 profile — without this the starship/zoxide/alias init never runs.
 # Documents\PowerShell\ parent is created by Set-Symlink if absent.
 Set-Symlink `
     -Target "$env:USERPROFILE\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" `
-    -Source "$UNCBase\windows\powershell\Microsoft.PowerShell_profile.ps1"
-
-Set-Symlink `
-    -Target "$env:APPDATA\Zed\settings.json" `
-    -Source "$UNCBase\zed\.config\zed\settings.json"
+    -Source "$RepoRoot\windows\powershell\Microsoft.PowerShell_profile.ps1"
 
 # .agents\ parent is created by Set-Symlink if absent
 Set-Symlink `
     -Target "$env:USERPROFILE\.agents\skills" `
-    -Source "$UNCBase\agents\.agents\skills"
+    -Source "$RepoRoot\agents\.agents\skills"
 
 # .config\ parent is created by Set-Symlink if absent
 Set-Symlink `
     -Target "$env:USERPROFILE\.config\starship.toml" `
-    -Source "$UNCBase\starship\starship.toml"
+    -Source "$RepoRoot\starship\starship.toml"
 
 # WezTerm reads $HOME\.config\wezterm\wezterm.lua on Windows (HOME = %USERPROFILE%).
 # .config\wezterm\ parent is created by Set-Symlink if absent.
 Set-Symlink `
     -Target "$env:USERPROFILE\.config\wezterm\wezterm.lua" `
-    -Source "$UNCBase\wezterm\.config\wezterm\wezterm.lua"
+    -Source "$RepoRoot\wezterm\.config\wezterm\wezterm.lua"
 
-# Pi coding agent is deliberately NOT symlinked: Pi writes its own settings.json (version
-# bumps, `pi install`), and a symlink to a \\wsl.localhost target is the same fragile pattern
-# that breaks Zed. Drop real local copies of settings.json + mcp.json from the WSL repo instead
-# (auth.json, sessions, npm\, git\, bin\*.exe stay machine-local). Re-run to refresh.
-& "$UNCBase\windows\sync-pi-settings.ps1" -SourceDir "$UNCBase\pi\.pi\agent"
+# Pi and Zed settings are deliberately copied rather than symlinked: both applications write
+# their settings, and Zed cannot open a UNC-backed symlink from its command palette.
+& (Join-Path $RepoRoot "sync-win.ps1") -SourceRoot $RepoRoot
 
 # --------------------------------------------------------------------------- 5. verify tools
 Write-Step "Verifying shell tools are on PATH"
