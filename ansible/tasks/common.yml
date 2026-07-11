@@ -77,8 +77,8 @@
 
 - name: Deploy ssh config natively on WSL
   # WSL only: install ~/.ssh/config as a real 0600 file sourced from the repo, replacing any
-  # prior /mnt/c symlink. Keeps WSL and Windows ssh configs independent — the Windows play
-  # still deploys its own. "if any": skip silently when the repo has no ssh config.
+  # prior /mnt/c symlink. Keeps WSL and native-Windows SSH configs independent. "if any":
+  # skip silently when the repo has no ssh config.
   when: is_wsl
   block:
     - name: Check repo ssh config exists

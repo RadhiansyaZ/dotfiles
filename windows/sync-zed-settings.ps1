@@ -15,8 +15,8 @@
     never overwritten. Idempotent: if the destination already matches the source by content,
     nothing is written and it reports OK.
 
-    Re-run this whenever the repo's Zed settings change (or wire it into the ansible Windows
-    play, which does exactly that).
+    Re-run this whenever the repo's Zed settings change. `setup-windows.ps1` invokes the root
+    `sync-win.ps1` wrapper automatically.
 
 .PARAMETER Source
     Path to the canonical settings.json in the WSL repo, reached over the \\wsl.localhost

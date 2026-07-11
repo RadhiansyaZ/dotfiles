@@ -19,7 +19,7 @@ Preserve that separation: repository files are canonical; Pi and Zed settings ar
 - `CHECKPOINT.md` — current setup-refactor checkpoint and follow-up constraints.
 - `ansible/playbook.yml` and `ansible/tasks/` — provisioner behavior and tags.
 - `setup.sh`, `setup.ps1`, `setup-wsl.ps1`, `setup-windows.ps1`, and `sync-win.ps1` — executable setup and synchronization contracts.
-- `docs/` — detailed or newly created documentation; create it when a detailed document is needed.
+- `docs/` — detailed documentation, including `docs/machine-tooling.md` for cross-platform package and tooling inventory.
 
 ## 4. AI-agent documentation housekeeping
 

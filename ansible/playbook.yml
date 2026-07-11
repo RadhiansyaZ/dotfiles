@@ -17,23 +17,6 @@
         - ansible_facts.os_family != 'Debian'
 
   tasks:
-    - name: Register native Windows host (when bootstrapped via setup.ps1)
-      ansible.builtin.add_host:
-        name: windows-local
-        groups: windows
-        ansible_host: "{{ lookup('ansible.builtin.env', 'DOTFILES_WIN_HOST') }}"
-        ansible_user: "{{ lookup('ansible.builtin.env', 'DOTFILES_WIN_USER') }}"
-        ansible_connection: ssh
-        ansible_shell_type: powershell
-        ansible_ssh_private_key_file: "{{ ansible_facts.env.HOME }}/.ssh/id_ed25519"
-        # -F /dev/null: ignore the user's ~/.ssh/config. When the ssh dotfiles are stowed from
-        # /mnt/c, that config is a symlink to a world-writable DrvFs file and OpenSSH refuses it
-        # ("Bad owner or permissions"). This connection is self-contained (-i + the options below).
-        ansible_ssh_common_args: "-F /dev/null -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
-        dotfiles_win_dir: "{{ lookup('ansible.builtin.env', 'DOTFILES_WIN_DIR') }}"
-      when: lookup('ansible.builtin.env', 'DOTFILES_WIN_HOST') | length > 0
-      tags: [always, windows]
-
     - name: Load architecture mapping
       ansible.builtin.include_tasks: tasks/arch.yml
       when: ansible_facts.system == 'Linux'
@@ -63,12 +46,3 @@
       changed_when: false
       failed_when: false
       tags: [verify]
-
-# Second play: provision the native Windows host over SSH (no-op if no host was registered).
-- name: Provision native Windows host
-  hosts: windows
-  gather_facts: true
-  tasks:
-    - name: Run Windows setup tasks
-      ansible.builtin.import_tasks: tasks/windows.yml
-      tags: [windows]

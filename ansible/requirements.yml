@@ -1,5 +1,0 @@
----
-# Ansible collections needed to provision the native Windows host from WSL.
-collections:
-  - name: ansible.windows
-  - name: community.windows

@@ -17,9 +17,9 @@
     overwritten). Idempotent: files matching the source by content are left alone. One-way:
     WSL repo -> %USERPROFILE%\.pi\agent.
 
-    Re-run this whenever the repo's Pi config changes (or rely on the ansible Windows play, which
-    calls it). From an interactive shell, the Sync-PiSettings function in the PowerShell profile
-    is the convenient entry point.
+    Re-run this whenever the repo's Pi config changes. `setup-windows.ps1` invokes the root
+    `sync-win.ps1` wrapper automatically; from an interactive shell, the Sync-PiSettings function
+    in the PowerShell profile is the convenient entry point.
 
 .PARAMETER SourceDir
     Directory holding the canonical Pi config in the WSL repo, reached over the \\wsl.localhost
