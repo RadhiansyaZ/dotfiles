@@ -1,17 +1,15 @@
-[includeIf "gitdir:~/"]
-  path = ~/dotfiles/git/personal.gitconfig
+[user]
+  name = Radhiansya Zain Antriksa Putra
+  email = 58207190+RadhiansyaZ@users.noreply.github.com
 
 [includeIf "gitdir:~/Codes/"]
-  path = ~/dotfiles/git/gdt.gitconfig
-
-[includeIf "gitdir:~/Codes/personal/"]
-  path = ~/dotfiles/git/personal.gitconfig
+  path = ~/.config/git/gdt.gitconfig
 
 [url "ssh://git@github-gdt/good-doctor-technology/"]
   insteadOf = https://github.com/good-doctor-technology/
 
 [includeIf "gitdir:~/aetosky/"]
-  path = ~/dotfiles/git/aetosky.gitconfig
+  path = ~/.config/git/aetosky.gitconfig
 
 [core]
   editor = zed --wait

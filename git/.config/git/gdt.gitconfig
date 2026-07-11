@@ -4,6 +4,3 @@
 
 [url "ssh://git@github-gdt/"]
 	insteadOf = https://github.com/
-
-[url "ssh://git@github-gdt/radhiansya-gdt/*"]
-	insteadOf = https://github.com/radhiansya-gdt/*
