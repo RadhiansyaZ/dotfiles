@@ -54,6 +54,30 @@ if wezterm.target_triple:find("windows") then
 	-- pane is still a local Windows pane; otherwise CurrentPaneDomain can keep
 	-- spawning under C:\Users\<user>.
 	spawn_domain = "DefaultDomain"
+
+	-- Preserve the native Windows font fallback chain and useful shell launcher.
+	config.font = wezterm.font_with_fallback({ "JetBrains Mono", "Fira Code", "DengXian" })
+	config.font_size = 10
+	config.launch_menu = {
+		{
+			label = "Git Bash",
+			args = { "C:\\Program Files\\Git\\bin\\bash.exe", "--login", "-i" },
+		},
+	}
+
+	-- Ctrl-click links without forwarding the matching mouse-down event.
+	config.mouse_bindings = {
+		{
+			event = { Up = { streak = 1, button = "Left" } },
+			mods = "CTRL",
+			action = act.OpenLinkAtMouseCursor,
+		},
+		{
+			event = { Down = { streak = 1, button = "Left" } },
+			mods = "CTRL",
+			action = act.Nop,
+		},
+	}
 end
 
 -- --------------------------------------------------------------------------- leader
