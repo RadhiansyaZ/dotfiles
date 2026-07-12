@@ -46,7 +46,9 @@ docs/
     DESIGN.md                        # selected wiki architecture
     PLAN.md                          # implementation plan and verification gates
   wiki/
-    README.md                         # wiki landing page and navigation
+    README.md                         # concise landing page and navigation
+    index.md                          # content-oriented catalog of maintained pages
+    log.md                            # append-only wiki-maintenance timeline
     architecture.md                   # system model and source-of-truth rules
     platforms.md                      # macOS, Debian/Ubuntu, WSL, Windows model
     setup-and-verification.md         # supported setup and checks
@@ -191,6 +193,8 @@ The first content pass creates the pages in the layout above. Their responsibili
 | Page | Primary questions answered | Principal sources |
 |---|---|---|
 | `README.md` | Where do I start and how is the wiki organized? | all wiki pages |
+| `index.md` | What maintained operational page is relevant to my task? | wiki navigation and source map |
+| `log.md` | What significant wiki maintenance, validation, or queue work happened recently? | wiki maintenance workflow |
 | `architecture.md` | What is canonical? What are the system boundaries? | `README.md`, `AGENTS.md`, `docs/idea-artifacts/RFC.md` |
 | `platforms.md` | Which platforms are supported and how do their roles differ? | `README.md`, setup scripts, playbook |
 | `setup-and-verification.md` | How do I install and validate each supported path? | `README.md`, `setup.sh`, `setup*.ps1`, playbook |
@@ -207,10 +211,11 @@ The initial content must cite paths rather than duplicate long scripts or config
 
 1. Make a repository change on a branch.
 2. Run `python3 scripts/wiki_check.py check --base origin/main --head HEAD`.
-3. Update the owned wiki page if the effect is known. Update its `last_reviewed` date and source links.
+3. Update the owned wiki page if the effect is known. Update its `last_reviewed` date and source links; update `index.md` when the page set changes.
 4. If the effect is uncertain, add a pending-review record instead of guessing.
-5. Run `python3 scripts/wiki_check.py audit` and `git diff --check`.
-6. In code review, reviewers verify source-backed claims against the linked files and either accept the page change or resolve/retain the queued question.
+5. Append a dated `log.md` entry for significant wiki maintenance, validation, or queue resolution.
+6. Run `python3 scripts/wiki_check.py audit` and `git diff --check`.
+7. In code review, reviewers verify source-backed claims against the linked files and either accept the page change or resolve/retain the queued question.
 
 Documentation pages never override source behavior. If documentation and source disagree, the reviewer fixes the page or explicitly records the source ambiguity; they do not change configuration merely to satisfy documentation tooling.
 

@@ -15,14 +15,14 @@ This plan implements the proposed design in [`DESIGN.md`](DESIGN.md). Each step 
 Create:
 
 - `docs/idea-artifacts/{RFC,DESIGN,PLAN}.md`
-- `docs/wiki/README.md`
+- `docs/wiki/{README,index,log}.md`
 - `docs/wiki/{architecture,platforms,setup-and-verification,unix-provisioning,windows-provisioning,synchronization,configuration-packages,maintenance,privacy-and-sensitive-boundaries}.md`
 - `docs/wiki/_meta/{source-map.yml,page-schema.md}`
 - `docs/wiki/pending/README.md`
 - `scripts/wiki_check.py`
 - `.github/workflows/wiki.yml`
 
-**Verification:** Every path exists and `docs/wiki/README.md` links to every substantive page.
+**Verification:** Every path exists, `docs/wiki/README.md` links to the content-oriented index and chronological log, and `index.md` catalogs every substantive operational page.
 
 ## 2. Define page and queue contracts
 
@@ -42,6 +42,8 @@ Document the writing rules:
 - Source-backed claims link to repository paths.
 - Operational guidance is labelled as guidance.
 - Uncertainty links to a pending-review item.
+- `index.md` is updated when substantive pages are added or removed.
+- `log.md` is append-only and records significant wiki maintenance, validation, and queue-resolution events with dated headings.
 - Wiki content must not contain secrets, machine-local paths, hostnames, raw diffs, or sensitive values.
 
 Define pending records as `docs/wiki/pending/<short-head-sha>.md` with:

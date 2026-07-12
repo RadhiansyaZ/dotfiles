@@ -16,10 +16,11 @@ Repository behavior is authoritative; update wiki pages to describe a source cha
 
 1. Make a change on a branch.
 2. Run `python3 scripts/wiki_check.py check --base origin/main --head HEAD`.
-3. Update the owned page and `last_reviewed` date when the impact is known.
+3. Update the owned page and `last_reviewed` date when the impact is known. When adding or removing a substantive page, also update the [wiki index](index.md).
 4. Otherwise add a public-safe [pending record](pending/README.md).
-5. Run `python3 scripts/wiki_check.py audit` and `git diff --check`.
-6. In review, verify source-backed claims against their linked files.
+5. Append a dated entry to the [wiki log](log.md) for significant wiki maintenance, validation, or queue-resolution events; use `## [YYYY-MM-DD] <kind> | <summary>`.
+6. Run `python3 scripts/wiki_check.py audit` and `git diff --check`.
+7. In review, verify source-backed claims against their linked files.
 
 ## Constraints
 
