@@ -7,6 +7,7 @@
   "packages": [
     "npm:pi-ask-user",
     "npm:pi-web-access",
-    "npm:context-mode"
+    "npm:context-mode",
+    "npm:pi-agent-browser-native"
   ]
 }
