@@ -1,13 +1,13 @@
 ---
 title: Wiki architecture
 source_files:
-  - DESIGN.md
-  - RFC.md
+  - docs/idea-artifacts/DESIGN.md
+  - docs/idea-artifacts/RFC.md
 last_reviewed: 2026-07-12
 ---
 # Wiki architecture
 
-Repository files remain authoritative. This wiki is hand-maintained Markdown that links to source files; it never overrides source behavior. The design in [DESIGN.md](../../DESIGN.md) defines deterministic diff checks and a tracked pending-review queue.
+Repository files remain authoritative. This wiki is hand-maintained Markdown that links to source files; it never overrides source behavior. The design in [DESIGN.md](../idea-artifacts/DESIGN.md) defines deterministic diff checks and a tracked pending-review queue.
 
 ## Safety boundary
 

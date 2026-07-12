@@ -14,6 +14,7 @@ This plan implements the proposed design in [`DESIGN.md`](DESIGN.md). Each step 
 
 Create:
 
+- `docs/idea-artifacts/{RFC,DESIGN,PLAN}.md`
 - `docs/wiki/README.md`
 - `docs/wiki/{architecture,platforms,setup-and-verification,unix-provisioning,windows-provisioning,synchronization,configuration-packages,maintenance,privacy-and-sensitive-boundaries}.md`
 - `docs/wiki/_meta/{source-map.yml,page-schema.md}`

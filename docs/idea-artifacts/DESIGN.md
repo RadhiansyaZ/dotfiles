@@ -41,6 +41,10 @@ The checker will run locally on demand and in required pull-request CI. This pro
 ```text
 docs/
   machine-tooling.md
+  idea-artifacts/
+    RFC.md                           # documentation intent and constraints
+    DESIGN.md                        # selected wiki architecture
+    PLAN.md                          # implementation plan and verification gates
   wiki/
     README.md                         # wiki landing page and navigation
     architecture.md                   # system model and source-of-truth rules
@@ -187,14 +191,14 @@ The first content pass creates the pages in the layout above. Their responsibili
 | Page | Primary questions answered | Principal sources |
 |---|---|---|
 | `README.md` | Where do I start and how is the wiki organized? | all wiki pages |
-| `architecture.md` | What is canonical? What are the system boundaries? | `README.md`, `AGENTS.md`, `RFC.md` |
+| `architecture.md` | What is canonical? What are the system boundaries? | `README.md`, `AGENTS.md`, `docs/idea-artifacts/RFC.md` |
 | `platforms.md` | Which platforms are supported and how do their roles differ? | `README.md`, setup scripts, playbook |
 | `setup-and-verification.md` | How do I install and validate each supported path? | `README.md`, `setup.sh`, `setup*.ps1`, playbook |
 | `unix-provisioning.md` | How do Ansible, Stow, packages, and Unix tasks interact? | `ansible/**`, `Brewfile`, Stow packages |
 | `windows-provisioning.md` | How is native Windows provisioned? | `setup*.ps1`, `windows/**` |
 | `synchronization.md` | What is copied, in which direction, and what is prohibited? | `sync-win.ps1`, `windows/sync-*.ps1`, `CHECKPOINT.md` |
 | `configuration-packages.md` | What does each configuration package own? | Stow package directories, `ansible/group_vars/all.yml` |
-| `maintenance.md` | How do I make a safe change and keep documentation current? | `AGENTS.md`, this design, checker contract |
+| `maintenance.md` | How do I make a safe change and keep documentation current? | `AGENTS.md`, `docs/idea-artifacts/DESIGN.md`, checker contract |
 | `privacy-and-sensitive-boundaries.md` | What must not be documented or synchronized? | `.git-crypt/**`, credential paths, sync scripts, `AGENTS.md` |
 
 The initial content must cite paths rather than duplicate long scripts or configuration blocks. Existing `README.md` remains the concise entry point; it gains a link to the wiki but is not replaced by it. `docs/machine-tooling.md` remains its detailed inventory and is linked from the relevant wiki pages.

@@ -4,13 +4,13 @@ source_files:
   - AGENTS.md
   - README.md
   - CHECKPOINT.md
-  - PLAN.md
+  - docs/idea-artifacts/PLAN.md
   - .gitattributes
 last_reviewed: 2026-07-12
 ---
 # Maintenance workflow
 
-Repository behavior is authoritative; update wiki pages to describe a source change, not the reverse. The maintainer constraints are in [AGENTS.md](../../AGENTS.md), and the current implementation plan is [PLAN.md](../../PLAN.md).
+Repository behavior is authoritative; update wiki pages to describe a source change, not the reverse. The maintainer constraints are in [AGENTS.md](../../AGENTS.md), and the current implementation plan is [PLAN.md](../idea-artifacts/PLAN.md).
 
 ## Change workflow
 

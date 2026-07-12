@@ -12,3 +12,9 @@ This is the source-backed operational wiki for this repository. Repository files
 - [Maintenance](maintenance.md)
 - [Privacy and sensitive boundaries](privacy-and-sensitive-boundaries.md)
 - [Pending-review queue](pending/README.md)
+
+## Ideation artifacts
+
+- [RFC](../idea-artifacts/RFC.md)
+- [Design](../idea-artifacts/DESIGN.md)
+- [Implementation plan](../idea-artifacts/PLAN.md)
