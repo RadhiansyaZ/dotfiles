@@ -22,7 +22,10 @@
   "effortLevel": "high",
   "theme": "dark",
   "permissions": {
-    "allow": ["Bash(*)", "Edit"],
+    "allow": [
+      "Bash(*)",
+      "Edit"
+    ],
     "ask": [
       "Bash(chown:*)",
       "Bash(git push:*)",
