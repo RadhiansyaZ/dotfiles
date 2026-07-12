@@ -57,6 +57,18 @@ synchronizes, and verifies configuration.
 - To import SSH keys from the Windows profile into WSL, run `./copy-ssh-from-windows.sh`.
   It copies keys and `known_hosts`, leaves `config` to Stow, and is safe to rerun.
 
+## Wiki validation
+
+The source-backed [repository wiki](docs/wiki/README.md) documents operational behavior. After a source change, run:
+
+```sh
+python3 scripts/wiki_check.py check --base origin/main --head HEAD
+python3 scripts/wiki_check.py audit
+git diff --check
+```
+
+Update the responsible wiki page when the impact is known. If it needs human resolution, add a public-safe record under `docs/wiki/pending/` instead of guessing.
+
 ## Agent skills
 
 The `agents` Stow package installs skills under `~/.agents/skills` and keeps the skills CLI
@@ -88,3 +100,5 @@ machines.
 | `windows/` | PowerShell profile, package manifest, and Windows sync scripts |
 | `agents/` | Agent-skill Stow package and tracked lockfile |
 | `CHECKPOINT.md` | Current setup-refactor notes and constraints |
+| `docs/wiki/` | Source-backed repository wiki and pending-review queue |
+| `scripts/wiki_check.py` | Wiki audit and changed-path validator |

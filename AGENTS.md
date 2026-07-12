@@ -20,6 +20,7 @@ Preserve that separation: repository files are canonical; Pi and Zed settings ar
 - `ansible/playbook.yml` and `ansible/tasks/` — provisioner behavior and tags.
 - `setup.sh`, `setup.ps1`, `setup-wsl.ps1`, `setup-windows.ps1`, and `sync-win.ps1` — executable setup and synchronization contracts.
 - `docs/` — detailed documentation, including `docs/machine-tooling.md` for cross-platform package and tooling inventory.
+- `docs/wiki/` — source-backed operational wiki; use `python3 scripts/wiki_check.py check --base origin/main --head HEAD` and `python3 scripts/wiki_check.py audit` after source changes.
 
 ## 4. AI-agent documentation housekeeping
 

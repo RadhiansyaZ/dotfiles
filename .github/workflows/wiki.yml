@@ -1,0 +1,37 @@
+name: Wiki validation
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  pull-request:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Validate changed documentation responsibilities
+        run: |
+          git fetch origin "${{ github.base_ref }}"
+          base="$(git merge-base HEAD "origin/${{ github.base_ref }}")"
+          python3 scripts/wiki_check.py check --base "$base" --head HEAD
+          python3 scripts/wiki_check.py audit
+
+  default-branch:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Audit wiki and pushed range
+        run: |
+          python3 scripts/wiki_check.py audit
+          python3 scripts/wiki_check.py check --base "${{ github.event.before }}" --head "${{ github.sha }}"
