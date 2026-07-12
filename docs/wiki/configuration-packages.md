@@ -20,4 +20,4 @@ The repository is canonical. Application settings that cannot safely use a WSL-b
 
 ## Guidance
 
-For the detailed cross-platform, difference-first tool inventory, use [machine tooling comparison](machine-tooling.md). Agent-skill lockfiles record third-party skill sources but restored third-party directories are not committed.
+For the detailed cross-platform, difference-first tool inventory, use [machine tooling comparison](machine-tooling.md). Global agent guidance is canonical at [agents/.agents/AGENTS.md](../../agents/.agents/AGENTS.md), installed at `~/.agents/AGENTS.md`, imported by Claude Code, and linked into Pi's agent directory. Agent-skill lockfiles record third-party skill sources but restored third-party directories are not committed.

@@ -71,10 +71,12 @@ Update the responsible wiki page when the impact is known. If it needs human res
 
 ## Agent skills
 
-The `agents` Stow package installs skills under `~/.agents/skills` and keeps the skills CLI
-lockfile at `~/.local/state/skills/.skill-lock.json`. That location is a Stow link to the
-tracked `agents/.agents/.skill-lock.json`, so the same dependency list is shared across
-machines.
+The `agents` Stow package installs global agent guidance at `~/.agents/AGENTS.md`, skills
+under `~/.agents/skills`, and keeps the skills CLI lockfile at
+`~/.local/state/skills/.skill-lock.json`. These are Stow links to the tracked package, so
+shared guidance and the dependency list stay consistent across machines. Claude Code imports
+the global guidance from `~/.claude/CLAUDE.md`; Pi receives a linked copy at
+`~/.pi/agent/AGENTS.md`.
 
 - **Local skills:** committed in `agents/.agents/skills/`. The ignore policy currently tracks
   only `gitnexus-*`; add another allowlist rule in `agents/.agents/skills/.gitignore` before
@@ -98,7 +100,7 @@ machines.
 | `setup-wsl.ps1`, `setup-windows.ps1` | Individual Windows setup stages |
 | `sync-win.ps1` | Copies canonical Pi and Zed settings to Windows |
 | `windows/` | PowerShell profile, package manifest, and Windows sync scripts |
-| `agents/` | Agent-skill Stow package and tracked lockfile |
+| `agents/` | Global agent guidance, agent-skill Stow package, and tracked lockfile |
 | `CHECKPOINT.md` | Current setup-refactor notes and constraints |
 | `docs/wiki/` | Source-backed repository wiki and pending-review queue |
 | `scripts/wiki_check.py` | Wiki audit and changed-path validator |

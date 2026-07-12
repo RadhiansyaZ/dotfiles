@@ -34,9 +34,10 @@ stow_conflict_files:
   # symlink the repo copies. auth.json/sessions/npm/git/bin stay machine-local.
   - "{{ ansible_facts.env.HOME }}/.pi/agent/settings.json"
   - "{{ ansible_facts.env.HOME }}/.pi/agent/mcp.json"
-  # Claude Code writes real settings.json/statusline on first run; clear them so
-  # stow can symlink the repo copies. settings.local.json, credentials, cache,
-  # sessions and other state stay machine-local (not in the claude package).
+  - "{{ ansible_facts.env.HOME }}/.pi/agent/AGENTS.md"
+  # Claude Code writes real settings.json/statusline/CLAUDE.md on first run; clear
+  # them so stow can symlink the repo copies. settings.local.json, credentials,
+  # cache, sessions and other state stay machine-local (not in the claude package).
   - "{{ ansible_facts.env.HOME }}/.claude/settings.json"
   - "{{ ansible_facts.env.HOME }}/.claude/statusline-command.sh"
   - "{{ ansible_facts.env.HOME }}/.claude/CLAUDE.md"
