@@ -12,6 +12,8 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 local config = wezterm.config_builder()
+-- Report modified keys (including Shift+Enter) distinctly to terminal apps such as Pi.
+config.enable_kitty_keyboard = true
 local wsl_color_scheme = "Catppuccin Macchiato"
 local spawn_domain = "CurrentPaneDomain"
 
