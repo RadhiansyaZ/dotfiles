@@ -83,7 +83,7 @@ the global guidance from `~/.claude/CLAUDE.md`; Pi receives a linked copy at
 - **Third-party skills:** ignored after installation. Their Git source, path, and folder hash
   are recorded in `.skill-lock.json`; restore them on a new machine with the skills CLI using
   that lockfile.
-- **Changing third-party skills:** use the skills CLI to add or update them, then review and
+- **Syncing third-party skills:** run `npx skills update --global --yes`, then review and
   commit the resulting lockfile change. Do not commit the restored skill directories.
 - **Durability:** vendor a third-party skill when its upstream source might disappear; a
   lockfile cannot restore a deleted or moved repository.

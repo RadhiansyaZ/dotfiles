@@ -26,10 +26,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/mattpocock/skills.git",
       "skillPath": "skills/productivity/handoff/SKILL.md",
-      "skillFolderHash": "aa82ffd61d7a3bda110060b4e24ec782b983cb8d",
-      "pluginName": "mattpocock-skills",
+      "skillFolderHash": "3f7df8e717e41dfd6eacd03d47319a2e01248ffb",
       "installedAt": "2026-07-08T04:55:46.283Z",
-      "updatedAt": "2026-07-08T05:29:37.141Z"
+      "updatedAt": "2026-07-12T12:13:40.291Z"
     },
     "caveman": {
       "source": "JuliusBrussee/caveman",
@@ -45,9 +44,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/vercel-labs/skills.git",
       "skillPath": "skills/find-skills/SKILL.md",
-      "skillFolderHash": "3013fdeb8a11b10b1eb795ec3ae8bfca38f7c26d",
+      "skillFolderHash": "76a98a285cb0434f3d39e1a873823556330e398b",
       "installedAt": "2026-04-16T02:21:35.678Z",
-      "updatedAt": "2026-04-27T03:16:05.823Z"
+      "updatedAt": "2026-07-12T12:13:41.184Z"
     },
     "postgres": {
       "source": "planetscale/database-skills",
@@ -113,10 +112,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/anthropics/skills.git",
       "skillPath": "skills/claude-api/SKILL.md",
-      "skillFolderHash": "6d12d690ffa6b91119e932e448f4437d9f197a53",
-      "pluginName": "claude-api",
+      "skillFolderHash": "a4c392286cdd8ad4ac28c13c7d2543895c6b94cf",
       "installedAt": "2026-04-25T04:44:32.123Z",
-      "updatedAt": "2026-04-25T04:44:32.123Z"
+      "updatedAt": "2026-07-12T12:13:44.016Z"
     },
     "canvas-design": {
       "source": "anthropics/skills",
@@ -143,10 +141,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/anthropics/skills.git",
       "skillPath": "skills/frontend-design/SKILL.md",
-      "skillFolderHash": "928950704df8a8b885c03de5da626331e6f29cf8",
-      "pluginName": "example-skills",
+      "skillFolderHash": "0d5b74a14bdf3ebcd64f352d06376a2ef05ed296",
       "installedAt": "2026-04-25T04:44:34.097Z",
-      "updatedAt": "2026-04-25T04:44:34.097Z"
+      "updatedAt": "2026-07-12T12:13:45.588Z"
     },
     "internal-comms": {
       "source": "anthropics/skills",
@@ -476,9 +473,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/openai/skills.git",
       "skillPath": "skills/.curated/yeet/SKILL.md",
-      "skillFolderHash": "57cbd4e5e51c504f2acdf82b6dd85aa90314aa3f",
+      "skillFolderHash": "1c9c3f489a88dd896e910f038471ba1d2c1803aa",
       "installedAt": "2026-04-25T07:02:37.015Z",
-      "updatedAt": "2026-04-25T07:02:37.015Z"
+      "updatedAt": "2026-07-12T12:13:47.584Z"
     },
     "web-design-guidelines": {
       "source": "vercel-labs/agent-skills",
