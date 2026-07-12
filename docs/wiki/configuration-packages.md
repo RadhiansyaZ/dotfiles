@@ -20,4 +20,4 @@ The repository is canonical. Application settings that cannot safely use a WSL-b
 
 ## Guidance
 
-For the detailed cross-platform tool inventory, use [machine-tooling.md](../machine-tooling.md). Agent-skill lockfiles record third-party skill sources but restored third-party directories are not committed.
+For the detailed cross-platform, difference-first tool inventory, use [machine tooling comparison](machine-tooling.md). Agent-skill lockfiles record third-party skill sources but restored third-party directories are not committed.

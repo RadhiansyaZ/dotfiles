@@ -1,19 +1,20 @@
 {
   "rules": [
+    {"path": ".gitignore", "classification": "internal-metadata", "pages": [], "rationale": "Ignore rules are repository metadata."},
     {"path": ".git-crypt/**", "classification": "sensitive-boundary", "pages": ["docs/wiki/privacy-and-sensitive-boundaries.md"], "rationale": "Encrypted key material is documented only as an exclusion."},
     {"path": "postgresql/**", "classification": "sensitive-boundary", "pages": ["docs/wiki/privacy-and-sensitive-boundaries.md"], "rationale": "Database connection credentials are boundary-only material."},
     {"path": "docs/wiki/**", "classification": "internal-metadata", "pages": [], "rationale": "The authored wiki and its queue are validated directly."},
     {"path": "scripts/wiki_check.py", "classification": "internal-metadata", "pages": [], "rationale": "Wiki validation implementation is internal metadata."},
     {"path": ".github/**", "classification": "internal-metadata", "pages": [], "rationale": "Wiki workflow implementation is internal metadata."},
     {"path": "tests/**", "classification": "internal-metadata", "pages": [], "rationale": "Wiki checker fixtures are internal metadata."},
-    {"path": "ansible/**", "classification": "document", "pages": ["docs/wiki/unix-provisioning.md", "docs/wiki/setup-and-verification.md"], "rationale": "Ansible is the Unix provisioning contract."},
+    {"path": "ansible/**", "classification": "document", "pages": ["docs/wiki/unix-provisioning.md", "docs/wiki/setup-and-verification.md", "docs/wiki/machine-tooling.md"], "rationale": "Ansible is the Unix provisioning and machine-tooling contract."},
     {"path": "setup.sh", "classification": "document", "pages": ["docs/wiki/unix-provisioning.md", "docs/wiki/setup-and-verification.md"], "rationale": "Unix bootstrap behavior is documented."},
     {"path": "setup.ps1", "classification": "document", "pages": ["docs/wiki/windows-provisioning.md", "docs/wiki/platforms.md"], "rationale": "Windows bootstrap behavior is documented."},
     {"path": "setup-wsl.ps1", "classification": "document", "pages": ["docs/wiki/windows-provisioning.md", "docs/wiki/platforms.md"], "rationale": "WSL bootstrap behavior is documented."},
-    {"path": "setup-windows.ps1", "classification": "document", "pages": ["docs/wiki/windows-provisioning.md", "docs/wiki/setup-and-verification.md"], "rationale": "Native Windows provisioning is documented."},
+    {"path": "setup-windows.ps1", "classification": "document", "pages": ["docs/wiki/windows-provisioning.md", "docs/wiki/setup-and-verification.md", "docs/wiki/machine-tooling.md"], "rationale": "Native Windows provisioning and tooling verification are documented."},
     {"path": "sync-win.ps1", "classification": "document", "pages": ["docs/wiki/synchronization.md"], "rationale": "Windows copy synchronization is documented."},
-    {"path": "windows/**", "classification": "document", "pages": ["docs/wiki/windows-provisioning.md", "docs/wiki/synchronization.md"], "rationale": "Windows packages, profile, and copy helpers are documented."},
-    {"path": "Brewfile", "classification": "document", "pages": ["docs/wiki/unix-provisioning.md"], "rationale": "macOS package inventory is documented."},
+    {"path": "windows/**", "classification": "document", "pages": ["docs/wiki/windows-provisioning.md", "docs/wiki/synchronization.md", "docs/wiki/machine-tooling.md"], "rationale": "Windows packages, profile, copy helpers, and tooling inventory are documented."},
+    {"path": "Brewfile", "classification": "document", "pages": ["docs/wiki/unix-provisioning.md", "docs/wiki/machine-tooling.md"], "rationale": "macOS package inventory and cross-platform tooling differences are documented."},
     {"path": "fonts.sh", "classification": "document", "pages": ["docs/wiki/unix-provisioning.md"], "rationale": "Font setup is part of Unix provisioning."},
     {"path": "tpm.sh", "classification": "document", "pages": ["docs/wiki/unix-provisioning.md"], "rationale": "TPM setup is part of Unix provisioning."},
     {"path": "copy-ssh-from-windows.sh", "classification": "document", "pages": ["docs/wiki/synchronization.md"], "rationale": "The one-way SSH import helper is documented."},
@@ -39,7 +40,6 @@
     {"path": "docs/idea-artifacts/PLAN.md", "classification": "document", "pages": ["docs/wiki/maintenance.md"], "rationale": "The implementation plan informs maintenance."},
     {"path": "docs/idea-artifacts/RFC.md", "classification": "document", "pages": ["docs/wiki/architecture.md"], "rationale": "The wiki RFC informs its architecture."},
     {"path": "README.md", "classification": "document", "pages": ["docs/wiki/setup-and-verification.md"], "rationale": "The setup entry point is documented."},
-    {"path": "LICENSE", "classification": "generated-or-vendored", "pages": [], "rationale": "License text does not require operational prose."},
-    {"path": "docs/machine-tooling.md", "classification": "document", "pages": ["docs/wiki/setup-and-verification.md"], "rationale": "The tooling inventory is linked from verification guidance."}
+    {"path": "LICENSE", "classification": "generated-or-vendored", "pages": [], "rationale": "License text does not require operational prose."}
   ]
 }

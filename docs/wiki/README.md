@@ -13,6 +13,7 @@ Start with the content-oriented [wiki index](index.md). Consult the chronologica
 - [Windows provisioning](windows-provisioning.md)
 - [Synchronization](synchronization.md)
 - [Configuration packages](configuration-packages.md)
+- [Machine tooling comparison](machine-tooling.md)
 - [Maintenance](maintenance.md)
 - [Privacy and sensitive boundaries](privacy-and-sensitive-boundaries.md)
 - [Pending-review queue](pending/README.md)

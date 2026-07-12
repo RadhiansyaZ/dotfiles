@@ -1,3 +1,15 @@
+---
+title: Machine tooling comparison
+source_files:
+  - Brewfile
+  - ansible/group_vars/all.yml
+  - ansible/tasks/linux.yml
+  - ansible/tasks/macos.yml
+  - windows/packages/packages.winget.json
+  - setup-windows.ps1
+  - sync-win.ps1
+last_reviewed: 2026-07-12
+---
 # Machine tooling comparison
 
 Use this as a **difference-first** inventory. It separates tools that the repository
@@ -241,7 +253,7 @@ not in an installer table.
 
 ### Homebrew: macOS `Brewfile`
 
-Homebrew Bundle consumes the tracked [`Brewfile`](../Brewfile); each formula or cask
+Homebrew Bundle consumes the tracked [`Brewfile`](../../Brewfile); each formula or cask
 below links to its Homebrew package page. Tap links identify the third-party formula
 source used by the Brewfile.
 
@@ -259,7 +271,7 @@ source used by the Brewfile.
 ### Debian/Ubuntu: APT packages
 
 The Linux playbook’s package names are the APT declarations in
-[`ansible/group_vars/all.yml`](../ansible/group_vars/all.yml). Each link is a Debian
+[`ansible/group_vars/all.yml`](../../ansible/group_vars/all.yml). Each link is a Debian
 package search page, which is deliberately version-independent across supported
 Debian/Ubuntu releases.
 
@@ -295,7 +307,7 @@ to the registry package used by `npm install -g`.
 ### Native Windows: Winget manifest packages
 
 The Windows installer imports the tracked
-[`packages.winget.json`](../windows/packages/packages.winget.json). Microsoft’s Winget
+[`packages.winget.json`](../../windows/packages/packages.winget.json). Microsoft’s Winget
 CLI identifies packages by ID; every link below searches that exact ID in the
 [official `microsoft/winget-pkgs` manifest repository](https://github.com/microsoft/winget-pkgs).
 Use `winget show --id <ID>` to inspect the currently available source/version before

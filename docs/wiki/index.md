@@ -21,6 +21,7 @@ This content-oriented catalog is the starting point for navigating the operation
 - [Windows provisioning](windows-provisioning.md) — PowerShell, winget, links, and native Windows setup.
 - [Synchronization](synchronization.md) — the canonical WSL/repository-to-Windows copy contract.
 - [Configuration packages](configuration-packages.md) — tracked Stow packages and their configuration responsibilities.
+- [Machine tooling comparison](machine-tooling.md) — difference-first inventory of installed, configured-only, and unprovisioned tooling by platform.
 
 ## Governance and safety
 
