@@ -67,7 +67,7 @@ machine.
 | `pnpm`, `uv`, Python | Installed | Installed | Installed | Package managers differ by platform. |
 | Neovim | Installed | Installed | Installed | Linux downloads the full latest release rather than APT Neovim. |
 | Zed | Configured only | Configured only | Installed and configured | Windows copies settings; Unix Stow deploys them. |
-| Pi, Codex, Context Mode, GitNexus | npm global packages installed | npm global packages installed | Configured only | Windows manifest has no Node runtime or global agent packages. |
+| Pi, Codex, Context Mode | npm global packages installed | npm global packages installed | Configured only | Windows manifest has no Node runtime or global agent packages. |
 | OpenCode | Installed | Configured only | Not provisioned | Only macOS Brewfile installs OpenCode. |
 | WezTerm | Configured only | Configured only | Configured only | No platform manifest installs WezTerm. |
 | Ghostty | Configured only | Configured only | Not provisioned | No installer is declared. |
@@ -188,7 +188,7 @@ application separately on any machine where it is needed.
 Shared Unix Go commands are `dlv`, `gcov2lcov`, `gofumpt`, `goimports`,
 `golangci-lint`, `goplay`, `gopls`, `gotests`, `impl`, `mockery`, `revive`, and
 `staticcheck`. Shared Unix npm globals are `@earendil-works/pi-coding-agent`,
-`@openai/codex`, `context-mode`, `corepack`, `gitnexus`, and `tree-sitter-cli`.
+`@openai/codex`, `context-mode`, `corepack`, and `tree-sitter-cli`.
 Neither set is installed by the native Windows bootstrap.
 
 ### Shell, terminal, and editor behavior
@@ -212,10 +212,10 @@ Neither set is installed by the native Windows bootstrap.
 
 - **Pi:** global npm agent on Unix; its shared configuration enables `pi-ask-user`,
   `pi-web-access`, and `context-mode`, and starts Context Mode as an MCP server.
-- **OpenCode:** configuration enables the DCP plugin and starts GitNexus locally through
-  `npx`; the OpenCode executable is provisioned only on macOS.
-- **Skills:** the `agents` Stow package contains local GitNexus skills and a lockfile for
-  restoring third-party skills. Installed third-party skill directories remain ignored.
+- **OpenCode:** configuration enables the DCP plugin; the OpenCode executable is provisioned
+  only on macOS.
+- **Skills:** the `agents` Stow package contains a lockfile for restoring third-party skills.
+  Installed third-party skill directories remain ignored.
 
 ## 8. Shared configuration versus machine-local state
 
@@ -302,7 +302,7 @@ to the registry package used by `npm install -g`.
 | Installer | Package sources |
 | --- | --- |
 | `go install` | [dlv](https://pkg.go.dev/github.com/go-delve/delve/cmd/dlv), [gcov2lcov](https://pkg.go.dev/github.com/jandelgado/gcov2lcov), [gofumpt](https://pkg.go.dev/mvdan.cc/gofumpt), [goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports), [golangci-lint](https://pkg.go.dev/github.com/golangci/golangci-lint/v2/cmd/golangci-lint), [goplay](https://pkg.go.dev/github.com/haya14busa/goplay/cmd/goplay), [gopls](https://pkg.go.dev/golang.org/x/tools/gopls), [gotests](https://pkg.go.dev/github.com/cweill/gotests/gotests), [impl](https://pkg.go.dev/github.com/josharian/impl), [mockery](https://pkg.go.dev/github.com/vektra/mockery/v2), [revive](https://pkg.go.dev/github.com/mgechev/revive), [staticcheck](https://pkg.go.dev/honnef.co/go/tools/cmd/staticcheck) |
-| `npm install -g` | [Pi coding agent](https://www.npmjs.com/package/@earendil-works/pi-coding-agent), [Codex](https://www.npmjs.com/package/@openai/codex), [Context Mode](https://www.npmjs.com/package/context-mode), [Corepack](https://www.npmjs.com/package/corepack), [GitNexus](https://www.npmjs.com/package/gitnexus), [tree-sitter CLI](https://www.npmjs.com/package/tree-sitter-cli) |
+| `npm install -g` | [Pi coding agent](https://www.npmjs.com/package/@earendil-works/pi-coding-agent), [Codex](https://www.npmjs.com/package/@openai/codex), [Context Mode](https://www.npmjs.com/package/context-mode), [Corepack](https://www.npmjs.com/package/corepack), [tree-sitter CLI](https://www.npmjs.com/package/tree-sitter-cli) |
 
 ### Native Windows: Winget manifest packages
 
@@ -331,5 +331,5 @@ is not installed by the matching platform bootstrap.
 | tmux plugins | [TPM](https://github.com/tmux-plugins/tpm), [tmux-sensible](https://github.com/tmux-plugins/tmux-sensible), [tmux-resurrect](https://github.com/tmux-plugins/tmux-resurrect), [tmux-continuum](https://github.com/tmux-plugins/tmux-continuum) |
 | Terminals and prompt | [Ghostty](https://ghostty.org), [WezTerm](https://wezfurlong.org/wezterm/), [Starship](https://starship.rs), [Zoxide](https://github.com/ajeetdsouza/zoxide) |
 | Editors | [Neovim](https://github.com/neovim/neovim), [lazy.nvim](https://github.com/folke/lazy.nvim), [LazyVim](https://github.com/LazyVim/LazyVim), [Zed](https://zed.dev) |
-| Agents and extensions | [Pi coding agent](https://www.npmjs.com/package/@earendil-works/pi-coding-agent), [pi-ask-user](https://www.npmjs.com/package/pi-ask-user), [pi-web-access](https://www.npmjs.com/package/pi-web-access), [Context Mode](https://www.npmjs.com/package/context-mode), [OpenCode](https://opencode.ai), [OpenCode DCP plugin](https://www.npmjs.com/package/@tarquinen/opencode-dcp), [GitNexus](https://www.npmjs.com/package/gitnexus), [Claude Code](https://docs.anthropic.com/en/docs/claude-code) |
+| Agents and extensions | [Pi coding agent](https://www.npmjs.com/package/@earendil-works/pi-coding-agent), [pi-ask-user](https://www.npmjs.com/package/pi-ask-user), [pi-web-access](https://www.npmjs.com/package/pi-web-access), [Context Mode](https://www.npmjs.com/package/context-mode), [OpenCode](https://opencode.ai), [OpenCode DCP plugin](https://www.npmjs.com/package/@tarquinen/opencode-dcp), [Claude Code](https://docs.anthropic.com/en/docs/claude-code) |
 | Other configured applications | [PostgreSQL](https://www.postgresql.org), [Git](https://git-scm.com) |

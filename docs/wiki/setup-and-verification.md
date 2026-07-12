@@ -18,4 +18,4 @@ The Unix playbook probes `zsh`, `stow`, `tmux`, and `nvim`; manually run `comman
 
 ## Constraints
 
-Do not run `./setup.sh` with `sudo`. Use the relevant setup path or targeted Ansible tags after provisioning changes.
+Do not run `./setup.sh` with `sudo`. Use the relevant setup path or targeted Ansible tags after provisioning changes. Third-party agent skills are restored from the tracked lockfile; add a local skill only after explicitly allowlisting it in `agents/.agents/skills/.gitignore`.

@@ -90,7 +90,6 @@ npm_packages:
   - "@openai/codex"
   - context-mode
   - corepack
-  - gitnexus
   - tree-sitter-cli
 
 linux_base_packages:

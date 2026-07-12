@@ -78,9 +78,8 @@ shared guidance and the dependency list stay consistent across machines. Claude 
 the global guidance from `~/.claude/CLAUDE.md`; Pi receives a linked copy at
 `~/.pi/agent/AGENTS.md`.
 
-- **Local skills:** committed in `agents/.agents/skills/`. The ignore policy currently tracks
-  only `gitnexus-*`; add another allowlist rule in `agents/.agents/skills/.gitignore` before
-  adding a different local skill.
+- **Local skills:** add hand-written skills under `agents/.agents/skills/` and allowlist them
+  in `agents/.agents/skills/.gitignore` before committing.
 - **Third-party skills:** ignored after installation. Their Git source, path, and folder hash
   are recorded in `.skill-lock.json`; restore them on a new machine with the skills CLI using
   that lockfile.

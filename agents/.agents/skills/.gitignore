@@ -6,5 +6,5 @@
 #
 # Ignore every skill folder...
 */
-# ...then re-include the local/hand-written ones (absent from .skill-lock.json).
-!gitnexus-*/
+# Add explicit allowlist rules below for any local/hand-written skills absent from
+# .skill-lock.json.

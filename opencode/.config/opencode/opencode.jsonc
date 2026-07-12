@@ -6,11 +6,4 @@
     "port": 4096,
   },
   "plugin": ["@tarquinen/opencode-dcp@latest"],
-  "mcp": {
-    "gitnexus": {
-      "type": "local",
-      "enabled": true,
-      "command": ["npx", "-y", "gitnexus@latest", "mcp"],
-    }
-  },
 }
