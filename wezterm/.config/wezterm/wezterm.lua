@@ -22,6 +22,19 @@ config.bypass_mouse_reporting_modifiers = "CTRL"
 config.color_scheme = "Catppuccin Macchiato"
 local spawn_domain = "CurrentPaneDomain"
 
+-- Open at bottom-left, sized to at least 1/4 of the screen area (half width,
+-- half height of the active screen's resolution). wezterm has no API to query
+-- the taskbar's reserved work area, so this assumes the default Windows
+-- taskbar height; adjust if yours is a different size.
+local TASKBAR_HEIGHT = 48
+wezterm.on("gui-startup", function(cmd)
+	local screen = wezterm.gui.screens().active
+	local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
+	local height = screen.height // 2
+	window:gui_window():set_position(screen.x, screen.y + screen.height - height - TASKBAR_HEIGHT)
+	window:gui_window():set_inner_size(screen.width // 2, height)
+end)
+
 -- On Windows, default to a native WSL domain so new tabs/splits inherit the
 -- Linux environment and land in the distro's home directory instead of
 -- C:\Users\<user>.
