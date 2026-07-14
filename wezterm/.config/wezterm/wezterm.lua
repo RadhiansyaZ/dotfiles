@@ -14,6 +14,9 @@ local act = wezterm.action
 local config = wezterm.config_builder()
 -- Report modified keys (including Shift+Enter) distinctly to terminal apps such as Pi.
 config.enable_kitty_keyboard = true
+-- Let CTRL alone bypass mouse reporting (tmux.conf sets `mouse on`), so
+-- CTRL-click still opens links instead of being swallowed by tmux.
+config.bypass_mouse_reporting_modifiers = "CTRL"
 local wsl_color_scheme = "Catppuccin Macchiato"
 local spawn_domain = "CurrentPaneDomain"
 
