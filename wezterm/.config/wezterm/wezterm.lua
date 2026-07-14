@@ -17,48 +17,21 @@ config.enable_kitty_keyboard = true
 -- Let CTRL alone bypass mouse reporting (tmux.conf sets `mouse on`), so
 -- CTRL-click still opens links instead of being swallowed by tmux.
 config.bypass_mouse_reporting_modifiers = "CTRL"
-local wsl_color_scheme = "Catppuccin Macchiato"
+-- Single fixed color scheme for every pane/domain (no per-pane switching, so no
+-- set_config_overrides repaints and no theme flicker).
+config.color_scheme = "Catppuccin Macchiato"
 local spawn_domain = "CurrentPaneDomain"
-
-local function is_wsl_pane(pane)
-	local cwd = pane:get_current_working_dir()
-	if cwd then
-		local cwd_str = tostring(cwd):lower()
-		if cwd_str:find("wsl%.localhost") or cwd_str:find("wsl%%24") then
-			return true
-		end
-	end
-
-	local proc = pane:get_foreground_process_name()
-	if proc then
-		local proc_l = proc:lower()
-		if proc_l:find("wsl.exe", 1, true) or proc_l:find("wslhost.exe", 1, true) then
-			return true
-		end
-	end
-
-	return false
-end
-
-wezterm.on("update-status", function(window, pane)
-	local overrides = window:get_config_overrides() or {}
-	local wanted_scheme = is_wsl_pane(pane) and wsl_color_scheme or nil
-
-	if overrides.color_scheme ~= wanted_scheme then
-		overrides.color_scheme = wanted_scheme
-		window:set_config_overrides(overrides)
-	end
-end)
 
 -- On Windows, default to a native WSL domain so new tabs/splits inherit the
 -- Linux environment and land in the distro's home directory instead of
 -- C:\Users\<user>.
 if wezterm.target_triple:find("windows") then
 	config.default_domain = "WSL:Debian"
-	-- Force new splits/tabs to use the configured WSL domain even if the current
-	-- pane is still a local Windows pane; otherwise CurrentPaneDomain can keep
-	-- spawning under C:\Users\<user>.
-	spawn_domain = "DefaultDomain"
+	-- spawn_domain stays CurrentPaneDomain: the base pane is already WSL (via
+	-- default_domain), so splits/tabs inherit the WSL domain AND the current
+	-- working directory. Landing in ~ instead of /mnt/c/Users requires the shell
+	-- to report its cwd via OSC 7 (see zsh/.zshrc); without that, WSL splits fall
+	-- back to wezterm's Windows launch dir.
 
 	-- Preserve the native Windows font fallback chain and useful shell launcher.
 	config.font = wezterm.font_with_fallback({ "JetBrains Mono", "Fira Code", "DengXian" })
@@ -232,6 +205,15 @@ local ghostty_keys = {
 for _, k in ipairs(ghostty_keys) do
 	table.insert(config.keys, k)
 end
+
+-- --------------------------------------------------------------------------- rendering
+-- WebGpu (DX12 on Windows) is smoother than the default OpenGL front end for
+-- the WSL-on-Windows setup; WezTerm auto-falls back to Software rendering under
+-- Remote Desktop. If a GPU/driver issue shows up, set front_end = "Software".
+config.front_end = "WebGpu"
+config.webgpu_power_preference = "HighPerformance"
+-- Cap the frame rate so busy WSL output doesn't spin the GPU needlessly.
+config.max_fps = 120
 
 -- --------------------------------------------------------------------------- appearance
 -- Minimal defaults; tweak freely. Tab bar at the bottom echoes tmux's status line.

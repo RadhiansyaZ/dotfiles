@@ -114,6 +114,18 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH=/usr/local/bin/:$PATH
 # complete -C '/usr/local/bin/aws_completer' aws
 
+# Report cwd to the terminal via OSC 7 so new panes/tabs open in the current
+# directory (e.g. WezTerm WSL splits land in ~ instead of /mnt/c/Users). Gated
+# to terminals that consume it to avoid stray escapes elsewhere.
+if [[ -n "${WEZTERM_PANE:-}" || "${TERM_PROGRAM:-}" == (WezTerm|ghostty) ]]; then
+  _osc7_report_cwd() {
+    printf '\033]7;file://%s%s\033\\' "${HOST}" "${PWD// /%20}"
+  }
+  autoload -Uz add-zsh-hook
+  add-zsh-hook chpwd _osc7_report_cwd
+  _osc7_report_cwd
+fi
+
 # Shell Integration
 [[ -f "$HOME/.homebrew.zshrc" ]] && source "$HOME/.homebrew.zshrc"
 
