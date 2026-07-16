@@ -16,7 +16,8 @@ Clone the repository on the target system and run this as your normal user:
 
 The script installs Ansible when necessary (a local virtual environment on macOS, `apt` on
 Debian/Ubuntu) and applies `ansible/playbook.yml`: packages, Stow links, fonts, tmux/TPM,
-and Go tooling. Do not run it with `sudo`.
+and Go tooling. On Linux and WSL, a tool already available on `PATH` is left in place without
+an installer or version upgrade. Do not run it with `sudo`.
 
 ### Native Windows
 
@@ -40,9 +41,9 @@ synchronizes, and verifies configuration.
 
 ## Verify and synchronize
 
-- Unix setup dry-runs Stow and probes `zsh`, `stow`, `tmux`, and `nvim`. To check manually:
+- Unix setup dry-runs Stow and probes `zsh`, `stow`, `tmux`, `nvim`, and `pyenv`. To check manually:
   ```sh
-  command -v zsh stow tmux nvim
+  command -v zsh stow tmux nvim pyenv
   ```
 - Windows setup reports missing tools. To check manually:
   ```powershell

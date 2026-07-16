@@ -64,7 +64,7 @@ machine.
 | `aws` | Installed | Installed | Installed | AWS CLI v2 is a direct Linux installer. |
 | `go` and Go tools | Installed | Installed | Go installed; shared Go tools not provisioned | Windows does not run the Unix shared Go-tools task. |
 | Node runtime | Node LTS via NVM | Node LTS via NVM | NVM for Windows only | Windows setup does **not** install a Node version. |
-| `pnpm`, `uv`, Python | Installed | Installed | Installed | Package managers differ by platform. |
+| `pnpm`, `uv`, Python | Installed | Installed | Installed | macOS/Linux/WSL also install `pyenv`; native Windows uses winget Python. |
 | Neovim | Installed | Installed | Installed | Linux downloads the full latest release rather than APT Neovim. |
 | Zed | Configured only | Configured only | Installed and configured | Windows copies settings; Unix Stow deploys them. |
 | Pi, Codex, Context Mode | npm global packages installed | npm global packages installed | Configured only | Windows manifest has no Node runtime or global agent packages. |
@@ -185,7 +185,7 @@ application separately on any machine where it is needed.
 | Go | Current release downloaded only when absent | Current release downloaded only when absent | Winget Go |
 | Node | NVM plus current LTS | NVM plus current LTS | NVM for Windows, no Node version selected |
 | PNPM | Homebrew | Official installer | Winget |
-| Python | Homebrew Python 3.12 | APT `python3`/`pip`, plus UV | Winget Python 3.12 and UV |
+| Python | Homebrew Python 3.12, pyenv, and UV | APT `python3`/`pip`, pyenv, and UV | Winget Python 3.12 and UV |
 | pre-commit | Homebrew | User-level `pip3` install | Not provisioned |
 
 Shared Unix Go commands are `dlv`, `gcov2lcov`, `gofumpt`, `goimports`,

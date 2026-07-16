@@ -1,81 +1,45 @@
 ---
-# Install Neovim on Linux from the latest GitHub release.
-#
-# Neovim is NOT a single static binary: its tarball ships bin/nvim alongside a share/nvim/runtime
-# tree that the editor locates at <bin>/../share/nvim/runtime. The generic single-binary task
-# (linux_github_binary.yml) copies only bin/nvim and drops the runtime, producing an editor with
-# no defaults/syntax that cannot run LazyVim. Hence this dedicated, version-aware task.
+# Install Neovim on Linux only when it is absent. The release tarball ships both the
+# executable and its runtime tree, so it cannot use the generic single-binary installer.
 
-- name: Remove distro Neovim (apt) to stop PATH shadowing
-  # Debian/Ubuntu ship an old Neovim (e.g. 0.10.4) that LazyVim cannot use. If present at
-  # /usr/bin/nvim it can shadow or be confused with our /usr/local/bin install. Purge it.
-  become: true
-  ansible.builtin.apt:
-    name:
-      - neovim
-      - neovim-runtime
-    state: absent
-    purge: true
-  when: ansible_facts.os_family == 'Debian'
-  tags: [linux, nvim, packages]
-
-- name: Fetch latest Neovim release
-  ansible.builtin.uri:
-    url: https://api.github.com/repos/neovim/neovim/releases/latest
-    return_content: true
-  register: nvim_release
-  tags: [linux, nvim, packages]
-
-- name: Set latest Neovim version
-  ansible.builtin.set_fact:
-    nvim_latest_version: "{{ nvim_release.json.tag_name | regex_replace('^v', '') }}"
-    nvim_asset_url: >-
-      {{ (nvim_release.json.assets
-          | selectattr('browser_download_url', 'search', 'nvim-linux-' ~ linux_nvim_arch ~ '\\.tar\\.gz')
-          | map(attribute='browser_download_url')
-          | list
-          | first) | default('') }}
-  tags: [linux, nvim, packages]
-
-- name: Check installed Neovim version
-  ansible.builtin.command: /usr/local/bin/nvim --version
-  register: nvim_installed
+- name: Check Neovim installation
+  ansible.builtin.command: which nvim
+  register: nvim_check
   changed_when: false
   failed_when: false
   tags: [linux, nvim, packages]
 
-- name: Set installed Neovim version
-  ansible.builtin.set_fact:
-    nvim_installed_version: >-
-      {{ (nvim_installed.stdout | regex_search('NVIM v[0-9.]+') | default('', true) | regex_replace('^NVIM v', ''))
-         if nvim_installed.rc == 0 else '' }}
-  tags: [linux, nvim, packages]
-
-- name: Install or upgrade Neovim from release tarball
-  when:
-    - nvim_asset_url | length > 0
-    - nvim_installed_version != nvim_latest_version
+- name: Install Neovim from latest release when missing
+  when: nvim_check.rc != 0
   block:
-    - name: Create temp directory for Neovim
+    - name: Fetch latest Neovim release
+      ansible.builtin.uri:
+        url: https://api.github.com/repos/neovim/neovim/releases/latest
+        return_content: true
+      register: nvim_release
+
+    - name: Select Neovim release asset
+      ansible.builtin.set_fact:
+        nvim_asset_url: >-
+          {{ (nvim_release.json.assets
+              | selectattr('browser_download_url', 'search', 'nvim-linux-' ~ linux_nvim_arch ~ '\\.tar\\.gz')
+              | map(attribute='browser_download_url')
+              | list
+              | first) | default('') }}
+
+    - name: Create temporary directory for Neovim
       ansible.builtin.tempfile:
         state: directory
         suffix: -nvim
       register: nvim_tmp
+      when: nvim_asset_url | length > 0
 
     - name: Download Neovim tarball
       ansible.builtin.get_url:
         url: "{{ nvim_asset_url }}"
         dest: "{{ nvim_tmp.path }}/nvim.tar.gz"
         mode: "0644"
-
-    # Mirror the official install (https://neovim.io/doc/install/):
-    #   sudo rm -rf /opt/nvim-linux-<arch>
-    #   sudo tar -C /opt -xzf nvim-linux-<arch>.tar.gz
-    - name: Remove previous Neovim install
-      become: true
-      ansible.builtin.file:
-        path: "/opt/nvim-linux-{{ linux_nvim_arch }}"
-        state: absent
+      when: nvim_asset_url | length > 0
 
     - name: Extract Neovim into /opt
       become: true
@@ -83,26 +47,26 @@
         src: "{{ nvim_tmp.path }}/nvim.tar.gz"
         dest: /opt
         remote_src: true
+      when: nvim_asset_url | length > 0
 
-    # The official docs add /opt/nvim-linux-<arch>/bin to PATH via shell config. This repo's
-    # shell config is stow-managed, so symlink into /usr/local/bin (already on PATH) instead —
-    # same outcome without editing a managed file, and it keeps nvim visible to non-interactive
-    # shells (e.g. the playbook's verify step).
-    - name: Symlink nvim into /usr/local/bin
+    - name: Symlink Neovim into /usr/local/bin
       become: true
       ansible.builtin.file:
         src: "/opt/nvim-linux-{{ linux_nvim_arch }}/bin/nvim"
         dest: /usr/local/bin/nvim
         state: link
         force: true
+      when: nvim_asset_url | length > 0
 
-    - name: Remove temp directory for Neovim
+    - name: Remove temporary directory for Neovim
       ansible.builtin.file:
         path: "{{ nvim_tmp.path }}"
         state: absent
+      when:
+        - nvim_tmp is defined
+        - nvim_tmp.path is defined
 
-- name: Warn when no Neovim release asset matched
-  ansible.builtin.debug:
-    msg: "No nvim-linux-{{ linux_nvim_arch }}.tar.gz asset found in the latest Neovim release."
-  when: nvim_asset_url | length == 0
-  tags: [linux, nvim, packages]
+    - name: Warn when no Neovim release asset matched
+      ansible.builtin.debug:
+        msg: "No nvim-linux-{{ linux_nvim_arch }}.tar.gz asset found in the latest Neovim release."
+      when: nvim_asset_url | length == 0

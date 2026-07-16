@@ -118,6 +118,7 @@ linux_cli_packages:
   - libdbd-pg-perl
   - pass
   - git-crypt
+  - pyenv
   - python3
   - python3-pip
   - mpv

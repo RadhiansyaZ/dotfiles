@@ -1,6 +1,6 @@
 ---
 - name: Check {{ direct_binary.name }}
-  ansible.builtin.command: "command -v {{ direct_binary.name }}"
+  ansible.builtin.command: "which {{ direct_binary.name }}"
   register: direct_binary_check
   changed_when: false
   failed_when: false

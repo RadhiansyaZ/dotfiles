@@ -51,6 +51,8 @@ brew "pgformatter"
 brew "pnpm"
 # Framework for managing multi-language pre-commit hooks
 brew "pre-commit"
+# Manage multiple Python versions
+brew "pyenv"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.12"
 # Search tool like grep and The Silver Searcher

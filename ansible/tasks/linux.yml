@@ -51,6 +51,13 @@
   when: lookup('ansible.builtin.pipe', 'command -v fdfind || true') | length > 0
   tags: [linux, packages]
 
+- name: Check GitHub CLI installation
+  ansible.builtin.command: which gh
+  register: linux_gh_check
+  changed_when: false
+  failed_when: false
+  tags: [linux, packages]
+
 - name: Add GitHub CLI key
   become: true
   ansible.builtin.shell: |
@@ -62,7 +69,9 @@
   args:
     executable: /bin/bash
     creates: /etc/apt/keyrings/githubcli-archive-keyring.gpg
-  when: ansible_facts.os_family == 'Debian'
+  when:
+    - ansible_facts.os_family == 'Debian'
+    - linux_gh_check.rc != 0
   tags: [linux, packages]
 
 - name: Add GitHub CLI apt repository
@@ -71,7 +80,16 @@
     repo: "deb [arch={{ linux_arch }} signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main"
     filename: github-cli
     state: present
-  when: ansible_facts.os_family == 'Debian'
+  when:
+    - ansible_facts.os_family == 'Debian'
+    - linux_gh_check.rc != 0
+  tags: [linux, packages]
+
+- name: Check eza installation
+  ansible.builtin.command: which eza
+  register: linux_eza_check
+  changed_when: false
+  failed_when: false
   tags: [linux, packages]
 
 - name: Add eza key
@@ -85,7 +103,9 @@
   args:
     executable: /bin/bash
     creates: /etc/apt/keyrings/gierens.gpg
-  when: ansible_facts.os_family == 'Debian'
+  when:
+    - ansible_facts.os_family == 'Debian'
+    - linux_eza_check.rc != 0
   tags: [linux, packages]
 
 - name: Add eza apt repository
@@ -94,18 +114,31 @@
     repo: "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main"
     filename: gierens
     state: present
-  when: ansible_facts.os_family == 'Debian'
+  when:
+    - ansible_facts.os_family == 'Debian'
+    - linux_eza_check.rc != 0
   tags: [linux, packages]
 
-- name: Install gh and eza
+- name: Install GitHub CLI when missing
   become: true
   ansible.builtin.apt:
-    name:
-      - gh
-      - eza
+    name: gh
     state: present
     update_cache: true
-  when: ansible_facts.os_family == 'Debian'
+  when:
+    - ansible_facts.os_family == 'Debian'
+    - linux_gh_check.rc != 0
+  tags: [linux, packages]
+
+- name: Install eza when missing
+  become: true
+  ansible.builtin.apt:
+    name: eza
+    state: present
+    update_cache: true
+  when:
+    - ansible_facts.os_family == 'Debian'
+    - linux_eza_check.rc != 0
   tags: [linux, packages]
 
 - name: Check Go installation
@@ -155,44 +188,76 @@
   when: linux_go_check.rc != 0
   tags: [linux, go]
 
-- name: Download starship installer
+- name: Check Starship installation
+  ansible.builtin.command: which starship
+  register: linux_starship_check
+  changed_when: false
+  failed_when: false
+  tags: [linux, packages]
+
+- name: Download Starship installer when missing
   ansible.builtin.get_url:
     url: https://starship.rs/install.sh
     dest: /tmp/starship-install.sh
     mode: "0755"
+  when: linux_starship_check.rc != 0
   tags: [linux, packages]
 
-- name: Install starship
+- name: Install Starship when missing
   become: true
-  ansible.builtin.command:
-    cmd: /tmp/starship-install.sh --yes
-    creates: /usr/local/bin/starship
+  ansible.builtin.command: /tmp/starship-install.sh --yes
+  when: linux_starship_check.rc != 0
   tags: [linux, packages]
 
-- name: Download zoxide installer
+- name: Check zoxide installation
+  ansible.builtin.command: which zoxide
+  register: linux_zoxide_check
+  changed_when: false
+  failed_when: false
+  tags: [linux, packages]
+
+- name: Download zoxide installer when missing
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh
     dest: /tmp/zoxide-install.sh
     mode: "0755"
+  when: linux_zoxide_check.rc != 0
   tags: [linux, packages]
 
-- name: Install zoxide
-  ansible.builtin.command:
-    cmd: /tmp/zoxide-install.sh
-    creates: "{{ local_bin_dir }}/zoxide"
+- name: Install zoxide when missing
+  ansible.builtin.command: /tmp/zoxide-install.sh
+  when: linux_zoxide_check.rc != 0
   tags: [linux, packages]
 
-- name: Download nvm installer
+- name: Check nvm installation
+  ansible.builtin.stat:
+    path: "{{ item }}"
+  loop:
+    - "{{ ansible_facts.env.HOME }}/.config/nvm/nvm.sh"
+    - "{{ ansible_facts.env.HOME }}/.nvm/nvm.sh"
+  register: linux_nvm_files
+  changed_when: false
+  tags: [linux, node]
+
+- name: Set nvm installation state
+  ansible.builtin.set_fact:
+    linux_nvm_installed: "{{ linux_nvm_files.results | selectattr('stat.exists') | list | length > 0 }}"
+    linux_nvm_script: >-
+      {{ (linux_nvm_files.results | selectattr('stat.exists') | map(attribute='item') | list | first)
+         | default(ansible_facts.env.HOME ~ '/.config/nvm/nvm.sh', true) }}
+  tags: [linux, node]
+
+- name: Download nvm installer when missing
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/nvm-sh/nvm/HEAD/install.sh
     dest: /tmp/nvm-install.sh
     mode: "0755"
+  when: not (linux_nvm_installed | bool)
   tags: [linux, node]
 
-- name: Install nvm
-  ansible.builtin.command:
-    cmd: bash /tmp/nvm-install.sh
-    creates: "{{ ansible_facts.env.HOME }}/.config/nvm/nvm.sh"
+- name: Install nvm when missing
+  ansible.builtin.command: bash /tmp/nvm-install.sh
+  when: not (linux_nvm_installed | bool)
   environment:
     # zsh/.zshrc sources nvm from ~/.config/nvm, so install there (not the default ~/.nvm).
     NVM_DIR: "{{ ansible_facts.env.HOME }}/.config/nvm"
@@ -200,43 +265,63 @@
     PROFILE: /dev/null
   tags: [linux, node]
 
-- name: Install Node.js LTS and set as default (nvm)
+- name: Check Node.js installation
+  ansible.builtin.command: which node
+  register: linux_node_check
+  changed_when: false
+  failed_when: false
+  tags: [linux, node]
+
+- name: Install Node.js LTS and set as default when missing
   ansible.builtin.shell: |
-    set -e
-    export NVM_DIR="$HOME/.config/nvm"
-    . "$NVM_DIR/nvm.sh"
+    set -euo pipefail
+    export NVM_DIR="{{ linux_nvm_script | dirname }}"
+    . "{{ linux_nvm_script }}"
     nvm install --lts
     nvm alias default 'lts/*'
   args:
     executable: /bin/bash
-  register: linux_nvm_lts
-  changed_when: "'is already installed' not in linux_nvm_lts.stderr"
+  when: linux_node_check.rc != 0
   tags: [linux, node]
 
-- name: Download pnpm installer
+- name: Check pnpm installation
+  ansible.builtin.command: which pnpm
+  register: linux_pnpm_check
+  changed_when: false
+  failed_when: false
+  tags: [linux, node]
+
+- name: Download pnpm installer when missing
   ansible.builtin.get_url:
     url: https://get.pnpm.io/install.sh
     dest: /tmp/pnpm-install.sh
     mode: "0755"
+  when: linux_pnpm_check.rc != 0
   tags: [linux, node]
 
-- name: Install pnpm
-  ansible.builtin.command:
-    cmd: sh /tmp/pnpm-install.sh
-    creates: "{{ ansible_facts.env.HOME }}/.local/share/pnpm/pnpm"
+- name: Install pnpm when missing
+  ansible.builtin.command: sh /tmp/pnpm-install.sh
+  when: linux_pnpm_check.rc != 0
   tags: [linux, node]
 
-- name: Download uv installer
+- name: Check uv installation
+  ansible.builtin.command: which uv
+  register: linux_uv_check
+  changed_when: false
+  failed_when: false
+  tags: [linux, python]
+
+- name: Download uv installer when missing
   ansible.builtin.get_url:
     url: https://astral.sh/uv/install.sh
     dest: /tmp/uv-install.sh
     mode: "0755"
+  when: linux_uv_check.rc != 0
   tags: [linux, python]
 
-- name: Install uv
-  ansible.builtin.command:
-    cmd: sh /tmp/uv-install.sh
-    creates: "{{ local_bin_dir }}/uv"
+- name: Install uv when missing
+  ansible.builtin.command: sh /tmp/uv-install.sh
+  when: linux_uv_check.rc != 0
   tags: [linux, python]
 
 - name: Check AWS CLI installation
@@ -280,7 +365,14 @@
     loop_var: direct_binary
   tags: [linux, packages]
 
-- name: Install pre-commit
+- name: Check pre-commit installation
+  ansible.builtin.command: which pre-commit
+  register: linux_pre_commit_check
+  changed_when: false
+  failed_when: false
+  tags: [linux, python]
+
+- name: Install pre-commit when missing
   # Debian 12+/Ubuntu 24.04+ mark the system Python as externally managed (PEP 668), so a
   # plain `pip install --user` fails with "externally-managed-environment".
   # --break-system-packages bypasses that guard; combined with --user the install still lands
@@ -289,4 +381,5 @@
     name: pre-commit
     executable: pip3
     extra_args: --user --break-system-packages
+  when: linux_pre_commit_check.rc != 0
   tags: [linux, python]

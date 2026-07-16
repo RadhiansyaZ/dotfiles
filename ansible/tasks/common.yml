@@ -171,5 +171,7 @@
   # Go was just installed to /usr/local/go in the Linux play and may not be on the controller
   # PATH yet, so also probe that known location — otherwise these tools are silently skipped
   # on a fresh host. (The task itself prepends /usr/local/go/bin to PATH via `environment`.)
-  when: lookup('ansible.builtin.pipe', 'command -v go 2>/dev/null || (test -x /usr/local/go/bin/go && echo found) || true') | length > 0
+  when:
+    - lookup('ansible.builtin.pipe', 'command -v go 2>/dev/null || (test -x /usr/local/go/bin/go && echo found) || true') | length > 0
+    - lookup('ansible.builtin.pipe', 'command -v ' ~ item.binary ~ ' 2>/dev/null || true') | length == 0
   tags: [go]

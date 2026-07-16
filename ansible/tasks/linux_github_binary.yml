@@ -3,7 +3,7 @@
   when: not (github_binary.skip | default(false) | bool)
   block:
     - name: Check {{ github_binary.name }}
-      ansible.builtin.command: "command -v {{ github_binary.name }}"
+      ansible.builtin.command: "which {{ github_binary.name }}"
       register: github_binary_check
       changed_when: false
       failed_when: false
