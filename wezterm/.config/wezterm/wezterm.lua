@@ -12,6 +12,21 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 local config = wezterm.config_builder()
+
+-- resurrect.wezterm: tmux-resurrect-style save/restore of workspace layout
+-- (windows, tabs, panes). Fetched and cached by wezterm on first run.
+-- NOTE: upstream repo was archived 2026-05; still functional, unmaintained.
+-- Docs: https://github.com/MLFlexer/resurrect.wezterm
+local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
+-- Auto-save the workspace state every 15 min (tmux-continuum feel). Workspaces
+-- only: no per-window/per-tab snapshots, matching the workspace-level scope.
+-- State is written as plain JSON under wezterm's runtime dir (no encryption).
+resurrect.state_manager.periodic_save({
+	interval_seconds = 15 * 60,
+	save_workspaces = true,
+	save_windows = false,
+	save_tabs = false,
+})
 -- Report modified keys (including Shift+Enter) distinctly to terminal apps such as Pi.
 config.enable_kitty_keyboard = true
 -- Let CTRL alone bypass mouse reporting (tmux.conf sets `mouse on`), so
@@ -142,6 +157,27 @@ config.keys = {
 			end
 		end),
 	}) },
+	-- resurrect: save/restore the workspace, mirroring tmux-resurrect's
+	-- prefix+Ctrl-s (save) / prefix+Ctrl-r (restore) under the C-a leader.
+	{ key = "s", mods = "LEADER|CTRL", action = wezterm.action_callback(function()
+		resurrect.state_manager.save_state(resurrect.workspace_state.get_workspace_state())
+	end) },
+	{ key = "r", mods = "LEADER|CTRL", action = wezterm.action_callback(function(win, pane)
+		-- Fuzzy-pick a saved state; only workspace states are restored here.
+		resurrect.fuzzy_loader.fuzzy_load(win, pane, function(id)
+			local kind = string.match(id, "^([^/]+)")
+			id = string.match(id, "([^/]+)$")
+			id = string.match(id, "(.+)%..+$")
+			if kind == "workspace" then
+				local state = resurrect.state_manager.load_state(id, "workspace")
+				resurrect.workspace_state.restore_workspace(state, {
+					relative = true,
+					restore_text = true,
+					on_pane_restore = resurrect.tab_state.default_on_pane_restore,
+				})
+			end
+		end)
+	end) },
 
 	-- --------------------------------------------------------------- copy/misc
 	-- tmux: prefix + [ enters copy mode; prefix + ] pastes; prefix + : opens

@@ -147,7 +147,10 @@ Windows-native editor, and desktop application workflow.
 ### Windows configuration model
 
 `setup-windows.ps1` creates repository-backed symlinks for Git, the PowerShell profile,
-agent skills, Starship, and WezTerm. It copies Pi and Zed settings as real local files:
+agent skills, Starship, and WezTerm. It also pre-clones the WezTerm plugin tree
+(`resurrect.wezterm` and its `dev.wezterm` dependency) into `%APPDATA%/wezterm/plugins`
+with the system `git`, because WezTerm's bundled libgit2 cannot clone plugins on Windows.
+It copies Pi and Zed settings as real local files:
 
 | Application | Canonical source | Windows destination | Why copied instead of linked |
 | --- | --- | --- | --- |

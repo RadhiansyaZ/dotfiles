@@ -199,6 +199,55 @@ Set-Symlink `
 # their settings, and Zed cannot open a UNC-backed symlink from its command palette.
 & (Join-Path $RepoRoot "sync-win.ps1") -SourceRoot $RepoRoot
 
+# --------------------------------------------------------------------------- 4b. wezterm plugins
+# WezTerm's bundled libgit2 cannot clone plugins on Windows (it fails with "unsupported URL
+# protocol; class=Net"), so the wezterm.plugin.require() calls in wezterm.lua would error on
+# every launch and flash empty windows. Pre-clone the plugin tree with the system git; wezterm
+# reuses an existing plugin directory instead of cloning it itself.
+Write-Step "Installing WezTerm plugins"
+
+# Reproduces wezterm's URL -> on-disk directory name escaping (lua-api-crates/plugin):
+# '/' and '\' -> sZs, ':' -> sCs, '.' -> sDs; [A-Za-z0-9_-] pass through unchanged.
+function Get-WeztermPluginDir {
+    param([string]$Url)
+    $sb = [System.Text.StringBuilder]::new()
+    foreach ($c in $Url.ToCharArray()) {
+        switch -Regex ($c) {
+            '[/\\]'         { [void]$sb.Append('sZs'); break }
+            ':'             { [void]$sb.Append('sCs'); break }
+            '\.'            { [void]$sb.Append('sDs'); break }
+            '[A-Za-z0-9_-]' { [void]$sb.Append($c);   break }
+            default         { [void]$sb.Append(('u{0}' -f [int][char]$c)); break }
+        }
+    }
+    $sb.ToString()
+}
+
+# Clones $Url into wezterm's plugins directory under its escaped name, unless already present.
+function Install-WeztermPlugin {
+    param([string]$Url, [string]$PluginsRoot)
+    $dir  = Join-Path $PluginsRoot (Get-WeztermPluginDir $Url)
+    $init = Join-Path $dir "plugin\init.lua"
+    if (Test-Path $init) { Write-Ok "Already installed: $Url"; return }
+    if (Test-Path $dir)  { Remove-Item $dir -Recurse -Force }
+    git clone --depth 1 $Url $dir 2>&1 | Out-Null
+    if ($LASTEXITCODE -eq 0 -and (Test-Path $init)) {
+        Write-Ok "Cloned: $Url"
+    } else {
+        Write-Warn "Failed to clone $Url — resurrect.wezterm will not load until this succeeds."
+    }
+}
+
+if (Get-Command git -ErrorAction SilentlyContinue) {
+    $pluginsRoot = Join-Path $env:APPDATA "wezterm\plugins"
+    if (-not (Test-Path $pluginsRoot)) { New-Item -ItemType Directory -Path $pluginsRoot -Force | Out-Null }
+    # resurrect.wezterm plus its dependency dev.wezterm (required by resurrect's init.lua).
+    Install-WeztermPlugin -Url "https://github.com/MLFlexer/resurrect.wezterm" -PluginsRoot $pluginsRoot
+    Install-WeztermPlugin -Url "https://github.com/chrisgve/dev.wezterm"       -PluginsRoot $pluginsRoot
+} else {
+    Write-Warn "git not on PATH — skipping WezTerm plugin install. Re-run after git is installed."
+}
+
 # --------------------------------------------------------------------------- 5. verify tools
 Write-Step "Verifying shell tools are on PATH"
 Update-SessionPath
