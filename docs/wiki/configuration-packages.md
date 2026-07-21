@@ -4,6 +4,7 @@ source_files:
   - git/.gitconfig
   - zsh/.zshrc
   - tmux/.config/tmux/tmux.conf
+  - psmux/.psmux.conf
   - nvim/.config/nvim/init.lua
   - starship/starship.toml
   - wezterm/.config/wezterm/wezterm.lua
@@ -12,7 +13,7 @@ last_reviewed: 2026-07-12
 ---
 # Configuration packages
 
-Configuration directories are repository-managed Stow packages. They include shell, Git, terminal, editor, agent, and application configuration such as [zsh](../../zsh/.zshrc), [tmux](../../tmux/.config/tmux/tmux.conf), [Neovim](../../nvim/.config/nvim/init.lua), and [Starship](../../starship/starship.toml).
+Configuration directories are repository-managed Stow packages. They include shell, Git, terminal, editor, agent, and application configuration such as [zsh](../../zsh/.zshrc), [tmux](../../tmux/.config/tmux/tmux.conf), [psmux](../../psmux/.psmux.conf), [Neovim](../../nvim/.config/nvim/init.lua), and [Starship](../../starship/starship.toml).
 
 ## Constraints
 

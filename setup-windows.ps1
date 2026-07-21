@@ -179,6 +179,11 @@ Set-Symlink `
     -Target "$env:USERPROFILE\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" `
     -Source "$RepoRoot\windows\powershell\Microsoft.PowerShell_profile.ps1"
 
+# psmux reads this config from the Windows user profile.
+Set-Symlink `
+    -Target "$env:USERPROFILE\.psmux.conf" `
+    -Source "$RepoRoot\psmux\.psmux.conf"
+
 # .agents\ parent is created by Set-Symlink if absent
 Set-Symlink `
     -Target "$env:USERPROFILE\.agents\skills" `
@@ -199,7 +204,34 @@ Set-Symlink `
 # their settings, and Zed cannot open a UNC-backed symlink from its command palette.
 & (Join-Path $RepoRoot "sync-win.ps1") -SourceRoot $RepoRoot
 
-# --------------------------------------------------------------------------- 4b. wezterm plugins
+# --------------------------------------------------------------------------- 4b. psmux plugins
+# PPM is psmux's TPM-equivalent plugin manager. The linked config loads it from this location
+# and uses it to install the declared plugins on the first Prefix + I.
+Write-Step "Installing psmux Plugin Manager"
+$ppmDir = Join-Path $env:USERPROFILE ".psmux\plugins\ppm"
+$ppmEntry = Join-Path $ppmDir "ppm.ps1"
+if (Test-Path $ppmEntry) {
+    Write-Ok "Already installed: psmux Plugin Manager"
+} elseif (Get-Command git -ErrorAction SilentlyContinue) {
+    $ppmTemp = Join-Path ([IO.Path]::GetTempPath()) "psmux-plugins-$([guid]::NewGuid())"
+    try {
+        git clone --depth 1 "https://github.com/psmux/psmux-plugins.git" $ppmTemp 2>&1 | Out-Null
+        if ($LASTEXITCODE -ne 0) {
+            Write-Warn "Failed to clone psmux plugins — run setup again after resolving the Git error."
+        } else {
+            New-Item -ItemType Directory -Path (Split-Path $ppmDir -Parent) -Force | Out-Null
+            if (Test-Path $ppmDir) { Remove-Item $ppmDir -Recurse -Force }
+            Copy-Item (Join-Path $ppmTemp "ppm") $ppmDir -Recurse -Force
+            Write-Ok "Installed: psmux Plugin Manager"
+        }
+    } finally {
+        if (Test-Path $ppmTemp) { Remove-Item $ppmTemp -Recurse -Force }
+    }
+} else {
+    Write-Warn "git not on PATH — skipping psmux Plugin Manager install. Re-run after git is installed."
+}
+
+# --------------------------------------------------------------------------- 4c. wezterm plugins
 # WezTerm's bundled libgit2 cannot clone plugins on Windows (it fails with "unsupported URL
 # protocol; class=Net"), so the wezterm.plugin.require() calls in wezterm.lua would error on
 # every launch and flash empty windows. Pre-clone the plugin tree with the system git; wezterm
@@ -251,7 +283,7 @@ if (Get-Command git -ErrorAction SilentlyContinue) {
 # --------------------------------------------------------------------------- 5. verify tools
 Write-Step "Verifying shell tools are on PATH"
 Update-SessionPath
-$critical = @("starship", "fzf", "zoxide", "git", "nvim", "eza", "bat")
+$critical = @("starship", "fzf", "zoxide", "git", "nvim", "eza", "bat", "psmux")
 $missing = @()
 foreach ($tool in $critical) {
     if (Get-Command $tool -ErrorAction SilentlyContinue) {

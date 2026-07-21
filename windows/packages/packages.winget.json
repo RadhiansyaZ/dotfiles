@@ -12,6 +12,7 @@
       "Packages": [
         { "PackageIdentifier": "Microsoft.PowerShell" },
         { "PackageIdentifier": "Microsoft.WindowsTerminal" },
+        { "PackageIdentifier": "marlocarlo.psmux" },
         { "PackageIdentifier": "Git.Git" },
         { "PackageIdentifier": "GitHub.cli" },
         { "PackageIdentifier": "Neovim.Neovim" },

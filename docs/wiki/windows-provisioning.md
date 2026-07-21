@@ -6,11 +6,11 @@ source_files:
   - setup-windows.ps1
   - windows/packages/packages.winget.json
   - windows/powershell/Microsoft.PowerShell_profile.ps1
-last_reviewed: 2026-07-12
+last_reviewed: 2026-07-21
 ---
 # Windows provisioning
 
-[`setup.ps1`](../../setup.ps1) is the elevated Windows entry point. It ensures the WSL stage and runs [`setup-windows.ps1`](../../setup-windows.ps1) for native packages, configuration links, copy-based settings synchronization, and command checks. The Windows package manifest is [packages.winget.json](../../windows/packages/packages.winget.json).
+[`setup.ps1`](../../setup.ps1) is the elevated Windows entry point. It ensures the WSL stage and runs [`setup-windows.ps1`](../../setup-windows.ps1) for native packages, configuration links, copy-based settings synchronization, and command checks. The Windows package manifest is [packages.winget.json](../../windows/packages/packages.winget.json). Setup installs psmux, links its [configuration](../../psmux/.psmux.conf) to `%USERPROFILE%\.psmux.conf`, and bootstraps PPM (the psmux plugin manager). Start `psmux`, then press `C-a` followed by `I` to install the configured plugins.
 
 ## Guidance
 

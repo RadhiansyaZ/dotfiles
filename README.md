@@ -29,15 +29,16 @@ Set-ExecutionPolicy -Scope Process Bypass -Force
 ```
 
 This ensures WSL2 and Debian are available, then provisions native Windows. It installs the
-winget manifest, creates configuration links, copies Pi and Zed settings, and checks the
-shell tools. Open a new PowerShell session when it completes.
+winget manifest, creates configuration links (including psmux), copies Pi and Zed settings,
+and checks the shell tools. Open a new PowerShell session when it completes.
 
 Use `./setup-wsl.ps1` for only the WSL stage, or `./setup-windows.ps1` for only native
 Windows. `setup-windows.ps1 -SkipPackages` skips winget on a repeat run but still links,
 synchronizes, and verifies configuration.
 
 > To configure the WSL distribution after `setup.ps1`, clone this repository inside WSL and
-> run `./setup.sh` there. Native Windows does not support tmux or Ghostty; use WSL for them.
+> run `./setup.sh` there. Native Windows does not support tmux or Ghostty; psmux provides the
+> native PowerShell terminal-multiplexer setup.
 
 ## Verify and synchronize
 
@@ -47,8 +48,9 @@ synchronizes, and verifies configuration.
   ```
 - Windows setup reports missing tools. To check manually:
   ```powershell
-  Get-Command starship, fzf
+  Get-Command starship, fzf, psmux
   ```
+- After setup, run `psmux`, then press `C-a` followed by `I` to install its configured plugins.
 - `sync-win.ps1` refreshes the Windows-local copies of Pi and Zed settings. When the WSL
   repository is canonical, invoke it from PowerShell through its `\\wsl$` path:
   ```powershell

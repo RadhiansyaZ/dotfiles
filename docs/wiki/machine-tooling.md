@@ -128,7 +128,7 @@ macOS-exclusive; the parity matrix identifies their other implementations.
 
 | Group | Winget packages |
 | --- | --- |
-| Shell and terminal | PowerShell, Windows Terminal, Starship, Zoxide, FZF |
+| Shell and terminal | PowerShell, Windows Terminal, psmux, Starship, Zoxide, FZF |
 | File and JSON tools | Eza, Bat, FD, Ripgrep, JQ |
 | Development | Git, GitHub CLI, Neovim, Go, Python 3.12, UV, NVM for Windows, PNPM, AWS CLI, Terraform |
 | Developer applications | Zed, DBeaver Community, Bruno, Lazygit |
@@ -136,7 +136,8 @@ macOS-exclusive; the parity matrix identifies their other implementations.
 ### Deliberate Windows gaps
 
 Native Windows does **not** provision Zsh, Stow, tmux, TPM, Docker completion, Unix
-shell plugins, Go helper tools, Node LTS, or npm global agent tools. It also lacks the
+shell plugins, Go helper tools, Node LTS, or npm global agent tools. It installs psmux as a
+native PowerShell terminal multiplexer. It also lacks the
 Linux/macOS release-based tools `act`, `actionlint`, `dbmate`, `htmlq`, `lazysql`,
 `saml2aws`, and `tree-sitter`.
 
@@ -147,7 +148,8 @@ Windows-native editor, and desktop application workflow.
 ### Windows configuration model
 
 `setup-windows.ps1` creates repository-backed symlinks for Git, the PowerShell profile,
-agent skills, Starship, and WezTerm. It also pre-clones the WezTerm plugin tree
+psmux, agent skills, Starship, and WezTerm. It bootstraps PPM, the psmux plugin manager, so
+`C-a` followed by `I` installs the plugins declared in the linked psmux configuration. It also pre-clones the WezTerm plugin tree
 (`resurrect.wezterm` and its `dev.wezterm` dependency) into `%APPDATA%/wezterm/plugins`
 with the system `git`, because WezTerm's bundled libgit2 cannot clone plugins on Windows.
 It copies Pi and Zed settings as real local files:

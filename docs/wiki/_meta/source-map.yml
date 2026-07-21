@@ -26,6 +26,7 @@
     {"path": "nvim/**", "classification": "document", "pages": ["docs/wiki/configuration-packages.md"], "rationale": "Neovim configuration is a tracked package."},
     {"path": "opencode/**", "classification": "document", "pages": ["docs/wiki/configuration-packages.md"], "rationale": "OpenCode configuration is a tracked package."},
     {"path": "pi/**", "classification": "document", "pages": ["docs/wiki/configuration-packages.md", "docs/wiki/synchronization.md"], "rationale": "Pi configuration is tracked and copied to Windows."},
+    {"path": "psmux/**", "classification": "document", "pages": ["docs/wiki/configuration-packages.md", "docs/wiki/windows-provisioning.md", "docs/wiki/machine-tooling.md"], "rationale": "psmux configuration is tracked and linked by native Windows setup."},
     {"path": "ssh/**", "classification": "sensitive-boundary", "pages": ["docs/wiki/privacy-and-sensitive-boundaries.md"], "rationale": "SSH configuration is described without copying machine-specific state."},
     {"path": "starship/**", "classification": "document", "pages": ["docs/wiki/configuration-packages.md"], "rationale": "Starship configuration is a tracked package."},
     {"path": "tmux/**", "classification": "document", "pages": ["docs/wiki/configuration-packages.md"], "rationale": "tmux configuration is a tracked package."},

@@ -14,7 +14,7 @@ Run [`./setup.sh`](../../setup.sh) as a normal user on macOS, Debian/Ubuntu, or 
 
 ## Verification
 
-The Unix playbook probes `zsh`, `stow`, `tmux`, and `nvim`; manually run `command -v zsh stow tmux nvim` when needed. Native Windows setup reports shell-tool availability; manually use `Get-Command starship, fzf` from PowerShell. The cross-platform, difference-first tooling inventory is [machine tooling comparison](machine-tooling.md).
+The Unix playbook probes `zsh`, `stow`, `tmux`, and `nvim`; manually run `command -v zsh stow tmux nvim` when needed. Native Windows setup reports shell-tool availability; manually use `Get-Command starship, fzf, psmux` from PowerShell. The cross-platform, difference-first tooling inventory is [machine tooling comparison](machine-tooling.md).
 
 ## Constraints
 
