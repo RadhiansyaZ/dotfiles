@@ -31,6 +31,11 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 ## Keybindings
 bindkey -e
+# WezTerm sends Ctrl+Arrow/Delete as CSI sequences. Bind them in ZLE so they
+# edit by word instead of inserting their trailing `5D`/`5C` text.
+bindkey '^[[1;5D' backward-word
+bindkey '^[[1;5C' forward-word
+bindkey '^[[3;5~' kill-word
 # bindkey -v
 
 # CLI Alias

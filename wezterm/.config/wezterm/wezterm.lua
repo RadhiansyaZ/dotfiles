@@ -13,6 +13,10 @@ config.font = wezterm.font_with_fallback({ "JetBrains Mono", "Fira Code", "DengX
 config.font_size = 11
 config.default_domain = "WSL:Debian"
 
+-- Let terminal applications opt into Kitty's unambiguous modified-key protocol.
+-- Without negotiation, Ctrl+Left remains the legacy CSI 1;5D sequence.
+config.enable_kitty_keyboard = true
+
 wezterm.on("gui-startup", function(cmd)
 	local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
 	window:gui_window():maximize()
