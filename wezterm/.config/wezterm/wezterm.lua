@@ -6,6 +6,7 @@
 -- Docs: https://wezterm.org/config/files.html
 
 local wezterm = require("wezterm")
+local act = wezterm.action
 local config = wezterm.config_builder()
 
 config.color_scheme = "Catppuccin Mocha"
@@ -16,6 +17,21 @@ config.default_domain = "WSL:Debian"
 -- Let terminal applications opt into Kitty's unambiguous modified-key protocol.
 -- Without negotiation, Ctrl+Left remains the legacy CSI 1;5D sequence.
 config.enable_kitty_keyboard = true
+
+config.keys = {
+	{
+		key = "c",
+		mods = "CTRL",
+		action = wezterm.action_callback(function(window, pane)
+			if window:get_selection_text_for_pane(pane) ~= "" then
+				window:perform_action(act.CopyTo("Clipboard"), pane)
+			else
+				window:perform_action(act.SendKey({ key = "c", mods = "CTRL" }), pane)
+			end
+		end),
+	},
+	{ key = "v", mods = "CTRL", action = act.PasteFrom("Clipboard") },
+}
 
 wezterm.on("gui-startup", function(cmd)
 	local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
