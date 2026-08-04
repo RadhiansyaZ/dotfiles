@@ -18,3 +18,5 @@
 [alias]
   s = status
   l = log --graph --abbrev-commit --decorate
+[url "ssh://git@gitlab.aetosky.com/"]
+	insteadOf = https://gitlab.aetosky.com/
