@@ -156,6 +156,25 @@ if ($SkipPackages) {
     }
 }
 
+# --------------------------------------------------------------------------- 2b. glowm
+# glowm renders Mermaid through the Chrome package installed by the winget manifest.
+Write-Step "Installing glowm"
+if (-not (Get-Command go -ErrorAction SilentlyContinue)) {
+    Write-Warn "go not on PATH — skipping glowm. Re-run after the Go winget package is available."
+} else {
+    $glowmPath = Join-Path ((& go env GOPATH).Trim()) "bin\glowm.exe"
+    if (Test-Path $glowmPath) {
+        Write-Ok "Already installed: glowm"
+    } else {
+        & go install github.com/atani/glowm/cmd/glowm@latest
+        if ($LASTEXITCODE -eq 0 -and (Test-Path $glowmPath)) {
+            Write-Ok "Installed: glowm"
+        } else {
+            Write-Warn "Failed to install glowm. Re-run after resolving the Go error."
+        }
+    }
+}
+
 # --------------------------------------------------------------------------- 3. repository source
 # PSScriptRoot is the canonical source for all links/copies. It may be a \\wsl$ UNC
 # path when the repo lives in WSL, or a normal Windows path when it is cloned locally.
@@ -283,7 +302,7 @@ if (Get-Command git -ErrorAction SilentlyContinue) {
 # --------------------------------------------------------------------------- 5. verify tools
 Write-Step "Verifying shell tools are on PATH"
 Update-SessionPath
-$critical = @("starship", "fzf", "zoxide", "git", "nvim", "eza", "bat", "psmux")
+$critical = @("starship", "fzf", "zoxide", "git", "nvim", "eza", "bat", "psmux", "glowm")
 $missing = @()
 foreach ($tool in $critical) {
     if (Get-Command $tool -ErrorAction SilentlyContinue) {

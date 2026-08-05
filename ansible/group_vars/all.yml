@@ -82,6 +82,8 @@ go_tools:
     binary: revive
   - module: honnef.co/go/tools/cmd/staticcheck
     binary: staticcheck
+  - module: github.com/atani/glowm/cmd/glowm
+    binary: glowm
 
 # Global npm packages (installed via the nvm-managed Node.js). On macOS these previously lived
 # in the Brewfile as `npm "..."` lines, which `brew bundle` does not support.

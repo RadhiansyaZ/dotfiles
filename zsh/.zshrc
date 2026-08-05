@@ -50,6 +50,9 @@ if is_macos && command -v pbpaste >/dev/null 2>&1; then
 fi
 alias gcleanup="git branch | egrep -v \"(^\*|master|main)\" | xargs git branch -D"
 
+# Experimental: glowm supports iTerm2 images and WezTerm implements that protocol.
+# Keep the detection override scoped to this command.
+glowm-wezterm() { TERM_PROGRAM=iTerm.app command glowm "$@"; }
 
 # Function
 # Clipboard helpers

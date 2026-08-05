@@ -6,7 +6,7 @@ source_files:
   - Brewfile
   - fonts.sh
   - tpm.sh
-last_reviewed: 2026-07-12
+last_reviewed: 2026-08-05
 ---
 # Unix provisioning
 
@@ -15,6 +15,10 @@ last_reviewed: 2026-07-12
 ## Constraints
 
 Unix provisioning is for macOS and Debian/Ubuntu Linux. Package names may differ on other Linux families. Repository configuration is linked through GNU Stow rather than copied into the repository.
+
+## Mermaid Markdown viewer
+
+Setup installs `glowm` through the shared Go-tool task. macOS installs Google Chrome through Homebrew; Debian/Ubuntu and WSL install Chromium through APT. In WezTerm, use `glowm-wezterm <file.md>` for experimental inline Mermaid rendering.
 
 ## Verification
 

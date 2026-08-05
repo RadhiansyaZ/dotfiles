@@ -33,6 +33,7 @@
         { "PackageIdentifier": "Amazon.AWSCLI" },
         { "PackageIdentifier": "DBeaver.DBeaver.Community" },
         { "PackageIdentifier": "Bruno.Bruno" },
+        { "PackageIdentifier": "Google.Chrome" },
         { "PackageIdentifier": "Hashicorp.Terraform" },
         { "PackageIdentifier": "Zed.Zed" }
       ]

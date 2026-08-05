@@ -5,15 +5,20 @@ source_files:
   - zsh/.zshrc
   - tmux/.config/tmux/tmux.conf
   - psmux/.psmux.conf
+  - herdr/.config/herdr/config.toml
   - nvim/.config/nvim/init.lua
   - starship/starship.toml
   - wezterm/.config/wezterm/wezterm.lua
   - agents/.agents/.skill-lock.json
-last_reviewed: 2026-07-12
+last_reviewed: 2026-08-05
 ---
 # Configuration packages
 
-Configuration directories are repository-managed Stow packages. They include shell, Git, terminal, editor, agent, and application configuration such as [zsh](../../zsh/.zshrc), [tmux](../../tmux/.config/tmux/tmux.conf), [psmux](../../psmux/.psmux.conf), [Neovim](../../nvim/.config/nvim/init.lua), and [Starship](../../starship/starship.toml).
+Configuration directories are repository-managed Stow packages. They include shell, Git, terminal, editor, agent, and application configuration such as [zsh](../../zsh/.zshrc), [tmux](../../tmux/.config/tmux/tmux.conf), [psmux](../../psmux/.psmux.conf), [Herdr](../../herdr/.config/herdr/config.toml), [Neovim](../../nvim/.config/nvim/init.lua), and [Starship](../../starship/starship.toml).
+
+## WezTerm Mermaid preview
+
+`zsh/.zshrc` and the native Windows PowerShell profile provide `glowm-wezterm`. It is an experimental wrapper that makes `glowm` select its iTerm2 inline-image path, which WezTerm implements. It must be run directly in WezTerm and needs the provisioned Chrome or Chromium browser; use `glowm --pdf` if inline rendering fails.
 
 ## Constraints
 

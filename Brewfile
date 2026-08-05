@@ -81,6 +81,8 @@ brew "anomalyco/tap/opencode"
 brew "sqitchers/sqitch/sqitch", args: ["with-postgres-support"]
 # Open source IDE for exploring and testing APIs
 cask "bruno"
+# Required by glowm to render Mermaid diagrams and export PDFs
+cask "google-chrome"
 # Universal database tool and SQL client
 cask "dbeaver-community"
 # Pluggable Terraform linter

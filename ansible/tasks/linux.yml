@@ -24,6 +24,14 @@
   when: ansible_facts.os_family == 'Debian'
   tags: [linux, packages]
 
+- name: Install Chromium required by glowm
+  become: true
+  ansible.builtin.apt:
+    name: "{{ 'chromium-browser' if ansible_facts.distribution == 'Ubuntu' else 'chromium' }}"
+    state: present
+  when: ansible_facts.os_family == 'Debian'
+  tags: [linux, packages]
+
 - name: Ensure local bin directory exists
   # Created here (not only in common.yml, which runs later) because the symlink tasks below
   # write into it. On a fresh host ~/.local/bin does not pre-exist, so this must come first.

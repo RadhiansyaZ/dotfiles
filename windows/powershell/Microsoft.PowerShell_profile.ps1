@@ -53,6 +53,21 @@ function gcleanup {
         ForEach-Object { git branch -D $_.Trim() }
 }
 
+# Experimental: glowm supports iTerm2 images and WezTerm implements that protocol.
+function glowm-wezterm {
+    $termProgram = $env:TERM_PROGRAM
+    try {
+        $env:TERM_PROGRAM = "iTerm.app"
+        & glowm @args
+    } finally {
+        if ($null -eq $termProgram) {
+            Remove-Item Env:TERM_PROGRAM -ErrorAction SilentlyContinue
+        } else {
+            $env:TERM_PROGRAM = $termProgram
+        }
+    }
+}
+
 # Interactive git log browser with fzf preview (parity with .zshrc gdiff).
 # Uses fzf {1} token — strip ANSI codes automatically — so no --graph.
 function gdiff {

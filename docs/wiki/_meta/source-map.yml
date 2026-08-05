@@ -23,6 +23,7 @@
     {"path": "ghostty/**", "classification": "document", "pages": ["docs/wiki/configuration-packages.md"], "rationale": "Ghostty configuration is a tracked package."},
     {"path": "git/**", "classification": "document", "pages": ["docs/wiki/configuration-packages.md"], "rationale": "Git configuration is a tracked package."},
     {"path": "gnupg/**", "classification": "document", "pages": ["docs/wiki/privacy-and-sensitive-boundaries.md"], "rationale": "GnuPG configuration has a privacy boundary."},
+    {"path": "herdr/**", "classification": "document", "pages": ["docs/wiki/configuration-packages.md"], "rationale": "Herdr terminal multiplexer configuration is tracked."},
     {"path": "nvim/**", "classification": "document", "pages": ["docs/wiki/configuration-packages.md"], "rationale": "Neovim configuration is a tracked package."},
     {"path": "opencode/**", "classification": "document", "pages": ["docs/wiki/configuration-packages.md"], "rationale": "OpenCode configuration is a tracked package."},
     {"path": "pi/**", "classification": "document", "pages": ["docs/wiki/configuration-packages.md", "docs/wiki/synchronization.md"], "rationale": "Pi configuration is tracked and copied to Windows."},
