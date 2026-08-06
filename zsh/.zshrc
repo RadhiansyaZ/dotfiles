@@ -89,6 +89,12 @@ gdiff() {
 FZF-EOF"
 }
 
+kctx() {
+  local ctx
+  ctx=$(kubectl config get-contexts -o name | fzf --prompt='context> ' --height=40% --reverse) || return
+  [[ -n "$ctx" ]] && kubectl config use-context "$ctx"
+}
+
 
 # XDG Base Directory Specification
 export XDG_CACHE_HOME="$HOME/.cache"

@@ -1,6 +1,6 @@
 #!/bin/bash
 # Claude Code statusline. Reads session JSON on stdin.
-# Line 1: cwd (relative to $HOME) and git branch (truncated)
+# Line 1: cwd (relative to $HOME), git branch (truncated), and Kubernetes context
 # Line 2: model name and context window remaining
 
 # Max git branch length before truncation (leading chars kept, "…" suffix).
@@ -27,6 +27,12 @@ branch="$(git -C "$dir" symbolic-ref --quiet --short HEAD 2>/dev/null \
 # Truncate long branch names, keeping the leading part and appending "…".
 if [ -n "$branch" ] && [ "${#branch}" -gt "$BRANCH_MAXLEN" ]; then
   branch="${branch:0:BRANCH_MAXLEN}…"
+fi
+
+if command -v kubectl >/dev/null 2>&1; then
+  kube_context="$(kubectl config current-context 2>/dev/null)"
+  kube_namespace="$(kubectl config view --minify -o jsonpath='{..namespace}' 2>/dev/null)"
+  [ -n "$kube_namespace" ] || kube_namespace="default"
 fi
 
 model="$(printf '%s' "$input" | jq -r '.model.display_name // empty')"
@@ -57,6 +63,9 @@ fi
 
 printf '\033[01;34m%s\033[00m' "$dispdir"
 [ -n "$branch" ] && printf ' \033[00;32m%s\033[00m' "$branch"
+if [ -n "$kube_context" ]; then
+  printf ' \033[00;36m☸ %s (%s)\033[00m' "$kube_context" "$kube_namespace"
+fi
 printf '\n'
 [ -n "$model" ] && printf '\033[01;35m%s\033[00m' "$model"
 if [ -n "$remaining" ]; then

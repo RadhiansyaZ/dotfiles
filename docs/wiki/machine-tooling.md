@@ -212,8 +212,8 @@ Neither set is installed by the native Windows bootstrap.
 - **Neovim:** LazyVim bootstrapped by `lazy.nvim` on all three package-provisioned
   platforms. On Linux the latest upstream release is required for its runtime tree.
 - **Starship:** one shared configuration shows OS/host, directory, Git, Python, Go,
-  Node, and command duration. The OS/host display makes native Windows, WSL, and Unix
-  sessions visually distinguishable.
+  Node, the active Kubernetes context and namespace, and command duration. The OS/host
+  display makes native Windows, WSL, and Unix sessions visually distinguishable.
 
 ### Agent tooling
 
@@ -221,6 +221,8 @@ Neither set is installed by the native Windows bootstrap.
   `pi-web-access`, and `context-mode`, and starts Context Mode as an MCP server.
 - **OpenCode:** configuration enables the DCP plugin; the OpenCode executable is provisioned
   only on macOS.
+- **Claude Code:** its statusline shows the current workspace, Git branch, active Kubernetes
+  context and namespace, model, context remaining, cost, and applicable rate limits.
 - **Skills:** the `agents` Stow package contains a lockfile for restoring third-party skills.
   Installed third-party skill directories remain ignored.
 

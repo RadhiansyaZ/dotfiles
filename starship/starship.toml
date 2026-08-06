@@ -22,6 +22,7 @@ $git_status\
 $python\
 $golang\
 $nodejs\
+$kubernetes\
 $cmd_duration\
 $line_break\
 $character"""
@@ -77,3 +78,9 @@ symbol = " "
 
 [nodejs]
 symbol = " "
+
+[kubernetes]
+disabled = false
+format = "on [$symbol$context( ($namespace))]($style) "
+symbol = "☸ "
+style = "bold cyan"
