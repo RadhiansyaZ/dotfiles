@@ -6,6 +6,7 @@ onboarding = false
 prefix = "ctrl+a"          # was: set -g prefix C-a
 previous_tab = "prefix+ctrl+p"   # was: bind C-p previous-window
 next_tab = "prefix+ctrl+n"       # was: bind C-n next-window
+rename_tab = "prefix+comma"       # was: bind , command-prompt -I "#W" "rename-window '%%'"
 split_vertical = "prefix+percent"   # was: bind % split-window -h
 split_horizontal = "prefix+double_quote"   # was: bind '"' split-window -v
 
