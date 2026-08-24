@@ -14,9 +14,9 @@ config.font = wezterm.font_with_fallback({ "JetBrains Mono", "Fira Code", "DengX
 config.font_size = 11
 config.default_domain = "WSL:Debian"
 
--- Let terminal applications opt into Kitty's unambiguous modified-key protocol.
--- Without negotiation, Ctrl+Left remains the legacy CSI 1;5D sequence.
-config.enable_kitty_keyboard = true
+-- The installed Windows WezTerm build misreports shifted printable keys through
+-- Kitty keyboard mode in WSL multiplexers. Use standard terminal input instead.
+config.enable_kitty_keyboard = false
 
 config.keys = {
 	{

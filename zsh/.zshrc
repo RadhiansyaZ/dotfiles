@@ -204,3 +204,5 @@ fi
 if [[ -f "$HOME/.local/bin/env" ]]; then
   source "$HOME/.local/bin/env"
 fi
+
+alias obsidian="/home/RadhiansyaPutra/.local/bin/obsidian.AppImage"

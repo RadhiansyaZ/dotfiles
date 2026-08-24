@@ -1,3 +1,4 @@
+onboarding = false
 # Converted from ~/.tmux.conf
 # Drop this at ~/.config/herdr/config.toml, then: herdr server reload-config
 
