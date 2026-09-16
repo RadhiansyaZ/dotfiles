@@ -6,6 +6,7 @@
 - **Visualizations**: When a diagram would help (architecture, flow, sequence, etc.), use Mermaid only when output renders to a `.md` file. For terminal output, use ASCII art. Do not describe a diagram in prose when one can be drawn.
 - **Risky actions**: Before a risky file edit or destructive command, explain what it will do and why.
 - **Generated artifacts**: In reports, docs, code files, and written deliverables, use en dashes (–). Avoid em dash punctuation, negative parallelism, rhetorical contrastive phrasing, analogies, and metaphors. Base structure on genuine analysis. Do not impose groups of three to create apparent depth.
+- **No AI attribution**: Don't add Claude/AI attribution lines to git commits or PRs (no `Co-Authored-By: Claude`, no "Generated with Claude Code" footers).
 
 ## Coding Principles
 
