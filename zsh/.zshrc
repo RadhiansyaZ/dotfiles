@@ -13,6 +13,7 @@ setopt hist_find_no_dups
 
 # Docker CLI completions must be on fpath before compinit runs.
 fpath=("$HOME/.docker/completions" $fpath)
+fpath=("$HOME/.local/share/zsh/site-functions" $fpath)
 
 ## Load completions
 autoload -Uz compinit && compinit
@@ -206,3 +207,5 @@ if [[ -f "$HOME/.local/bin/env" ]]; then
 fi
 
 alias obsidian="/home/RadhiansyaPutra/.local/bin/obsidian.AppImage"
+alias k='kubectl1.32'
+alias h='helm3'
