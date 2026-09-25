@@ -3,11 +3,16 @@ title: Wiki log
 source_files:
   - docs/wiki/README.md
   - docs/wiki/maintenance.md
-last_reviewed: 2026-07-12
+last_reviewed: 2026-09-25
 ---
 # Wiki log
 
 This is an append-only, chronological record of significant wiki maintenance. It records documentation events, not configuration behavior; linked repository sources remain authoritative. Use the consistent heading format below so recent entries are easy to locate with `grep "^## \[" log.md | tail -5`.
+
+## [2026-09-25] maintenance | Added execution tracker artifacts
+
+- Added public-safe planning, decision, audit, and progress artifacts for dotfiles drift remediation.
+- Classified tracker files as non-authoritative internal maintenance metadata.
 
 ## [2026-07-12] maintenance | Integrated machine tooling inventory
 

@@ -7,6 +7,7 @@
     {"path": "scripts/wiki_check.py", "classification": "internal-metadata", "pages": [], "rationale": "Wiki validation implementation is internal metadata."},
     {"path": ".github/**", "classification": "internal-metadata", "pages": [], "rationale": "Wiki workflow implementation is internal metadata."},
     {"path": "tests/**", "classification": "internal-metadata", "pages": [], "rationale": "Wiki checker fixtures are internal metadata."},
+    {"path": "tracker/**", "classification": "internal-metadata", "pages": [], "rationale": "Execution trackers record non-authoritative maintenance state."},
     {"path": "ansible/**", "classification": "document", "pages": ["docs/wiki/unix-provisioning.md", "docs/wiki/setup-and-verification.md", "docs/wiki/machine-tooling.md"], "rationale": "Ansible is the Unix provisioning and machine-tooling contract."},
     {"path": "setup.sh", "classification": "document", "pages": ["docs/wiki/unix-provisioning.md", "docs/wiki/setup-and-verification.md"], "rationale": "Unix bootstrap behavior is documented."},
     {"path": "setup.ps1", "classification": "document", "pages": ["docs/wiki/windows-provisioning.md", "docs/wiki/platforms.md"], "rationale": "Windows bootstrap behavior is documented."},

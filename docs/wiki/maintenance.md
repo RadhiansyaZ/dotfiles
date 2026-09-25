@@ -5,12 +5,13 @@ source_files:
   - README.md
   - CHECKPOINT.md
   - docs/idea-artifacts/PLAN.md
+  - tracker/README.md
   - .gitattributes
-last_reviewed: 2026-07-12
+last_reviewed: 2026-09-25
 ---
 # Maintenance workflow
 
-Repository behavior is authoritative; update wiki pages to describe a source change, not the reverse. The maintainer constraints are in [AGENTS.md](../../AGENTS.md), and the current implementation plan is [PLAN.md](../idea-artifacts/PLAN.md).
+Repository behavior is authoritative; update wiki pages to describe a source change, not the reverse. The maintainer constraints are in [AGENTS.md](../../AGENTS.md), and the wiki implementation plan is [PLAN.md](../idea-artifacts/PLAN.md). Active maintenance work may use public-safe execution artifacts under [tracker](../../tracker/README.md) for scope, decisions, progress, and verification evidence. Trackers are non-authoritative and must be updated alongside the source and wiki changes they record.
 
 ## Change workflow
 
