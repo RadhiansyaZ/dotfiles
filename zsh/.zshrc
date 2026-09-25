@@ -125,6 +125,9 @@ fi
 # Added by ForgeCode installer
 export PATH="$HOME/.local/bin:$PATH"
 
+# kubectl plugin manager
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
 # Binary
 export PATH=/usr/local/bin/:$PATH
 # complete -C '/usr/local/bin/aws_completer' aws
