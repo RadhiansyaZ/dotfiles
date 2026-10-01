@@ -1,38 +1,89 @@
 {
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
   "permissions": {
     "allow": [
-      "Bash(*)",
+      "Bash(git push:*)",
       "Edit"
     ],
     "deny": [
       "Bash(git reset --hard:*)",
       "Bash(git clean:*)",
       "Bash(git push --force:*)",
-      "Bash(rm -rf *:*)",
+      "Bash(rm -rf *)",
       "Bash(mkfs:*)",
       "Bash(docker push:*)",
       "Bash(npm publish:*)",
       "Bash(terraform destroy:*)",
-      "Bash(aws s3 rm:*)"
+      "Bash(aws s3 rm:*)",
+      "Bash(git push * main)",
+      "Bash(git push * main *)",
+      "Bash(git push * master)",
+      "Bash(git push * master *)",
+      "Bash(git push origin main)",
+      "Bash(git push origin master)"
     ],
     "ask": [
       "Bash(chown:*)",
-      "Bash(git push:*)",
       "Bash(git rebase:*)",
       "Bash(git reset:*)",
-      "Bash(rm:*)",
       "Bash(sudo:*)"
     ],
     "defaultMode": "auto"
   },
   "model": "sonnet",
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /home/RadhiansyaPutra/.claude/hooks/git-rebase-guard.py",
+            "if": "Bash(git rebase:*)",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/home/RadhiansyaPutra/.config/tmux/plugins/tmux-assistant-resurrect/hooks/claude-session-cleanup.sh'"
+          }
+        ]
+      }
+    ],
     "SessionStart": [
       {
         "hooks": [
           {
             "type": "command",
             "command": "\"/home/RadhiansyaPutra/.claude/hooks/context-mode-cache-heal.mjs\""
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/home/RadhiansyaPutra/.config/tmux/plugins/tmux-assistant-resurrect/hooks/claude-session-track.sh'"
+          }
+        ]
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/home/RadhiansyaPutra/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
           }
         ]
       }
@@ -43,13 +94,15 @@
     "command": "bash ~/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
-    "code-review@claude-plugins-official": true,
-    "skill-creator@claude-plugins-official": true,
-    "chrome-devtools-mcp@claude-plugins-official": false,
     "atlassian@claude-plugins-official": true,
     "caveman@caveman": true,
+    "chrome-devtools-mcp@claude-plugins-official": false,
+    "code-review@claude-plugins-official": true,
     "context-mode@context-mode": true,
-    "mattpocock-skills@mattpocock": true
+    "i-have-adhd@i-have-adhd": true,
+    "mattpocock-skills@mattpocock": true,
+    "skill-creator@claude-plugins-official": true,
+    "gitlab@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "caveman": {
@@ -64,6 +117,12 @@
         "repo": "mksglu/context-mode"
       }
     },
+    "i-have-adhd": {
+      "source": {
+        "source": "github",
+        "repo": "ayghri/i-have-adhd"
+      }
+    },
     "mattpocock": {
       "source": {
         "source": "github",
@@ -72,5 +131,40 @@
     }
   },
   "effortLevel": "high",
-  "theme": "dark"
+  "modelSettings": {
+    "claude-opus-5": {
+      "effortLevel": "high"
+    },
+    "claude-opus-5-5": {
+      "effortLevel": "high"
+    }
+  },
+  "theme": "dark",
+  "autoMode": {
+    "environment": [
+      "### Org-wide",
+      "**Organization**: Aetosky (inferred from repo path ~/aetosky and sibling checkouts ~/aetosky/specter-prototype, ~/aetosky/deployment)",
+      "**Cloud provider(s)**: AWS (aws CLI 21x in shell history; specter-prototype/infra/terraform present with ecs.tf, vpc.tf; deployment/.env.eks)",
+      "**Repository visibility**: assume private unless the remote host and repo name indicate otherwise, or a visibility check in the transcript shows public — this repo has no configured remote, so gh could not query visibility; treat as private and local-only",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Secrets management**: None configured — secrets appear as local .env files under artifacts/, browser/, core/, cube/, neuro/, specter-prototype/ and terraform.tfvars; treat all as sensitive, never read into transcripts or share",
+      "**Default / protected branches**: unknown — origin/HEAD unset and no remotes configured; gh visibility/ruleset check not queryable here",
+      "**CI/CD deploy targets**: None configured",
+      "**Network posture**: None configured",
+      "**Source control**: The trusted repo and its remote(s) only (no additional orgs configured) — this repo has no remote, so source control is local; github.com/RadhiansyaZ/dotfiles and the sibling ~/aetosky checkouts are separate repos, not in scope",
+      "**Trusted internal domains**: None configured",
+      "**Trusted cloud buckets**: aetos-temp (config-derived — not a confirmed upload destination; uploads of local data still require confirmation); fada-aetos-data (config-derived — not a confirmed upload destination; uploads of local data still require confirmation). Generic single-word names in the same scan (drone, iceye, landsat, lidar, maxar, planet-scope, sentinel-s1-grd, sentinel-s2-l2a, your-bucket) are not adopted as trusted; no aetos-* wildcard is granted",
+      "**Key internal services**: Kubernetes/Helm clusters (kubectl 87x, helm 9x in shell history), Argo Workflows (deployment/helm/argo-workflows), MongoDB (neuro/backend/mongo-init), AWS EKS (deployment/.env.eks)",
+      "**Internal package registry**: None configured",
+      "**Sensitive data locations & audiences**: any file or store holding personal data, confidential business data, credentials, regulated data, or similarly sensitive material; preserve exact handles when known and share only with audiences cleared at the [named+specifics] bar — concretely here: all .env / .env.bak* / .env.development.local files listed in the config scan, specter-prototype/infra/terraform/terraform.tfvars, and neuro/backend/mongo-init/01-init-db-prod.js",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any namespace, host, or container whose name carries `prod` or `production` as a whole word or name segment (hyphen/underscore/dot-delimited — e.g. matches `prod-db`, not `producer`) — includes cube/admin-frontend/.env.production, deployment/cube/admin-frontend/.env.production, neuro/backend/mongo-init/01-init-db-prod.js",
+      "**Protected deployment namespaces / environments**: None configured — fall back to the Sensitive remote targets heuristic",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries `prod` or `production` as a whole word or name segment — concretely the Terraform under specter-prototype/infra/terraform (ecs.tf, vpc.tf, providers.tf, showcase-management.tf) and Kubernetes manifests core/wftile/k8s/install.yaml, deployment/helm/*",
+      "### User-specific",
+      "**Primary use of Claude Code**: software development — wiki tooling scripts (scaffold.sh, lint.py, log_append.sh) plus platform/infra work across this workspace",
+      "**Trusted repo**: The git repository the agent started in (its working directory, /home/RadhiansyaPutra/aetosky) and its configured remote(s) — none configured, so pushes have no default destination. When the repo's public/private visibility is given, use it to scope what is OK to commit or push there: confidential material is fine in a private repo; in a public one, only that repo's own work is — and content ported, repointed, or first read from outside this session's repo is not its own work, whoever directed the port. Visibility scopes confidential material only: secrets and sensitive data (personal & entrusted) are never cleared into any repo by its visibility",
+      "**Org-specific CLIs**: None configured (only pwd seen in this project's transcripts; agent-browser, pi, alembic seen in shell history but not org-specific)"
+    ]
+  }
 }
