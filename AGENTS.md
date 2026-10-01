@@ -4,7 +4,7 @@
 
 This repository makes personal dotfiles reproducible across macOS, Debian/Ubuntu Linux, WSL (Debian), and native Windows. Unix-like hosts are provisioned with Ansible and GNU Stow; native Windows uses PowerShell, winget, symlinks, and copy-based sync for application settings that cannot safely be symlinked from WSL.
 
-Preserve that separation: repository files are canonical; Pi and Zed settings are copied to Windows through `sync-win.ps1`; do not introduce Windows-to-WSL copying without an explicit conflict-resolution policy. Do not commit credentials or machine-local state.
+Preserve that separation: repository files are canonical; Pi and Zed settings are copied to Windows through `sync-win.ps1`; do not introduce Windows-to-WSL copying without an explicit conflict-resolution policy. On macOS and Linux (including WSL), every symlink from a repository file into the home directory must be created by GNU Stow through a package directory; do not use `ln -s`, Ansible `state: link`, or other ad hoc links for repository files. Resolve existing targets before stowing and choose package scope as described in `docs/stow-packages.md`. Do not commit credentials or machine-local state.
 
 ## 2. Setup and verification
 
@@ -19,7 +19,8 @@ Preserve that separation: repository files are canonical; Pi and Zed settings ar
 - `CHECKPOINT.md` — current setup-refactor checkpoint and follow-up constraints.
 - `ansible/playbook.yml` and `ansible/tasks/` — provisioner behavior and tags.
 - `setup.sh`, `setup.ps1`, `setup-wsl.ps1`, `setup-windows.ps1`, and `sync-win.ps1` — executable setup and synchronization contracts.
-- `docs/` — detailed documentation, including `docs/machine-tooling.md` for cross-platform package and tooling inventory.
+- `docs/stow-packages.md` — Stow conflict resolution and package-scope rules for macOS and Linux.
+- `docs/` — detailed documentation, including `docs/wiki/machine-tooling.md` for cross-platform package and tooling inventory.
 - `docs/wiki/` — source-backed operational wiki; use `python3 scripts/wiki_check.py check --base origin/main --head HEAD` and `python3 scripts/wiki_check.py audit` after source changes.
 
 ## 4. AI-agent documentation housekeeping

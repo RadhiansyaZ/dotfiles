@@ -22,7 +22,7 @@ Configuration directories are repository-managed Stow packages. They include she
 
 ## Constraints
 
-The repository is canonical. Application settings that cannot safely use a WSL-backed symlink are governed by [synchronization](synchronization.md), not Stow.
+The repository is canonical. On macOS and Linux, Stow is the only mechanism for linking repository files into the home directory; add a package directory instead of using `ln -s` or Ansible `state: link`. Application settings that cannot safely use a WSL-backed symlink are governed by [synchronization](synchronization.md), not Stow.
 
 ## Guidance
 
