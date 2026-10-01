@@ -20,6 +20,7 @@ Preserve that separation: repository files are canonical; Pi and Zed settings ar
 - `ansible/playbook.yml` and `ansible/tasks/` — provisioner behavior and tags.
 - `setup.sh`, `setup.ps1`, `setup-wsl.ps1`, `setup-windows.ps1`, and `sync-win.ps1` — executable setup and synchronization contracts.
 - `docs/stow-packages.md` — Stow conflict resolution and package-scope rules for macOS and Linux.
+- `docs/package_management/ideas.md` – package lifecycle proposal, structured catalogue options, and reproducibility trade-offs.
 - `docs/` — detailed documentation, including `docs/wiki/machine-tooling.md` for cross-platform package and tooling inventory.
 - `docs/wiki/` — source-backed operational wiki; use `python3 scripts/wiki_check.py check --base origin/main --head HEAD` and `python3 scripts/wiki_check.py audit` after source changes.
 
