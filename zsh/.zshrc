@@ -129,7 +129,7 @@ export PATH="$HOME/.local/bin:$PATH"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 # Binary
-export PATH=/usr/local/bin/:$PATH
+export PATH=/usr/local/bin:$PATH
 # complete -C '/usr/local/bin/aws_completer' aws
 
 # Report cwd to the terminal via OSC 7 so new panes/tabs open in the current
