@@ -1,6 +1,6 @@
 # Dotfiles drift remediation
 
-Status: `planning`
+Status: `executing`
 
 Baseline commit: `48017de`
 
@@ -21,6 +21,8 @@ Resolve confirmed configuration, provisioning, privacy, documentation, and repos
 - [DECISIONS.md](DECISIONS.md) – choices requiring maintainer approval
 - [PLAN.md](PLAN.md) – phased implementation and verification plan
 - [TRACKER.md](TRACKER.md) – executable work-item checklist
+- [WORK-PACKAGES.md](WORK-PACKAGES.md) – complete open-item inventory and scoped agent handoffs
+- [RESUME.md](RESUME.md) – durable orchestration checkpoint and resume procedure
 
 ## Execution rule
 

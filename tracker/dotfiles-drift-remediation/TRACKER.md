@@ -1,16 +1,20 @@
 # Execution tracker
 
-Last updated: `2026-09-25`
+Last updated: `2026-10-06`
 
-Overall status: `planning`
+Overall status: `executing`
+
+Execution baseline: `6be4fdf`; branch: `remediation/dotfiles-drift`.
+
+The original 53-item inventory, single-owner mapping, and agent contracts are in [WORK-PACKAGES.md](WORK-PACKAGES.md). Resume from [RESUME.md](RESUME.md). Implementation is delegated; Sol owns this tracker.
 
 ## Decisions
 
-- [ ] `DEC-001` – choose current-tree removal or Git history rewrite for machine-local Zed metadata
-- [ ] `DEC-002` – choose Windows-only or cross-platform WezTerm management
-- [ ] `DEC-003` – choose Krew PATH-only support or full provisioning
-- [ ] `DEC-004` – remove or retain the legacy font and TPM scripts
-- [ ] `DEC-005` – isolate, revert, or separately commit the existing Pi settings change
+- [x] `DEC-001` – choose current-tree removal or Git history rewrite for machine-local Zed metadata
+- [x] `DEC-002` – choose Windows-only or cross-platform WezTerm management
+- [x] `DEC-003` – choose Krew PATH-only support or full provisioning
+- [x] `DEC-004` – remove or retain the legacy font and TPM scripts
+- [x] `DEC-005` – isolate, revert, or separately commit the existing Pi settings change
 
 ## Phase 0 – Tracker artifacts
 
@@ -24,8 +28,8 @@ Overall status: `planning`
 
 ## Phase 1 – Privacy and local state
 
-- [ ] `PRV-001` Resolve DEC-001
-- [ ] `PRV-002` Resolve DEC-005
+- [x] `PRV-001` Resolve DEC-001
+- [x] `PRV-002` Resolve DEC-005
 - [ ] `PRV-003` Remove machine-local entries from canonical Zed settings
 - [ ] `PRV-004` Establish a narrow local-state policy
 - [ ] `PRV-005` Verify one-way Windows synchronization with sanitized settings
@@ -35,7 +39,7 @@ Overall status: `planning`
 
 ## Phase 2 – WezTerm reconciliation
 
-- [ ] `WZT-001` Resolve DEC-002
+- [x] `WZT-001` Resolve DEC-002
 - [ ] `WZT-002` Remove or restore stale plugin provisioning according to the decision
 - [ ] `WZT-003` Remove obsolete WezTerm and Zed backup snapshots
 - [ ] `WZT-004` Add narrow backup ignore rules
@@ -67,9 +71,9 @@ Overall status: `planning`
 
 ## Phase 5 – Krew and legacy scripts
 
-- [ ] `CLN-001` Resolve DEC-003
+- [x] `CLN-001` Resolve DEC-003
 - [ ] `CLN-002` Implement and document the selected Krew scope
-- [ ] `CLN-003` Resolve DEC-004
+- [x] `CLN-003` Resolve DEC-004
 - [ ] `CLN-004` Remove or document `fonts.sh`
 - [ ] `CLN-005` Remove or document `tpm.sh`
 - [ ] `CLN-006` Update wiki ownership and tooling inventory
@@ -98,3 +102,6 @@ Overall status: `planning`
 | 2026-09-25 | Latest-commit wiki responsibility check | Failed as expected | Krew PATH change requires a configuration-package documentation update. |
 | 2026-09-25 | ShellCheck | Skipped | Tool unavailable. |
 | 2026-09-25 | PowerShell parser | Skipped | Tool unavailable. |
+| 2026-10-06 | Orchestration workspace | Passed | Separate branch/worktree from 6be4fdf; original Pi/zsh edits excluded. |
+| 2026-10-06 | Decisions | Approved | DEC-001 through DEC-005 recorded. Krew is Unix-only; kubectl stays external. |
+| 2026-10-06 | Delegate capability | Passed | Luna gpt-6-luna and Terra gpt-5.6-terra probes returned READY; persistent sessions record effective xhigh effort. |

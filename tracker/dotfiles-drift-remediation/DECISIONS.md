@@ -4,7 +4,7 @@ Resolve these choices before starting dependent work. Record the selected option
 
 ## DEC-001 – Existing machine-local Zed data in Git history
 
-Status: `needs-decision`
+Status: `approved`
 
 Options:
 
@@ -13,11 +13,11 @@ Options:
 
 Recommendation: remove from the current tree immediately. Use history rewriting only if the exposed metadata is considered sensitive enough to justify repository-wide disruption.
 
-Decision: _unresolved_
+Decision: Current-tree removal only. Preserve history; historical metadata remains. No rewrite or force push is authorized. Approved on 2026-10-06.
 
 ## DEC-002 – WezTerm support model
 
-Status: `needs-decision`
+Status: `approved`
 
 Options:
 
@@ -26,11 +26,11 @@ Options:
 
 Recommendation: choose Windows-only unless active macOS or native Linux WezTerm use requires shared provisioning. This is the smaller and safer correction.
 
-Decision: _unresolved_
+Decision: Cross-platform managed configuration. Make platform defaults conditional and add Unix GNU Stow delivery. Remove unused plugin provisioning; plugin restoration is not requested. Approved on 2026-10-06.
 
 ## DEC-003 – Krew scope
 
-Status: `needs-decision`
+Status: `approved`
 
 Options:
 
@@ -39,11 +39,11 @@ Options:
 
 Recommendation: PATH support only unless reproducible Kubernetes workstation setup is a current repository goal.
 
-Decision: _unresolved_
+Decision: Full idempotent Krew provisioning on supported Unix platforms. Document installation and tooling inventory, with focused tests. Follow-up approval limits provisioning to macOS, Debian/Ubuntu, and WSL; native Windows is excluded and kubectl remains an externally installed prerequisite. Approved on 2026-10-06.
 
 ## DEC-004 – Legacy helper scripts
 
-Status: `needs-decision`
+Status: `approved`
 
 Options:
 
@@ -52,11 +52,11 @@ Options:
 
 Recommendation: remove them because their behavior is already represented in Ansible.
 
-Decision: _unresolved_
+Decision: Remove fonts.sh and tpm.sh. Keep Ansible as the provisioning path and update ownership/documentation. Approved on 2026-10-06.
 
 ## DEC-005 – Existing Pi settings change
 
-Status: `needs-decision`
+Status: `approved`
 
 Options:
 
@@ -66,4 +66,4 @@ Options:
 
 Recommendation: commit or revert it separately so phase diffs and verification remain unambiguous.
 
-Decision: _unresolved_
+Decision: Leave the existing Pi edit unstaged and excluded through a new worktree/branch, as authorized by the maintainer. Apply the same exclusion to the existing zsh edit. Original-checkout files must not be copied, reverted, modified, or staged. Approved on 2026-10-06.

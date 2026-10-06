@@ -16,7 +16,7 @@ The remediation is complete when:
 
 ## Phase 0 – Establish tracked execution artifacts
 
-Status: `in-progress`
+Status: `complete`
 
 Work:
 
@@ -37,9 +37,9 @@ Exit gate: artifacts are reviewable, public-safe, and accepted as the execution 
 
 ## Phase 1 – Remove machine-local state
 
-Status: `needs-decision`
+Status: `ready`
 
-Depends on: DEC-001, DEC-005
+Depends on: approved DEC-001, DEC-005
 
 Work:
 
@@ -60,9 +60,9 @@ Exit gate: current tracked content is public-safe and Windows synchronization re
 
 ## Phase 2 – Reconcile WezTerm provisioning
 
-Status: `needs-decision`
+Status: `ready`
 
-Depends on: DEC-002
+Depends on: approved DEC-002 (cross-platform)
 
 Work common to either decision:
 
@@ -140,9 +140,9 @@ Exit gate: setup preserves prior files, remains replayable, and cannot report fa
 
 ## Phase 5 – Resolve Krew and legacy-script drift
 
-Status: `needs-decision`
+Status: `ready`
 
-Depends on: DEC-003, DEC-004
+Depends on: approved DEC-003 (Unix Krew only; kubectl external), DEC-004 (remove scripts)
 
 Work:
 
