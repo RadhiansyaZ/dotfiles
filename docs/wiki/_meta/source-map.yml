@@ -42,6 +42,8 @@
     {"path": "docs/idea-artifacts/DESIGN.md", "classification": "document", "pages": ["docs/wiki/architecture.md"], "rationale": "The wiki design informs its architecture."},
     {"path": "docs/idea-artifacts/PLAN.md", "classification": "document", "pages": ["docs/wiki/maintenance.md"], "rationale": "The implementation plan informs maintenance."},
     {"path": "docs/idea-artifacts/RFC.md", "classification": "document", "pages": ["docs/wiki/architecture.md"], "rationale": "The wiki RFC informs its architecture."},
+    {"path": "docs/package_management/ideas.md", "classification": "document", "pages": ["docs/wiki/configuration-packages.md"], "rationale": "The package-management proposal informs configuration package guidance."},
+    {"path": "docs/stow-packages.md", "classification": "document", "pages": ["docs/wiki/configuration-packages.md"], "rationale": "Stow package rules govern repository-managed configuration."},
     {"path": "README.md", "classification": "document", "pages": ["docs/wiki/setup-and-verification.md"], "rationale": "The setup entry point is documented."},
     {"path": "LICENSE", "classification": "generated-or-vendored", "pages": [], "rationale": "License text does not require operational prose."}
   ]

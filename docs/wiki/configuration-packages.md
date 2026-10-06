@@ -12,6 +12,8 @@ source_files:
   - agents/.agents/.skill-lock.json
   - agents/.agents/skills/.gitignore
   - agents/.agents/skills/artifact-driven-development/SKILL.md
+  - docs/package_management/ideas.md
+  - docs/stow-packages.md
 last_reviewed: 2026-08-05
 ---
 # Configuration packages
