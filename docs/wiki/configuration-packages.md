@@ -10,6 +10,8 @@ source_files:
   - starship/starship.toml
   - wezterm/.config/wezterm/wezterm.lua
   - agents/.agents/.skill-lock.json
+  - agents/.agents/skills/.gitignore
+  - agents/.agents/skills/artifact-driven-development/SKILL.md
 last_reviewed: 2026-08-05
 ---
 # Configuration packages
@@ -27,3 +29,5 @@ The repository is canonical. On macOS and Linux, Stow is the only mechanism for 
 ## Guidance
 
 For the detailed cross-platform, difference-first tool inventory, use [machine tooling comparison](machine-tooling.md). Global agent guidance is canonical at [agents/.agents/AGENTS.md](../../agents/.agents/AGENTS.md), installed at `~/.agents/AGENTS.md`, imported by Claude Code, and linked into Pi's agent directory. Agent-skill lockfiles record third-party skill sources but restored third-party directories are not committed.
+
+The allowlisted local [artifact-driven-development skill](../../agents/.agents/skills/artifact-driven-development/SKILL.md) provides alignment, design, and implementation prompt templates, explicit approval gates, manual model-routing guidance, and cache-aware handoffs. It has no API runner or automatic model switching. It is installed through the existing `agents` Stow package; Pi discovers `~/.agents/skills/` and can reload updated skills with `/reload`.

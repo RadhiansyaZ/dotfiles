@@ -212,3 +212,6 @@ fi
 alias obsidian="/home/RadhiansyaPutra/.local/bin/obsidian.AppImage"
 alias k='kubectl1.32'
 alias h='helm3'
+
+# Keep the Unix Pi launcher ahead of Windows npm shims inherited by WSL.
+[[ -x "$HOME/.pi/agent/bin/pi" ]] && export PATH="$HOME/.pi/agent/bin:$PATH"

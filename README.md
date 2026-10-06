@@ -83,6 +83,12 @@ the global guidance from `~/.claude/CLAUDE.md`; Pi receives a linked copy at
 
 - **Local skills:** add hand-written skills under `agents/.agents/skills/` and allowlist them
   in `agents/.agents/skills/.gitignore` before committing.
+- **Artifact-driven development:** the local
+  [`artifact-driven-development`](agents/.agents/skills/artifact-driven-development/SKILL.md)
+  skill guides approved alignment → design → output with editable prompts, manual model
+  selection, and cache-aware handoffs. In Pi, run `/skill:artifact-driven-development`
+  with your request and artifact directory; use `/reload` after installing or editing it.
+  It includes templates and approval gates, with no API runner or automatic model switching.
 - **Third-party skills:** ignored after installation. Their Git source, path, and folder hash
   are recorded in `.skill-lock.json`; restore them on a new machine with the skills CLI using
   that lockfile.

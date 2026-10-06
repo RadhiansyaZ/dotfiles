@@ -8,3 +8,5 @@
 */
 # Add explicit allowlist rules below for any local/hand-written skills absent from
 # .skill-lock.json.
+!artifact-driven-development/
+!artifact-driven-development/**
