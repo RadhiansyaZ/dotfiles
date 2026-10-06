@@ -90,7 +90,6 @@ go_tools:
 npm_packages:
   - "@earendil-works/pi-coding-agent"
   - "@openai/codex"
-  - context-mode
   - corepack
   - tree-sitter-cli
 
