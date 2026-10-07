@@ -8,7 +8,8 @@ source_files:
   - windows/packages/packages.winget.json
   - setup-windows.ps1
   - sync-win.ps1
-last_reviewed: 2026-08-05
+  - docs/package_management/ideas.md
+last_reviewed: 2026-10-07
 ---
 # Machine tooling comparison
 

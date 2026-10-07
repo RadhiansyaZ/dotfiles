@@ -3,10 +3,10 @@ title: Unix provisioning
 source_files:
   - setup.sh
   - ansible/playbook.yml
+  - ansible/tasks/common.yml
   - Brewfile
-  - fonts.sh
-  - tpm.sh
-last_reviewed: 2026-08-05
+  - docs/stow-packages.md
+last_reviewed: 2026-10-07
 ---
 # Unix provisioning
 
@@ -14,7 +14,11 @@ last_reviewed: 2026-08-05
 
 ## Constraints
 
-Unix provisioning is for macOS and Debian/Ubuntu Linux. Package names may differ on other Linux families. Repository configuration is linked through GNU Stow rather than copied into the repository.
+Unix provisioning is for macOS and Debian/Ubuntu Linux. Package names may differ on other Linux families. Repository configuration is linked through GNU Stow rather than copied into the repository. Follow [Stow package rules](../stow-packages.md) for package scope and conflict resolution.
+
+## Fonts and tmux plugins
+
+The shared Ansible tasks install the configured Nerd Fonts into the macOS or Linux user font directory, then refresh the Linux font cache. They also clone TPM into the user tmux plugin directory and attempt TPM plugin installation after starting tmux. Ansible is the only retained provisioning path for these tasks.
 
 ## Mermaid Markdown viewer
 
