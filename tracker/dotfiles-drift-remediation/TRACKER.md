@@ -50,14 +50,14 @@ The original 53-item inventory, single-owner mapping, and agent contracts are in
 
 ## Phase 3 – Unix configuration delivery
 
-- [ ] `CFG-001` Move Starship configuration into its Stow target layout
-- [ ] `CFG-002` Update the Windows Starship source path
-- [ ] `CFG-003` Add Starship to Unix Stow deployment
-- [ ] `CFG-004` Add Herdr to Unix Stow deployment
-- [ ] `CFG-005` Apply the chosen WezTerm deployment model
-- [ ] `CFG-006` Confirm psmux remains Windows-only
-- [ ] `CFG-007` Run package-specific Stow dry-runs
-- [ ] `CFG-008` Verify and commit Phase 3
+- [x] `CFG-001` Move Starship configuration into its Stow target layout
+- [x] `CFG-002` Update the Windows Starship source path
+- [x] `CFG-003` Add Starship to Unix Stow deployment
+- [x] `CFG-004` Add Herdr to Unix Stow deployment
+- [x] `CFG-005` Apply the chosen WezTerm deployment model
+- [x] `CFG-006` Confirm psmux remains Windows-only
+- [x] `CFG-007` Run package-specific Stow dry-runs
+- [x] `CFG-008` Verify and commit Phase 3
 
 ## Phase 4 – Setup safety and verification
 
@@ -115,4 +115,5 @@ The original 53-item inventory, single-owner mapping, and agent contracts are in
 | 2026-10-07 | Resumed ownership follow-up | Accepted | LEGACY-3 reuses Terra/xhigh session drift-legacy-1, exited 0; exact two-file follow-up reviewed. Commit 04692b4 removes legacy scripts and repairs narrow ownership; retained Ansible font/TPM tasks inspected. Wiki audit, four wiki tests, scoped whitespace and execution-baseline range check passed. |
 | 2026-10-07 | Privacy commit | Passed | Commit 7b6077c contains only accepted PRV scope. Six Python privacy tests, native Windows sync fixture, Claude JSON and zsh -n pass. Bash parser was unsuitable for Zsh syntax; corrected to zsh -n. Wiki audit and full range check 48017de..HEAD pass after privacy documentation commit. CLN-006/007 remain open for Krew's inventory/phase gate. |
 | 2026-10-07 | WZT-1 handoff | Passed | Luna/xhigh exit 0; six-file scope reviewed and committed ed7ef57. Sol repeated two focused tests (Windows/Darwin/Linux mocks), twelve total Python tests, native Windows explicit-config WezTerm load and PowerShell parser successfully. Wiki audit/full 48017de range and whitespace pass. Native Unix application loads unavailable; fixtures cover target selection. DOC must correct the pre-existing Ctrl-A leader claim and refresh review dates. |
-| 2026-10-07 | CFG-1 dispatch | Running | Luna/xhigh owns CFG allowed files after WZT commit; no overlapping agent writes. |
+| 2026-10-07 | CFG-1 handoff | Passed | Luna/xhigh exit 0 accepted in 15508ad. Sol verified byte-identical Starship move, only three package additions, unchanged SSH handling, native-Windows psmux boundary. Three focused and fifteen total Python tests pass; each package dry-ran with Stow into an empty temporary target without mutation. Ansible syntax, Windows parser, wiki audit/full 48017de range and whitespace pass. |
+| 2026-10-07 | SAFE-1 dispatch | Running | Luna/xhigh owns SAFE allowed files after CFG commit; no overlapping agent writes. |
