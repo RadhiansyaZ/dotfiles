@@ -4,6 +4,10 @@ source_files:
   - setup.sh
   - ansible/playbook.yml
   - ansible/tasks/common.yml
+  - ansible/group_vars/all.yml
+  - starship/.config/starship.toml
+  - herdr/.config/herdr/config.toml
+  - wezterm/.config/wezterm/wezterm.lua
   - Brewfile
   - docs/stow-packages.md
 last_reviewed: 2026-10-07
@@ -14,7 +18,7 @@ last_reviewed: 2026-10-07
 
 ## Constraints
 
-Unix provisioning is for macOS and Debian/Ubuntu Linux. Package names may differ on other Linux families. Repository configuration is linked through GNU Stow rather than copied into the repository. Follow [Stow package rules](../stow-packages.md) for package scope and conflict resolution.
+Unix provisioning is for macOS and Debian/Ubuntu Linux. Package names may differ on other Linux families. Repository configuration is linked through GNU Stow rather than copied into the repository. Starship, Herdr, and WezTerm are selected Stow packages, delivering their configurations to `~/.config/starship.toml`, `~/.config/herdr/config.toml`, and `~/.config/wezterm/wezterm.lua`. psmux is native-Windows-only and is not deployed in WSL. Follow [Stow package rules](../stow-packages.md) for package scope and conflict resolution.
 
 ## Fonts and tmux plugins
 

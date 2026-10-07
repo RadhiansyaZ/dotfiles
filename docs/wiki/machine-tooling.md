@@ -139,7 +139,7 @@ macOS-exclusive; the parity matrix identifies their other implementations.
 
 Native Windows does **not** provision Zsh, Stow, tmux, TPM, Docker completion, Unix
 shell plugins, the shared Go helper-tool set other than `glowm`, Node LTS, or npm global agent tools. It installs psmux as a
-native PowerShell terminal multiplexer. It also lacks the
+native PowerShell terminal multiplexer; psmux is native-Windows-only and is not provisioned in WSL. It also lacks the
 Linux/macOS release-based tools `act`, `actionlint`, `dbmate`, `htmlq`, `lazysql`,
 `saml2aws`, and `tree-sitter`.
 
@@ -150,7 +150,9 @@ Windows-native editor, and desktop application workflow.
 ### Windows configuration model
 
 `setup-windows.ps1` creates repository-backed symlinks for Git, the PowerShell profile,
-psmux, agent skills, Starship, and WezTerm. It bootstraps PPM, the psmux plugin manager, so
+psmux, agent skills, Starship (from `starship/.config/starship.toml`), and WezTerm. On Unix,
+Stow delivers the Starship, Herdr, and WezTerm configurations to their home-relative config paths.
+It bootstraps PPM, the psmux plugin manager, so
 `C-a` followed by `I` installs the plugins declared in the linked psmux configuration. The
 WezTerm link deploys configuration only; setup does not install the application. It copies
 Pi and Zed settings as real local files:

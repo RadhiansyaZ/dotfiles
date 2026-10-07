@@ -11,12 +11,15 @@ stow_packages:
   - ghostty
   - git
   - gnupg
+  - herdr
   - nvim
   - opencode
   - pi
   - postgresql
   - ssh
+  - starship
   - tmux
+  - wezterm
   - zed
   - zsh
 

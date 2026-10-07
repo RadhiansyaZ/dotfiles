@@ -211,7 +211,7 @@ Set-Symlink `
 # .config\ parent is created by Set-Symlink if absent
 Set-Symlink `
     -Target "$env:USERPROFILE\.config\starship.toml" `
-    -Source "$RepoRoot\starship\starship.toml"
+    -Source "$RepoRoot\starship\.config\starship.toml"
 
 # WezTerm reads $HOME\.config\wezterm\wezterm.lua on Windows (HOME = %USERPROFILE%).
 # .config\wezterm\ parent is created by Set-Symlink if absent.
