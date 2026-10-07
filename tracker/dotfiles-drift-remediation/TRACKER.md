@@ -2,7 +2,7 @@
 
 Last updated: `2026-10-07`
 
-Overall status: `in-progress – setup phase complete; Krew pending`
+Overall status: `paused – KREW-1 handoff awaiting fresh Sol review`
 
 Execution baseline: `6be4fdf`; branch: `remediation/dotfiles-drift`.
 
@@ -122,3 +122,4 @@ The original 53-item inventory, single-owner mapping, and agent contracts are in
 | 2026-10-07 | Fresh-session checkpoint | Paused | Approximately 39% Sol context. No active agent. VERIFY-2 correction prompt prepared locally, not dispatched; resume recorded drift-verify-1 session after goal-resume in a fresh Sol session. Require valid tmux flag and strict argument-checking fixtures before acceptance. |
 | 2026-10-07 | VERIFY-2 handoff | Accepted | Resumed Luna/xhigh session drift-verify-1 exited 0. Sol reviewed only VERIFY-owned files and repeated seven controlled real-Ansible tests: tagged unsupported-family rejection before probes, all-present support, aggregate missing/nonzero failures, strict per-command version flags including `tmux -V`, and check-mode probes. Ansible syntax, wiki unit tests, staged audit/range check, and whitespace pass. |
 | 2026-10-07 | Setup phase commit | Passed | Accepted VERIFY scope committed in `8d1e2f6`; SET-003 through SET-007 are complete. |
+| 2026-10-07 | KREW-1 handoff | Unreviewed | Luna/xhigh session drift-krew-1 exited 0. It reports seven local mocked installer tests, task syntax, audit, Python compile, whitespace, and working-tree ownership passed. Source/docs remain uncommitted; fresh Sol review is required before acceptance. |

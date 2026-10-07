@@ -34,8 +34,8 @@ VERIFY-2 is accepted after the fresh-session review. No agent is active. Accepte
 - VERIFY-2 resumed the same Luna/xhigh session and exited 0. It replaces that unaccepted handoff: `tmux` uses `-V`; other commands retain `--version`; mocks reject incorrect flags; seven controlled real-Ansible tests cover platform/tag rejection, all-present, aggregation, nonzero diagnostics, correct tmux flag, and check-mode probes. Sol repeated all seven tests, Ansible syntax, four wiki tests, staged wiki audit/full range, and whitespace successfully.
 - Latest accepted source commit: 8d1e2f6 (VERIFY); setup verification is committed. No implementation agent may edit tracker files or stage source.
 - PRV-1/2, LEGACY-1/3 succeeded; LEGACY-2 exit 130 was superseded by the reconciled same-session follow-up. Never restart these accepted packets.
-- KREW-1 is the next dispatch: use Luna/xhigh with the prepared local prompt and its own PID/events/exit files. It may create only its scoped implementation/docs/tests; Sol reviews and stages after handoff.
-- After Krew review, complete DOC, final phase gates/integration, maintainer acceptance, and ordinary branch push. CLN-006/007 await Krew's inventory and cleanup phase gate.
+- KREW-1 Luna/xhigh exited 0 in session drift-krew-1 and is unreviewed. Its uncommitted scope is `ansible/tasks/common.yml`, new `ansible/tasks/krew.yml`, new Krew fixture/tests, and three Krew wiki pages. It reports seven local mocked installer tests, syntax, audit, Python compile, whitespace, and working-tree ownership passed; Sol must inspect the implementation and repeat the applicable checks before staging or accepting it.
+- Next fresh Sol session: reconcile KREW-1 diff against its packet, test actual tasks with controlled fixtures, stage only accepted files, run audit/full range and commit. Then complete DOC, final phase gates/integration, maintainer acceptance, and ordinary branch push. CLN-006/007 await Krew's inventory and cleanup phase gate.
 
 ## Available verification and limits
 
