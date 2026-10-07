@@ -3,6 +3,8 @@ title: Machine tooling comparison
 source_files:
   - Brewfile
   - ansible/group_vars/all.yml
+  - ansible/playbook.yml
+  - ansible/tasks/verify.yml
   - ansible/tasks/linux.yml
   - ansible/tasks/macos.yml
   - windows/packages/packages.winget.json
@@ -249,9 +251,11 @@ The repository remains canonical, and Windows copies flow from it only.
 | Native Windows package | `windows/packages/packages.winget.json` | This document |
 | Windows links/copy policy | `setup-windows.ps1`, `sync-win.ps1`, and `windows/sync-*.ps1` | `README.md`, `AGENTS.md`, and this document |
 
-After a change, run the relevant setup path. Unix setup dry-runs Stow and probes `zsh`,
-`stow`, `tmux`, and `nvim`; native Windows verifies `starship`, `fzf`, `zoxide`, `git`,
-`nvim`, `eza`, and `bat` after refreshing `PATH`. Before committing, run
+After a change, run the relevant setup path. The Unix playbook rejects unsupported
+operating systems and non-Debian Linux before provisioning, including tagged runs; setup
+dry-runs Stow and probes `zsh`, `stow`, `nvim`, and `pyenv` with `--version`, plus `tmux`
+with `-V`. Probes also run in Ansible check mode, aggregating all failures. Native Windows verifies
+`starship`, `fzf`, `zoxide`, `git`, `nvim`, `eza`, and `bat` after refreshing `PATH`. Before committing, run
 `git diff --check`.
 
 ## 10. Installation source catalogue

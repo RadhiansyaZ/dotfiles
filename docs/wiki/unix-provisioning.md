@@ -4,6 +4,7 @@ source_files:
   - setup.sh
   - ansible/playbook.yml
   - ansible/tasks/common.yml
+  - ansible/tasks/verify.yml
   - ansible/group_vars/all.yml
   - starship/.config/starship.toml
   - herdr/.config/herdr/config.toml
@@ -14,7 +15,7 @@ last_reviewed: 2026-10-07
 ---
 # Unix provisioning
 
-[`setup.sh`](../../setup.sh) bootstraps Ansible, then executes [ansible/playbook.yml](../../ansible/playbook.yml). macOS uses a repository-local Python environment when Ansible is absent; Debian/Ubuntu uses `apt`. The playbook dispatches macOS, Linux, and shared tasks and verifies core commands. On Linux and WSL, upstream and release installers first check command availability and leave an installed tool at its current version.
+[`setup.sh`](../../setup.sh) bootstraps Ansible, then executes [ansible/playbook.yml](../../ansible/playbook.yml). macOS uses a repository-local Python environment when Ansible is absent; Debian/Ubuntu uses `apt`. The playbook dispatches macOS, Linux, and shared tasks. It supports Darwin and Debian-family Linux, rejecting other operating systems and Linux families before provisioning, including tagged runs. After setup it probes `zsh`, `stow`, `nvim`, and `pyenv` with `--version`, and `tmux` with `-V`. The non-mutating probes also run in Ansible check mode; one aggregate failure reports missing commands and probe diagnostics. On Linux and WSL, upstream and release installers first check command availability and leave an installed tool at its current version.
 
 ## Constraints
 

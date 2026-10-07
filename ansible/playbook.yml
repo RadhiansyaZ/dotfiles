@@ -4,17 +4,12 @@
   gather_facts: true
 
   pre_tasks:
-    - name: Reject unsupported operating systems
-      ansible.builtin.fail:
-        msg: "Unsupported operating system: {{ ansible_facts.system }}. Supported: Darwin, Linux."
-      when: ansible_facts.system not in ['Darwin', 'Linux']
-
-    - name: Warn when Linux is not Debian family
-      ansible.builtin.debug:
-        msg: "This playbook targets Debian/Ubuntu Linux. Detected os_family={{ ansible_facts.os_family }}. Package names may differ."
-      when:
-        - ansible_facts.system == 'Linux'
-        - ansible_facts.os_family != 'Debian'
+    - name: Validate platform before platform-specific tasks
+      ansible.builtin.import_tasks: tasks/verify.yml
+      vars:
+        verify_platform: true
+        verify_commands: false
+      tags: [always]
 
   tasks:
     - name: Load architecture mapping
@@ -37,13 +32,8 @@
       tags: [common]
 
     - name: Verify critical commands
-      ansible.builtin.command: "{{ item }} --version"
-      loop:
-        - zsh
-        - stow
-        - tmux
-        - nvim
-        - pyenv
-      changed_when: false
-      failed_when: false
+      ansible.builtin.import_tasks: tasks/verify.yml
+      vars:
+        verify_platform: false
+        verify_commands: true
       tags: [verify]

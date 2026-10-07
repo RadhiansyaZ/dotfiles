@@ -6,9 +6,10 @@ source_files:
   - setup-windows.ps1
   - ansible/playbook.yml
   - ansible/tasks/common.yml
+  - ansible/tasks/verify.yml
   - ansible/group_vars/all.yml
   - docs/wiki/machine-tooling.md
-last_reviewed: 2026-08-05
+last_reviewed: 2026-10-07
 ---
 # Setup and verification
 
@@ -16,7 +17,7 @@ Run [`./setup.sh`](../../setup.sh) as a normal user on macOS, Debian/Ubuntu, or 
 
 ## Verification
 
-The Unix playbook probes `zsh`, `stow`, `tmux`, and `nvim`; manually run `command -v zsh stow tmux nvim glowm chromium chromium-browser` when needed. Native Windows setup reports shell-tool availability; manually use `Get-Command starship, fzf, psmux, glowm` from PowerShell. In WezTerm, run `glowm-wezterm <file.md>` against a file containing Mermaid and use `glowm --pdf <file.md>` as the fallback. The cross-platform, difference-first tooling inventory is [machine tooling comparison](machine-tooling.md).
+The Unix playbook supports Darwin and Debian-family Linux. It rejects other operating systems and non-Debian Linux before provisioning, including tagged runs. Setup dry-runs Stow, then probes `zsh`, `stow`, `nvim`, and `pyenv` with `--version`, and `tmux` with `-V`. These non-mutating probes also run in Ansible check mode; one final failure reports every missing command and each failed probe's diagnostic. Manually check with `command -v zsh stow tmux nvim pyenv`. Native Windows setup reports shell-tool availability; manually use `Get-Command starship, fzf, psmux, glowm` from PowerShell. In WezTerm, run `glowm-wezterm <file.md>` against a file containing Mermaid and use `glowm --pdf <file.md>` as the fallback. The cross-platform, difference-first tooling inventory is [machine tooling comparison](machine-tooling.md).
 
 ## Stow conflict handling
 

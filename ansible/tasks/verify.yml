@@ -1,0 +1,64 @@
+- name: Reject unsupported operating systems
+  ansible.builtin.fail:
+    msg: "Unsupported operating system: {{ ansible_facts.system }}. Supported: Darwin, Debian-family Linux."
+  when:
+    - verify_platform | default(true)
+    - ansible_facts.system not in ['Darwin', 'Linux']
+  tags: [always]
+
+- name: Reject unsupported Linux families
+  ansible.builtin.fail:
+    msg: "Unsupported Linux family: {{ ansible_facts.os_family }}. Supported Linux family: Debian."
+  when:
+    - verify_platform | default(true)
+    - ansible_facts.system == 'Linux'
+    - ansible_facts.os_family != 'Debian'
+  tags: [always]
+
+- name: Probe critical command versions
+  ansible.builtin.command:
+    argv:
+      - /bin/sh
+      - -c
+      - |
+        if ! command -v "$1" >/dev/null 2>&1; then
+          printf 'missing critical command: %s\n' "$1" >&2
+          exit 127
+        fi
+        exec "$1" "$2"
+      - critical-command-probe
+      - "{{ item.command }}"
+      - "{{ item.version_arg }}"
+  loop:
+    - command: zsh
+      version_arg: --version
+    - command: stow
+      version_arg: --version
+    - command: tmux
+      version_arg: -V
+    - command: nvim
+      version_arg: --version
+    - command: pyenv
+      version_arg: --version
+  environment:
+    PATH: "{{ ansible_facts.env.PATH }}"
+  register: critical_command_results
+  changed_when: false
+  failed_when: false
+  check_mode: false
+  when: verify_commands | default(true)
+  tags: [verify]
+
+- name: Fail once after aggregating critical command failures
+  ansible.builtin.fail:
+    msg: |
+      Critical command verification failed.
+      Missing critical commands: {{ critical_command_results.results | selectattr('stderr', 'search', 'missing critical command:') | map(attribute='item.command') | list | join(', ') or 'none' }}.
+      Failed command probes:
+      {% for result in critical_command_results.results if result.rc != 0 %}
+      - {{ result.item.command }} (rc={{ result.rc }}): {{ (result.stderr | default('', true) or result.stdout | default('', true) or result.msg | default('no diagnostic', true)) | trim }}
+      {% endfor %}
+  when:
+    - verify_commands | default(true)
+    - critical_command_results.results | rejectattr('rc', 'equalto', 0) | list | length > 0
+  tags: [verify]
