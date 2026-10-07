@@ -61,8 +61,8 @@ The original 53-item inventory, single-owner mapping, and agent contracts are in
 
 ## Phase 4 – Setup safety and verification
 
-- [ ] `SET-001` Back up plain-file Stow conflicts before replacement
-- [ ] `SET-002` Verify conflict handling is idempotent
+- [x] `SET-001` Back up plain-file Stow conflicts before replacement
+- [x] `SET-002` Verify conflict handling is idempotent
 - [ ] `SET-003` Reject unsupported Linux families in the playbook
 - [ ] `SET-004` Aggregate and fail missing critical-command verification
 - [ ] `SET-005` Add focused regression tests or fixtures
@@ -117,4 +117,5 @@ The original 53-item inventory, single-owner mapping, and agent contracts are in
 | 2026-10-07 | WZT-1 handoff | Passed | Luna/xhigh exit 0; six-file scope reviewed and committed ed7ef57. Sol repeated two focused tests (Windows/Darwin/Linux mocks), twelve total Python tests, native Windows explicit-config WezTerm load and PowerShell parser successfully. Wiki audit/full 48017de range and whitespace pass. Native Unix application loads unavailable; fixtures cover target selection. DOC must correct the pre-existing Ctrl-A leader claim and refresh review dates. |
 | 2026-10-07 | CFG-1 handoff | Passed | Luna/xhigh exit 0 accepted in 15508ad. Sol verified byte-identical Starship move, only three package additions, unchanged SSH handling, native-Windows psmux boundary. Three focused and fifteen total Python tests pass; each package dry-ran with Stow into an empty temporary target without mutation. Ansible syntax, Windows parser, wiki audit/full 48017de range and whitespace pass. |
 | 2026-10-07 | SAFE-1 review | Unaccepted | Sol interrupted agent with SIGINT, exit 130, after discovering the real-WSL fixture reached an unrelated sensitive-boundary SSH-copy task. Temporary test homes were cleaned; no boundary contents printed in the review. Two partial tests failed (check-mode SSH path and recap whitespace); Stow LINK output is stderr, so current stdout-only change reporting is also incorrect. |
-| 2026-10-07 | SAFE-2 follow-up | Running | Same Luna/xhigh drift-safe-1 session, new attempt logs. Isolate synthetic facts/package source before more tests; fix real change reporting and first-run/repeat assertions. No competing agent; no SAFE commit or acceptance yet. |
+| 2026-10-07 | SAFE-2 handoff | Passed | Same Luna/xhigh session, exit 0 accepted in 5bff941. Synthetic non-WSL facts and temporary package source isolate real production tasks. Sol repeated five real-Ansible safety tests: preserved bytes/mode, collisions including backup symlink, symlink exclusion, first-run reported change, repeat link inode/mtime and changed=0, check-mode safety. Ansible syntax, four wiki tests, audit/full 48017de range and whitespace pass. --stow avoids link churn but does not prune removed paths; documented trade-off. SET-005/006/007 await VERIFY adoption and phase gate. |
+| 2026-10-07 | VERIFY-1 dispatch | Running | Luna/xhigh after SAFE commit; controlled facts/executables and isolated sources required for fixtures. |

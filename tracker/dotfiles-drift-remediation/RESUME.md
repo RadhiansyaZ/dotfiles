@@ -22,16 +22,17 @@ Follow-ups: narrow ownership repair for docs/package_management/ideas.md and doc
 
 Execution resumed through the active goal continuation. LEGACY-3 resumed the recorded Terra/xhigh session drift-legacy-1, exited 0, and its narrow ownership follow-up was accepted. Source changes are committed; no push has been made.
 
-- Goal milestones: inventory, workspace, handoffs, decisions, privacy, legacy, WezTerm, configuration delivery complete; Stow safety in progress.
+- Goal milestones: inventory, workspace, handoffs, decisions, privacy, legacy, WezTerm, configuration delivery, Stow safety complete; setup verification in progress.
 - LEGACY committed in 04692b4: fonts.sh/tpm.sh removed, retained Ansible tasks reviewed, narrow proposal/Stow-guide ownership repaired. Four wiki tests, audit, scoped whitespace, execution-baseline range check passed.
 - PRV committed in 7b6077c after the ownership gate passed. Sol repeated six privacy tests and the real native Windows sync fixture successfully; Claude JSON and zsh -n passed. Earlier accepted count-only scan and scoped settings review remain recorded in TRACKER.md. Bash is unsuitable for parsing the Zsh pattern syntax; corrected parser passed.
 - Full wiki changed-path responsibility check from 48017de to HEAD passes after the PRV documentation commit. The intermediate LEGACY-only range check had correctly required privacy-page updates, now committed.
 - WZT-1 exited 0 and was accepted in ed7ef57. Sol repeated platform mocks, native Windows explicit-config WezTerm load, PowerShell parser, twelve Python tests, audit/full range/whitespace successfully. Native Unix WezTerm loads remain unavailable. DOC must correct the pre-existing Ctrl-A leader claim and refresh review dates.
 - CFG-1 exited 0 and was accepted in 15508ad. Sol checked byte-identical Starship relocation, package/source boundaries, temporary-target Stow dry-runs, fifteen Python tests, Ansible syntax, Windows parser and wiki audit/full range/whitespace successfully.
 - SAFE-1 was interrupted by Sol, exit 130, for fixture isolation corrections before acceptance. The real WSL facts reached an unrelated SSH-copy task against sensitive-boundary material; temporary test homes cleaned, no boundary contents printed. Partial fixtures failed check-mode/recap assertions; change reporting mistakenly uses stdout although Stow LINK output is stderr.
-- SAFE-2 is next/active: same Luna/xhigh session drift-safe-1, new attempt logs, exclusive SAFE allowed files. Require synthetic non-WSL facts and temporary package source before any more runs, real first-run change reporting and second-run zero-change checks. Reconcile PID/exit/final events before retry or acceptance.
+- SAFE-2 exited 0 and was accepted in 5bff941. Corrected synthetic facts/package source prevent boundary access. Five independent real-Ansible tests, syntax, four wiki tests, audit/full range/whitespace passed. --stow avoids actual link churn but does not prune removed package paths; trade-off documented.
+- VERIFY-1 is next/active: Luna/xhigh session drift-verify-1, exclusive VERIFY allowed files. Require controlled facts/executables and isolated source roots. Reconcile PID/exit/final events before retry or acceptance.
 - PRV-1/2, LEGACY-1/3 succeeded; LEGACY-2 exit 130 was superseded by the reconciled same-session follow-up. Never restart these accepted packets.
-- Next: review SAFE-1 handoff and run actual Ansible temporary-home conflict fixtures, including repeat run, collision, symlink and check-mode cases; verify preservation/idempotency before committing. Then VERIFY, KREW, DOC with shared scopes serialized. CLN-006/007 await Krew's inventory and cleanup phase gate.
+- Next: review VERIFY-1 handoff for early unsupported-Linux rejection (including tags), aggregated command failure/all-present behavior, actual-task fixtures and SAFE documentation/test adoption. Run syntax/wiki/whitespace checks, commit only accepted scope. Then KREW and DOC. Prepare fresh-session handoff before approximately 40% context. CLN-006/007 await Krew's inventory and cleanup phase gate.
 
 ## Available verification and limits
 
@@ -57,7 +58,7 @@ The maintainer requests fresh Sol sessions around 40% context usage. Begin hando
 
 1. Find the worktree for the branch with `git worktree list`; operate only there.
 2. Read repository instructions, this checkpoint, WORK-PACKAGES.md, TRACKER.md, and DECISIONS.md. Inspect status/recent commits against packet evidence.
-3. Reconcile local runtime .pid/.exit and final events before starting any agent. Current packet is SAFE-2, session drift-safe-1. SAFE-1 exit 130 was reconciled as an unaccepted interrupted attempt. CFG-1 and WZT-1 exit 0 are accepted. LEGACY-3 exit 0 was accepted; its predecessor LEGACY-2 exit 130 needs no further retry.
+3. Reconcile local runtime .pid/.exit and final events before starting any agent. Current packet is VERIFY-1, session drift-verify-1. SAFE-2 exit 0 is accepted; SAFE-1 exit 130 was reconciled and superseded. CFG-1 and WZT-1 exit 0 are accepted. LEGACY-3 exit 0 was accepted; its predecessor LEGACY-2 exit 130 needs no further retry.
 4. Verified models are openai-codex/gpt-6-luna and openai-codex/gpt-5.6-terra; effective effort xhigh. Built-in codemode may batch checks. No substitutions without approval.
 5. For fresh packets, the local dispatch.sh records PID/exit and rejects duplicate runs. Existing packet prompts are prepared. Resume follow-ups with the recorded session, not an unverified new attempt.
 6. Agents may not stage, commit, edit tracker files, push, or provision hosts. Sol validates scope/results and explicitly stages only accepted files.
