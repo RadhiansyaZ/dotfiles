@@ -7,7 +7,7 @@ source_files:
   - copy-ssh-from-windows.sh
   - pi/.pi/agent/settings.json
   - zed/.config/zed/settings.json
-last_reviewed: 2026-07-12
+last_reviewed: 2026-10-06
 ---
 # Windows synchronization
 
@@ -16,6 +16,8 @@ last_reviewed: 2026-07-12
 ## Safety boundary
 
 Synchronization is one-way: repository files are canonical and are copied to Windows. Do not add Windows-to-WSL copying without an explicit conflict-resolution policy. Pi and Zed are copied rather than symlinked because the applications write their settings and UNC-backed symlinks are unsuitable.
+
+Zed connections and project history can contain machine-local metadata, so they remain in Zed's local state and are excluded from canonical settings. The Zed sync replaces differing Windows settings from the repository copy. It backs up an existing destination once and does not overwrite an existing backup; it does not merge or automatically preserve later Windows-local edits.
 
 ## Guidance
 

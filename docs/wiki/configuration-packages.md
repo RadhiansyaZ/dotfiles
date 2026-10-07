@@ -10,15 +10,18 @@ source_files:
   - starship/starship.toml
   - wezterm/.config/wezterm/wezterm.lua
   - agents/.agents/.skill-lock.json
+  - claude/.claude/settings.json
   - agents/.agents/skills/.gitignore
   - agents/.agents/skills/artifact-driven-development/SKILL.md
   - docs/package_management/ideas.md
   - docs/stow-packages.md
-last_reviewed: 2026-08-05
+last_reviewed: 2026-10-06
 ---
 # Configuration packages
 
-Configuration directories are repository-managed Stow packages. They include shell, Git, terminal, editor, agent, and application configuration such as [zsh](../../zsh/.zshrc), [tmux](../../tmux/.config/tmux/tmux.conf), [psmux](../../psmux/.psmux.conf), [Herdr](../../herdr/.config/herdr/config.toml), [Neovim](../../nvim/.config/nvim/init.lua), and [Starship](../../starship/starship.toml).
+Configuration directories are repository-managed Stow packages. They include shell, Git, terminal, editor, agent, and application configuration such as [zsh](../../zsh/.zshrc), [tmux](../../tmux/.config/tmux/tmux.conf), [psmux](../../psmux/.psmux.conf), [Herdr](../../herdr/.config/herdr/config.toml), [Neovim](../../nvim/.config/nvim/init.lua), [Starship](../../starship/starship.toml), [Zed](../../zed/.config/zed/settings.json), and [Claude Code](../../claude/.claude/settings.json).
+
+The tracked Zed settings hold shared preferences only. Connection definitions and project history are application-local state and are excluded from canonical settings; see [synchronization](synchronization.md). Claude hook commands and the Zsh `obsidian` alias use quoted `$HOME`-relative paths. These references do not install the local hooks or application binary.
 
 ## WezTerm Mermaid preview
 

@@ -209,7 +209,7 @@ if [[ -f "$HOME/.local/bin/env" ]]; then
   source "$HOME/.local/bin/env"
 fi
 
-alias obsidian="/home/RadhiansyaPutra/.local/bin/obsidian.AppImage"
+alias obsidian='"$HOME/.local/bin/obsidian.AppImage"'
 alias k='kubectl1.32'
 alias h='helm3'
 

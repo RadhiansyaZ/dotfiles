@@ -41,7 +41,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 /home/RadhiansyaPutra/.claude/hooks/git-rebase-guard.py",
+            "command": "python3 \"$HOME/.claude/hooks/git-rebase-guard.py\"",
             "if": "Bash(git rebase:*)",
             "timeout": 5
           }
@@ -54,7 +54,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash '/home/RadhiansyaPutra/.config/tmux/plugins/tmux-assistant-resurrect/hooks/claude-session-cleanup.sh'"
+            "command": "bash \"$HOME/.config/tmux/plugins/tmux-assistant-resurrect/hooks/claude-session-cleanup.sh\""
           }
         ]
       }
@@ -64,7 +64,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"/home/RadhiansyaPutra/.claude/hooks/context-mode-cache-heal.mjs\""
+            "command": "\"$HOME/.claude/hooks/context-mode-cache-heal.mjs\""
           }
         ]
       },
@@ -73,7 +73,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash '/home/RadhiansyaPutra/.config/tmux/plugins/tmux-assistant-resurrect/hooks/claude-session-track.sh'"
+            "command": "bash \"$HOME/.config/tmux/plugins/tmux-assistant-resurrect/hooks/claude-session-track.sh\""
           }
         ]
       },
@@ -82,7 +82,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash '/home/RadhiansyaPutra/.claude/hooks/herdr-agent-state.sh' session",
+            "command": "bash \"$HOME/.claude/hooks/herdr-agent-state.sh\" session",
             "timeout": 10
           }
         ]
@@ -163,7 +163,7 @@
       "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries `prod` or `production` as a whole word or name segment — concretely the Terraform under specter-prototype/infra/terraform (ecs.tf, vpc.tf, providers.tf, showcase-management.tf) and Kubernetes manifests core/wftile/k8s/install.yaml, deployment/helm/*",
       "### User-specific",
       "**Primary use of Claude Code**: software development — wiki tooling scripts (scaffold.sh, lint.py, log_append.sh) plus platform/infra work across this workspace",
-      "**Trusted repo**: The git repository the agent started in (its working directory, /home/RadhiansyaPutra/aetosky) and its configured remote(s) — none configured, so pushes have no default destination. When the repo's public/private visibility is given, use it to scope what is OK to commit or push there: confidential material is fine in a private repo; in a public one, only that repo's own work is — and content ported, repointed, or first read from outside this session's repo is not its own work, whoever directed the port. Visibility scopes confidential material only: secrets and sensitive data (personal & entrusted) are never cleared into any repo by its visibility",
+      "**Trusted repo**: The git repository the agent started in (its working directory, the current repository root) and its configured remote(s) — none configured, so pushes have no default destination. When the repo's public/private visibility is given, use it to scope what is OK to commit or push there: confidential material is fine in a private repo; in a public one, only that repo's own work is — and content ported, repointed, or first read from outside this session's repo is not its own work, whoever directed the port. Visibility scopes confidential material only: secrets and sensitive data (personal & entrusted) are never cleared into any repo by its visibility",
       "**Org-specific CLIs**: None configured (only pwd seen in this project's transcripts; agent-browser, pi, alembic seen in shell history but not org-specific)"
     ]
   }
