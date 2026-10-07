@@ -2,7 +2,7 @@
 
 Last updated: `2026-10-07`
 
-Overall status: `paused – fresh Sol session required`
+Overall status: `in-progress – setup phase complete; Krew pending`
 
 Execution baseline: `6be4fdf`; branch: `remediation/dotfiles-drift`.
 
@@ -63,11 +63,11 @@ The original 53-item inventory, single-owner mapping, and agent contracts are in
 
 - [x] `SET-001` Back up plain-file Stow conflicts before replacement
 - [x] `SET-002` Verify conflict handling is idempotent
-- [ ] `SET-003` Reject unsupported Linux families in the playbook
-- [ ] `SET-004` Aggregate and fail missing critical-command verification
-- [ ] `SET-005` Add focused regression tests or fixtures
-- [ ] `SET-006` Update setup and verification documentation
-- [ ] `SET-007` Verify and commit Phase 4
+- [x] `SET-003` Reject unsupported Linux families in the playbook
+- [x] `SET-004` Aggregate and fail missing critical-command verification
+- [x] `SET-005` Add focused regression tests or fixtures
+- [x] `SET-006` Update setup and verification documentation
+- [x] `SET-007` Verify and commit Phase 4
 
 ## Phase 5 – Krew and legacy scripts
 
@@ -120,3 +120,5 @@ The original 53-item inventory, single-owner mapping, and agent contracts are in
 | 2026-10-07 | SAFE-2 handoff | Passed | Same Luna/xhigh session, exit 0 accepted in 5bff941. Synthetic non-WSL facts and temporary package source isolate real production tasks. Sol repeated five real-Ansible safety tests: preserved bytes/mode, collisions including backup symlink, symlink exclusion, first-run reported change, repeat link inode/mtime and changed=0, check-mode safety. Ansible syntax, four wiki tests, audit/full 48017de range and whitespace pass. --stow avoids link churn but does not prune removed paths; documented trade-off. SET-005/006/007 await VERIFY adoption and phase gate. |
 | 2026-10-07 | VERIFY-1 handoff review | Unaccepted | Luna/xhigh exit 0; Sol repeated five controlled actual-task tests successfully, but found tmux --version invalid on installed tmux while tmux -V succeeds. Mock scripts ignore arguments and miss this defect. Source/docs remain uncommitted; no setup phase gate closed. A controlled check-mode fixture exits 0 with probes skipped; do not claim those probes ran. |
 | 2026-10-07 | Fresh-session checkpoint | Paused | Approximately 39% Sol context. No active agent. VERIFY-2 correction prompt prepared locally, not dispatched; resume recorded drift-verify-1 session after goal-resume in a fresh Sol session. Require valid tmux flag and strict argument-checking fixtures before acceptance. |
+| 2026-10-07 | VERIFY-2 handoff | Accepted | Resumed Luna/xhigh session drift-verify-1 exited 0. Sol reviewed only VERIFY-owned files and repeated seven controlled real-Ansible tests: tagged unsupported-family rejection before probes, all-present support, aggregate missing/nonzero failures, strict per-command version flags including `tmux -V`, and check-mode probes. Ansible syntax, wiki unit tests, staged audit/range check, and whitespace pass. |
+| 2026-10-07 | Setup phase commit | Passed | Accepted VERIFY scope committed in `8d1e2f6`; SET-003 through SET-007 are complete. |
