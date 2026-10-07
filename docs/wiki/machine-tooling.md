@@ -151,10 +151,9 @@ Windows-native editor, and desktop application workflow.
 
 `setup-windows.ps1` creates repository-backed symlinks for Git, the PowerShell profile,
 psmux, agent skills, Starship, and WezTerm. It bootstraps PPM, the psmux plugin manager, so
-`C-a` followed by `I` installs the plugins declared in the linked psmux configuration. It also pre-clones the WezTerm plugin tree
-(`resurrect.wezterm` and its `dev.wezterm` dependency) into `%APPDATA%/wezterm/plugins`
-with the system `git`, because WezTerm's bundled libgit2 cannot clone plugins on Windows.
-It copies Pi and Zed settings as real local files:
+`C-a` followed by `I` installs the plugins declared in the linked psmux configuration. The
+WezTerm link deploys configuration only; setup does not install the application. It copies
+Pi and Zed settings as real local files:
 
 | Application | Canonical source | Windows destination | Why copied instead of linked |
 | --- | --- | --- | --- |
@@ -173,7 +172,7 @@ application separately on any machine where it is needed.
 | Application/configuration | macOS | Linux/WSL | Native Windows | Notes |
 | --- | --- | --- | --- | --- |
 | Ghostty | Configured only | Configured only | Not provisioned | The tracked Ghostty file currently contains only template comments. |
-| WezTerm | Configured only | Configured only | Configured only | Windows link defaults tabs/splits to the Debian WSL domain. |
+| WezTerm | Configured only | Configured only | Configured only | Shared config is deployed by Stow on Unix and linked on Windows; setup does not install WezTerm. |
 | Zed | Configured only | Configured only | Installed + copied config | Zed is the preferred configured editor where available. |
 | Claude Code | Configured only | Configured only | Not provisioned | Credentials and local state are intentionally excluded. |
 | Pi | Configured; executable installed via npm | Configured; executable installed via npm | Configured only | Windows needs a separate Pi/Node installation. |
@@ -207,9 +206,10 @@ Neither set is installed by the native Windows bootstrap.
   loading, and cached Starship/Zoxide initialization. It is not a Zsh replacement.
 - **tmux (macOS/Linux/WSL):** TPM with `tmux-sensible`, `tmux-resurrect`, and
   `tmux-continuum`; `Ctrl-A` is the prefix.
-- **WezTerm:** mirrors the tmux `Ctrl-A` leader. On Windows it opens new panes/tabs in
-  WSL Debian by default. `glowm-wezterm` temporarily selects glowm’s iTerm2 image path,
-  which WezTerm supports; this is experimental, so use `glowm --pdf` if rendering fails.
+- **WezTerm:** mirrors the tmux `Ctrl-A` leader. Its Windows target triple selects WSL
+  Debian as the default domain; macOS and Linux retain their native default. `glowm-wezterm`
+  temporarily selects glowm’s iTerm2 image path, which WezTerm supports; this is experimental,
+  so use `glowm --pdf` if rendering fails.
 - **Neovim:** LazyVim bootstrapped by `lazy.nvim` on all three package-provisioned
   platforms. On Linux the latest upstream release is required for its runtime tree.
 - **Starship:** one shared configuration shows OS/host, directory, Git, Python, Go,
