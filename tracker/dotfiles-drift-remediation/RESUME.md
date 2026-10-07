@@ -22,13 +22,14 @@ Follow-ups: narrow ownership repair for docs/package_management/ideas.md and doc
 
 Execution resumed through the active goal continuation. LEGACY-3 resumed the recorded Terra/xhigh session drift-legacy-1, exited 0, and its narrow ownership follow-up was accepted. Source changes are committed; no push has been made.
 
-- Goal milestones: inventory, workspace, handoffs, decisions, privacy, legacy complete; WezTerm in progress.
+- Goal milestones: inventory, workspace, handoffs, decisions, privacy, legacy, WezTerm complete; configuration delivery in progress.
 - LEGACY committed in 04692b4: fonts.sh/tpm.sh removed, retained Ansible tasks reviewed, narrow proposal/Stow-guide ownership repaired. Four wiki tests, audit, scoped whitespace, execution-baseline range check passed.
 - PRV committed in 7b6077c after the ownership gate passed. Sol repeated six privacy tests and the real native Windows sync fixture successfully; Claude JSON and zsh -n passed. Earlier accepted count-only scan and scoped settings review remain recorded in TRACKER.md. Bash is unsuitable for parsing the Zsh pattern syntax; corrected parser passed.
 - Full wiki changed-path responsibility check from 48017de to HEAD passes after the PRV documentation commit. The intermediate LEGACY-only range check had correctly required privacy-page updates, now committed.
-- WZT-1 is next/active: Luna/xhigh session drift-wzt-1, exclusive WZT allowed files, fresh packet dispatch through local dispatch.sh. Reconcile its PID/exit/final events before retry or accepting its handoff.
+- WZT-1 exited 0 and was accepted in ed7ef57. Sol repeated platform mocks, native Windows explicit-config WezTerm load, PowerShell parser, twelve Python tests, audit/full range/whitespace successfully. Native Unix WezTerm loads remain unavailable. DOC must correct the pre-existing Ctrl-A leader claim and refresh review dates.
+- CFG-1 is next/active: Luna/xhigh session drift-cfg-1, exclusive CFG allowed files. Reconcile PID/exit/final events before retry or acceptance.
 - PRV-1/2, LEGACY-1/3 succeeded; LEGACY-2 exit 130 was superseded by the reconciled same-session follow-up. Never restart these accepted packets.
-- Next: review WZT-1 handoff and scope; run independent mocked-platform/config-load/parser/wiki checks; record evidence and commit accepted source. Then CFG, SAFE, VERIFY, KREW, DOC with shared scopes serialized. CLN-006/007 await Krew's inventory and cleanup phase gate.
+- Next: review CFG-1 handoff; verify relocated Starship bytes/source path, all three temporary-target Stow dry-runs, package list boundaries, parser/Ansible/wiki checks; commit accepted source. Then SAFE, VERIFY, KREW, DOC with shared scopes serialized. CLN-006/007 await Krew's inventory and cleanup phase gate.
 
 ## Available verification and limits
 
@@ -54,7 +55,7 @@ The maintainer requests fresh Sol sessions around 40% context usage. Begin hando
 
 1. Find the worktree for the branch with `git worktree list`; operate only there.
 2. Read repository instructions, this checkpoint, WORK-PACKAGES.md, TRACKER.md, and DECISIONS.md. Inspect status/recent commits against packet evidence.
-3. Reconcile local runtime .pid/.exit and final events before starting any agent. Current packet is WZT-1, session drift-wzt-1. LEGACY-3 exit 0 was accepted; its predecessor LEGACY-2 exit 130 needs no further retry.
+3. Reconcile local runtime .pid/.exit and final events before starting any agent. Current packet is CFG-1, session drift-cfg-1. WZT-1 exit 0 is accepted. LEGACY-3 exit 0 was accepted; its predecessor LEGACY-2 exit 130 needs no further retry.
 4. Verified models are openai-codex/gpt-6-luna and openai-codex/gpt-5.6-terra; effective effort xhigh. Built-in codemode may batch checks. No substitutions without approval.
 5. For fresh packets, the local dispatch.sh records PID/exit and rejects duplicate runs. Existing packet prompts are prepared. Resume follow-ups with the recorded session, not an unverified new attempt.
 6. Agents may not stage, commit, edit tracker files, push, or provision hosts. Sol validates scope/results and explicitly stages only accepted files.

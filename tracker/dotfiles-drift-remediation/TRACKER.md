@@ -40,13 +40,13 @@ The original 53-item inventory, single-owner mapping, and agent contracts are in
 ## Phase 2 – WezTerm reconciliation
 
 - [x] `WZT-001` Resolve DEC-002
-- [ ] `WZT-002` Remove or restore stale plugin provisioning according to the decision
+- [x] `WZT-002` Remove or restore stale plugin provisioning according to the decision
 - [x] `WZT-003` Remove obsolete WezTerm and Zed backup snapshots
 - [x] `WZT-004` Add narrow backup ignore rules
-- [ ] `WZT-005` Align WezTerm comments and platform behavior
-- [ ] `WZT-006` Update Windows, configuration-package, and tooling documentation
-- [ ] `WZT-007` Run available PowerShell and WezTerm checks
-- [ ] `WZT-008` Verify and commit Phase 2
+- [x] `WZT-005` Align WezTerm comments and platform behavior
+- [x] `WZT-006` Update Windows, configuration-package, and tooling documentation
+- [x] `WZT-007` Run available PowerShell and WezTerm checks
+- [x] `WZT-008` Verify and commit Phase 2
 
 ## Phase 3 – Unix configuration delivery
 
@@ -114,4 +114,5 @@ The original 53-item inventory, single-owner mapping, and agent contracts are in
 | 2026-10-07 | Maintainer pause | Paused at prior checkpoint | LEGACY-2 stopped with SIGINT, exit 130; uncommitted work preserved. |
 | 2026-10-07 | Resumed ownership follow-up | Accepted | LEGACY-3 reuses Terra/xhigh session drift-legacy-1, exited 0; exact two-file follow-up reviewed. Commit 04692b4 removes legacy scripts and repairs narrow ownership; retained Ansible font/TPM tasks inspected. Wiki audit, four wiki tests, scoped whitespace and execution-baseline range check passed. |
 | 2026-10-07 | Privacy commit | Passed | Commit 7b6077c contains only accepted PRV scope. Six Python privacy tests, native Windows sync fixture, Claude JSON and zsh -n pass. Bash parser was unsuitable for Zsh syntax; corrected to zsh -n. Wiki audit and full range check 48017de..HEAD pass after privacy documentation commit. CLN-006/007 remain open for Krew's inventory/phase gate. |
-| 2026-10-07 | WZT-1 dispatch | Running | Luna/xhigh owns only WZT allowed files; preceding source packets committed and shared writes serialized. |
+| 2026-10-07 | WZT-1 handoff | Passed | Luna/xhigh exit 0; six-file scope reviewed and committed ed7ef57. Sol repeated two focused tests (Windows/Darwin/Linux mocks), twelve total Python tests, native Windows explicit-config WezTerm load and PowerShell parser successfully. Wiki audit/full 48017de range and whitespace pass. Native Unix application loads unavailable; fixtures cover target selection. DOC must correct the pre-existing Ctrl-A leader claim and refresh review dates. |
+| 2026-10-07 | CFG-1 dispatch | Running | Luna/xhigh owns CFG allowed files after WZT commit; no overlapping agent writes. |

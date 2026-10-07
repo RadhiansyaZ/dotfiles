@@ -39,8 +39,8 @@ Phase 0 was committed in `42b888a` and remains complete. PLAN.md's old in-progre
 | Packet | Model / effort | State | Predecessor |
 | --- | --- | --- | --- |
 | PRV | Luna / xhigh | accepted; committed 7b6077c | Approved DEC-001/005 |
-| WZT | Luna / xhigh | dispatching WZT-1 | LEGACY |
-| CFG | Luna / xhigh | pending | WZT |
+| WZT | Luna / xhigh | accepted; committed ed7ef57 | LEGACY |
+| CFG | Luna / xhigh | dispatching CFG-1 | WZT |
 | SAFE | Luna / xhigh | pending | CFG |
 | VERIFY | Luna / xhigh | pending | SAFE |
 | KREW | Luna / xhigh | pending | VERIFY; approved Unix-only scope |
