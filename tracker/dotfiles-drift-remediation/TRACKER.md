@@ -2,7 +2,7 @@
 
 Last updated: `2026-10-07`
 
-Overall status: `running`
+Overall status: `paused – fresh Sol session required`
 
 Execution baseline: `6be4fdf`; branch: `remediation/dotfiles-drift`.
 
@@ -118,4 +118,5 @@ The original 53-item inventory, single-owner mapping, and agent contracts are in
 | 2026-10-07 | CFG-1 handoff | Passed | Luna/xhigh exit 0 accepted in 15508ad. Sol verified byte-identical Starship move, only three package additions, unchanged SSH handling, native-Windows psmux boundary. Three focused and fifteen total Python tests pass; each package dry-ran with Stow into an empty temporary target without mutation. Ansible syntax, Windows parser, wiki audit/full 48017de range and whitespace pass. |
 | 2026-10-07 | SAFE-1 review | Unaccepted | Sol interrupted agent with SIGINT, exit 130, after discovering the real-WSL fixture reached an unrelated sensitive-boundary SSH-copy task. Temporary test homes were cleaned; no boundary contents printed in the review. Two partial tests failed (check-mode SSH path and recap whitespace); Stow LINK output is stderr, so current stdout-only change reporting is also incorrect. |
 | 2026-10-07 | SAFE-2 handoff | Passed | Same Luna/xhigh session, exit 0 accepted in 5bff941. Synthetic non-WSL facts and temporary package source isolate real production tasks. Sol repeated five real-Ansible safety tests: preserved bytes/mode, collisions including backup symlink, symlink exclusion, first-run reported change, repeat link inode/mtime and changed=0, check-mode safety. Ansible syntax, four wiki tests, audit/full 48017de range and whitespace pass. --stow avoids link churn but does not prune removed paths; documented trade-off. SET-005/006/007 await VERIFY adoption and phase gate. |
-| 2026-10-07 | VERIFY-1 dispatch | Running | Luna/xhigh after SAFE commit; controlled facts/executables and isolated sources required for fixtures. |
+| 2026-10-07 | VERIFY-1 handoff review | Unaccepted | Luna/xhigh exit 0; Sol repeated five controlled actual-task tests successfully, but found tmux --version invalid on installed tmux while tmux -V succeeds. Mock scripts ignore arguments and miss this defect. Source/docs remain uncommitted; no setup phase gate closed. A controlled check-mode fixture exits 0 with probes skipped; do not claim those probes ran. |
+| 2026-10-07 | Fresh-session checkpoint | Paused | Approximately 39% Sol context. No active agent. VERIFY-2 correction prompt prepared locally, not dispatched; resume recorded drift-verify-1 session after goal-resume in a fresh Sol session. Require valid tmux flag and strict argument-checking fixtures before acceptance. |
