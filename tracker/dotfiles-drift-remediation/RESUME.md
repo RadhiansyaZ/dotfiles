@@ -28,7 +28,8 @@ Execution resumed through the active goal continuation. LEGACY-3 resumed the rec
 - Full wiki changed-path responsibility check from 48017de to HEAD passes after the PRV documentation commit. The intermediate LEGACY-only range check had correctly required privacy-page updates, now committed.
 - WZT-1 exited 0 and was accepted in ed7ef57. Sol repeated platform mocks, native Windows explicit-config WezTerm load, PowerShell parser, twelve Python tests, audit/full range/whitespace successfully. Native Unix WezTerm loads remain unavailable. DOC must correct the pre-existing Ctrl-A leader claim and refresh review dates.
 - CFG-1 exited 0 and was accepted in 15508ad. Sol checked byte-identical Starship relocation, package/source boundaries, temporary-target Stow dry-runs, fifteen Python tests, Ansible syntax, Windows parser and wiki audit/full range/whitespace successfully.
-- SAFE-1 is next/active: Luna/xhigh session drift-safe-1, exclusive SAFE allowed files. Reconcile PID/exit/final events before retry or acceptance.
+- SAFE-1 was interrupted by Sol, exit 130, for fixture isolation corrections before acceptance. The real WSL facts reached an unrelated SSH-copy task against sensitive-boundary material; temporary test homes cleaned, no boundary contents printed. Partial fixtures failed check-mode/recap assertions; change reporting mistakenly uses stdout although Stow LINK output is stderr.
+- SAFE-2 is next/active: same Luna/xhigh session drift-safe-1, new attempt logs, exclusive SAFE allowed files. Require synthetic non-WSL facts and temporary package source before any more runs, real first-run change reporting and second-run zero-change checks. Reconcile PID/exit/final events before retry or acceptance.
 - PRV-1/2, LEGACY-1/3 succeeded; LEGACY-2 exit 130 was superseded by the reconciled same-session follow-up. Never restart these accepted packets.
 - Next: review SAFE-1 handoff and run actual Ansible temporary-home conflict fixtures, including repeat run, collision, symlink and check-mode cases; verify preservation/idempotency before committing. Then VERIFY, KREW, DOC with shared scopes serialized. CLN-006/007 await Krew's inventory and cleanup phase gate.
 
@@ -44,7 +45,7 @@ A no-profile native Windows command lookup resolves starship/git/psmux; fzf/zoxi
 
 Runtime prompts, sessions, event logs, PIDs, exits, and private validation inputs stay under owner-only `drift-agent-runs/` in the Git common directory. Resolve that directory with `git rev-parse --git-common-dir`. Do not publish raw sessions.
 
-PRV reported that a diagnostic emitted autoMode context into its private session and scanned sensitive SSH content. No captured private values are included in tracker artifacts. Treat those sessions as sensitive. Sol's accepted scan excluded every sensitive-boundary path by source-map classification, not just encrypted-file headers. Future scans must never read/hash sensitive-boundary contents.
+PRV reported that a diagnostic emitted autoMode context into its private session and scanned sensitive SSH content. No captured private values are included in tracker artifacts. Treat those sessions as sensitive. Sol's accepted scan excluded every sensitive-boundary path by source-map classification, not just encrypted-file headers. Future scans and fixtures must never read/hash/copy sensitive-boundary contents. SAFE-1's imported WSL SSH-copy task exposed a fixture isolation gap; SAFE-2 must use controlled non-WSL facts and synthetic source packages.
 
 The original Pi/zsh file hashes have remained unchanged during Sol checks. The original hash record is local-only; do not overwrite unrelated changes if a later user/runtime edit changes it.
 
@@ -56,7 +57,7 @@ The maintainer requests fresh Sol sessions around 40% context usage. Begin hando
 
 1. Find the worktree for the branch with `git worktree list`; operate only there.
 2. Read repository instructions, this checkpoint, WORK-PACKAGES.md, TRACKER.md, and DECISIONS.md. Inspect status/recent commits against packet evidence.
-3. Reconcile local runtime .pid/.exit and final events before starting any agent. Current packet is SAFE-1, session drift-safe-1. CFG-1 and WZT-1 exit 0 are accepted. LEGACY-3 exit 0 was accepted; its predecessor LEGACY-2 exit 130 needs no further retry.
+3. Reconcile local runtime .pid/.exit and final events before starting any agent. Current packet is SAFE-2, session drift-safe-1. SAFE-1 exit 130 was reconciled as an unaccepted interrupted attempt. CFG-1 and WZT-1 exit 0 are accepted. LEGACY-3 exit 0 was accepted; its predecessor LEGACY-2 exit 130 needs no further retry.
 4. Verified models are openai-codex/gpt-6-luna and openai-codex/gpt-5.6-terra; effective effort xhigh. Built-in codemode may batch checks. No substitutions without approval.
 5. For fresh packets, the local dispatch.sh records PID/exit and rejects duplicate runs. Existing packet prompts are prepared. Resume follow-ups with the recorded session, not an unverified new attempt.
 6. Agents may not stage, commit, edit tracker files, push, or provision hosts. Sol validates scope/results and explicitly stages only accepted files.
