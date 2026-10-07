@@ -18,7 +18,7 @@ last_reviewed: 2026-10-07
 
 ## Constraints
 
-Unix provisioning is for macOS and Debian/Ubuntu Linux. Package names may differ on other Linux families. Repository configuration is linked through GNU Stow rather than copied into the repository. Starship, Herdr, and WezTerm are selected Stow packages, delivering their configurations to `~/.config/starship.toml`, `~/.config/herdr/config.toml`, and `~/.config/wezterm/wezterm.lua`. psmux is native-Windows-only and is not deployed in WSL. Follow [Stow package rules](../stow-packages.md) for package scope and conflict resolution.
+Unix provisioning is for macOS and Debian/Ubuntu Linux. Package names may differ on other Linux families. Repository configuration is linked through GNU Stow rather than copied into the repository. Starship, Herdr, and WezTerm are selected Stow packages, delivering their configurations to `~/.config/starship.toml`, `~/.config/herdr/config.toml`, and `~/.config/wezterm/wezterm.lua`. psmux is native-Windows-only and is not deployed in WSL. Configured regular-file conflicts are moved to `<target>.pre-stow` with permissions preserved; an existing backup stops provisioning without changing either file, and symlink conflicts are left for Stow to report. Provisioning uses `--stow` to avoid relinking correct targets, so removed package paths are not pruned automatically. Follow [Stow package rules](../stow-packages.md) for package scope and conflict resolution.
 
 ## Fonts and tmux plugins
 
