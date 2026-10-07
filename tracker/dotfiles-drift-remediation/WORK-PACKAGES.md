@@ -1,6 +1,6 @@
 # Agent work packages
 
-Execution baseline: `6be4fdf`. Audit baseline: `48017de`. All implementation packets run serially in the `remediation/dotfiles-drift` worktree. Sol owns this directory and task state. This inventory contains the 53 entries unchecked at orchestration start; later completion does not remove them from the inventory.
+Execution baseline: `6be4fdf`. Audit baseline: `48017de`. Implementation runs in the `remediation/dotfiles-drift` worktree, serially for overlapping file scopes. PRV-2 and LEGACY may overlap because their allowed write scopes are disjoint. Sol owns this directory and task state. This inventory contains the 53 entries unchecked at orchestration start; later completion does not remove them from the inventory.
 
 ## Open-item inventory and single ownership
 
@@ -18,7 +18,7 @@ Execution baseline: `6be4fdf`. Audit baseline: `48017de`. All implementation pac
 | Sol – setup gate | SET-007 review/verify/commit setup | SAFE and VERIFY |
 | Sol – cleanup decisions/gate | CLN-001 resolve DEC-003; CLN-003 resolve DEC-004; CLN-007 review/verify/commit cleanup | KREW and LEGACY |
 | KREW | CLN-002 install/document Krew | DEC-003; VERIFY |
-| LEGACY | CLN-004 remove fonts.sh; CLN-005 remove tpm.sh; CLN-006 ownership and tooling documentation | DEC-004; KREW; tooling edits from KREW contribute evidence to CLN-006 |
+| LEGACY | CLN-004 remove fonts.sh; CLN-005 remove tpm.sh; CLN-006 ownership and tooling documentation | DEC-004; original PRV handoff; tooling edits from KREW contribute later evidence to CLN-006 |
 | Sol – integration | FIN-001 Ansible syntax; FIN-002 wiki tests; FIN-003 wiki audit/range check; FIN-004 shell checks; FIN-005 PowerShell/Windows checks; FIN-006 all Unix Stow dry-runs; FIN-007 whitespace; FIN-008 sanitized privacy review; FIN-009 wiki log/tracker evidence; FIN-010 maintainer review | All packets; DOC contributes authored log/docs to FIN-009 |
 
 Phase 0 was committed in `42b888a` and remains complete. PLAN.md's old in-progress status is stale. Later repository changes require rechecking line references and findings; do not implement from old line numbers alone.
@@ -38,16 +38,20 @@ Phase 0 was committed in `42b888a` and remains complete. PLAN.md's old in-progre
 
 | Packet | Model / effort | State | Predecessor |
 | --- | --- | --- | --- |
-| PRV | Luna / xhigh | pending | Approved DEC-001/005 |
-| WZT | Luna / xhigh | pending | PRV |
+| PRV | Luna / xhigh | accepted; committed 7b6077c | Approved DEC-001/005 |
+| WZT | Luna / xhigh | dispatching WZT-1 | LEGACY |
 | CFG | Luna / xhigh | pending | WZT |
 | SAFE | Luna / xhigh | pending | CFG |
 | VERIFY | Luna / xhigh | pending | SAFE |
 | KREW | Luna / xhigh | pending | VERIFY; approved Unix-only scope |
-| LEGACY | Terra / xhigh | pending | KREW |
+| LEGACY | Terra / xhigh | accepted; committed 04692b4 | Original PRV handoff; disjoint PRV-2 may continue |
 | DOC | Terra / xhigh | pending | All source packets |
 
-No parallel writes: setup-windows.ps1, ansible files, .gitignore, and wiki pages have overlapping packet scopes. Sol reviews/checkpoints each handoff before the next dispatch. Each packet receives its own persistent session and event/exit records, named by packet and attempt. Retries reuse a recorded session or explicitly identify the abandoned attempt.
+LEGACY is scheduled immediately after PRV to repair the approved baseline wiki ownership gap before remaining source gates. KREW follows VERIFY; CLN-006 accepts KREW tooling evidence later.
+
+Concurrent exception: PRV-2 owns Claude/zsh home-path corrections, privacy tests, and privacy/synchronization/configuration-package wiki pages. LEGACY owns fonts.sh/tpm.sh deletions, source-map ownership, and Unix/tooling/maintenance wiki pages. Their allowed write scopes do not overlap; neither agent may stage or commit. Sol reconciles both handoffs before shared-file work.
+
+Serialize remaining writes: setup-windows.ps1, ansible files, .gitignore, and wiki pages have overlapping packet scopes. Sol reviews/checkpoints each handoff before the next dispatch. Each packet receives its own persistent session and event/exit records, named by packet and attempt. Retries reuse a recorded session or explicitly identify the abandoned attempt.
 
 ## PRV – Canonical editor privacy and backup hygiene
 
@@ -55,6 +59,7 @@ Outcome: canonical Zed settings and obsolete snapshots contain no known machine-
 
 Allowed files:
 - zed/.config/zed/settings.json
+- claude/.claude/settings.json and zsh/.zshrc (only matching machine-specific home-path literals, explicitly approved after the scan)
 - Delete only zed/.config/zed/settings_backup.json and wezterm/.config/wezterm/wezterm.lua.bak
 - .gitignore (narrow backup/local-state patterns only)
 - tests/test_zed_privacy.py and tests/test_windows_sync.ps1 (new focused fixtures)
@@ -67,6 +72,7 @@ Acceptance:
 - Document that connections/project history are local state, excluded from canonical copies. Do not promise automatic preservation of Windows-local edits across the existing overwrite-style sync.
 - Delete both named snapshots and add exact/narrow equivalent ignore patterns.
 - Capture removed values privately for an in-memory or local-only count-based scan of current tracked files, excluding intentionally encrypted boundary content. Never publish values or fixtures containing them.
+- Maintainer-approved follow-up: replace matching machine-specific home-path literals in canonical Claude settings and zsh with supported portable equivalents. Preserve hook/alias behavior, validate configuration and shell syntax, and test path handling in isolated fixtures. Retain the matching shared Git URL-rewrite rule by explicit approval; supported-platform names and that intentional Git routing reference are exemptions from raw-string scan failures. Do not alter Git behavior or print its host.
 - Tests verify absence of forbidden machine-local fields and preserve valid shared settings. Use appropriate JSONC validation, not strict JSON without comment/trailing-comma handling.
 - PowerShell fixture exercises sync-zed-settings.ps1 with temporary source/destination: forward copy, source unchanged, repeat stability, first backup preservation; exercise the root wrapper with mocked child sync helpers to prove its allowlist/direction where feasible.
 
@@ -110,7 +116,7 @@ Verification: `python3 -m unittest -v tests/test_config_delivery.py`; individual
 Outcome: approved regular-file conflicts are moved aside once before replacement; existing backups survive and repeat runs are safe.
 
 Allowed files:
-- ansible/tasks/common.yml (conflict-handling/Stow change reporting only)
+- ansible/tasks/common.yml (conflict-handling/Stow idempotent execution and change reporting only)
 - ansible/group_vars/all.yml (conflict comments only, not configuration policy changes)
 - tests/test_stow_safety.py and tests/fixtures/stow-safety.yml
 - docs/stow-packages.md, docs/wiki/unix-provisioning.md, docs/wiki/setup-and-verification.md
@@ -160,11 +166,11 @@ Verification: `python3 -m unittest -v tests/test_krew_provisioning.py` exercisin
 
 ## LEGACY – Remove duplicate standalone scripts
 
-Outcome: fonts.sh and tpm.sh are removed; their retained Ansible equivalents and documentation remain accurate.
+Outcome: fonts.sh and tpm.sh are removed; their retained Ansible equivalents and documentation remain accurate. Repair the separately approved baseline ownership gap for docs/package_management/ideas.md without changing that proposal's content.
 
 Allowed files:
 - Delete fonts.sh and tpm.sh only
-- docs/wiki/_meta/source-map.yml (remove the two deleted-path rules only)
+- docs/wiki/_meta/source-map.yml (remove the two deleted-path rules and add narrow ownership for existing docs/package_management/ideas.md and docs/stow-packages.md, as separately approved)
 - docs/wiki/unix-provisioning.md, docs/wiki/machine-tooling.md, docs/wiki/maintenance.md
 - README.md or CHECKPOINT.md only if they reference the removed scripts
 

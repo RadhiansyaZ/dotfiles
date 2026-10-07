@@ -67,3 +67,15 @@ Options:
 Recommendation: commit or revert it separately so phase diffs and verification remain unambiguous.
 
 Decision: Leave the existing Pi edit unstaged and excluded through a new worktree/branch, as authorized by the maintainer. Apply the same exclusion to the existing zsh edit. Original-checkout files must not be copied, reverted, modified, or staged. Approved on 2026-10-06.
+
+## Execution follow-up approvals
+
+Approved on 2026-10-06:
+
+- Repair the current-baseline ownership gap for docs/package_management/ideas.md with a narrow source-map/responsible-wiki-page update. Do not change the proposal's content or treat it as implemented behavior.
+- Extend PRV only to replace matching machine-specific home-path literals in canonical claude/.claude/settings.json and zsh/.zshrc with supported portable equivalents. Verify existing hook/alias behavior and leave original-checkout files untouched.
+- Retain the matching shared Git URL-rewrite rule in git/.gitconfig. That intentional shared configuration and generic supported-platform names are exemptions from raw-string privacy scans; machine-local Zed connection/project state and approved home-path literals remain subject to removal.
+
+Approved on 2026-10-07:
+
+- Add narrow wiki ownership and a responsible-page source reference for existing docs/stow-packages.md. Its behavior changes remain assigned to SAFE; do not change its content in the ownership follow-up.

@@ -1,8 +1,8 @@
 # Execution tracker
 
-Last updated: `2026-10-06`
+Last updated: `2026-10-07`
 
-Overall status: `executing`
+Overall status: `running`
 
 Execution baseline: `6be4fdf`; branch: `remediation/dotfiles-drift`.
 
@@ -30,19 +30,19 @@ The original 53-item inventory, single-owner mapping, and agent contracts are in
 
 - [x] `PRV-001` Resolve DEC-001
 - [x] `PRV-002` Resolve DEC-005
-- [ ] `PRV-003` Remove machine-local entries from canonical Zed settings
-- [ ] `PRV-004` Establish a narrow local-state policy
-- [ ] `PRV-005` Verify one-way Windows synchronization with sanitized settings
-- [ ] `PRV-006` Apply the approved Git-history treatment
-- [ ] `PRV-007` Update privacy and synchronization documentation
-- [ ] `PRV-008` Verify and commit Phase 1
+- [x] `PRV-003` Remove machine-local entries from canonical Zed settings
+- [x] `PRV-004` Establish a narrow local-state policy
+- [x] `PRV-005` Verify one-way Windows synchronization with sanitized settings
+- [x] `PRV-006` Apply the approved Git-history treatment
+- [x] `PRV-007` Update privacy and synchronization documentation
+- [x] `PRV-008` Verify and commit Phase 1
 
 ## Phase 2 – WezTerm reconciliation
 
 - [x] `WZT-001` Resolve DEC-002
 - [ ] `WZT-002` Remove or restore stale plugin provisioning according to the decision
-- [ ] `WZT-003` Remove obsolete WezTerm and Zed backup snapshots
-- [ ] `WZT-004` Add narrow backup ignore rules
+- [x] `WZT-003` Remove obsolete WezTerm and Zed backup snapshots
+- [x] `WZT-004` Add narrow backup ignore rules
 - [ ] `WZT-005` Align WezTerm comments and platform behavior
 - [ ] `WZT-006` Update Windows, configuration-package, and tooling documentation
 - [ ] `WZT-007` Run available PowerShell and WezTerm checks
@@ -74,8 +74,8 @@ The original 53-item inventory, single-owner mapping, and agent contracts are in
 - [x] `CLN-001` Resolve DEC-003
 - [ ] `CLN-002` Implement and document the selected Krew scope
 - [x] `CLN-003` Resolve DEC-004
-- [ ] `CLN-004` Remove or document `fonts.sh`
-- [ ] `CLN-005` Remove or document `tpm.sh`
+- [x] `CLN-004` Remove or document `fonts.sh`
+- [x] `CLN-005` Remove or document `tpm.sh`
 - [ ] `CLN-006` Update wiki ownership and tooling inventory
 - [ ] `CLN-007` Verify and commit Phase 5
 
@@ -105,3 +105,13 @@ The original 53-item inventory, single-owner mapping, and agent contracts are in
 | 2026-10-06 | Orchestration workspace | Passed | Separate branch/worktree from 6be4fdf; original Pi/zsh edits excluded. |
 | 2026-10-06 | Decisions | Approved | DEC-001 through DEC-005 recorded. Krew is Unix-only; kubectl stays external. |
 | 2026-10-06 | Delegate capability | Passed | Luna gpt-6-luna and Terra gpt-5.6-terra probes returned READY; persistent sessions record effective xhigh effort. |
+| 2026-10-06 | Current-baseline wiki audit | Failed | Existing docs/package_management/ideas.md lacks ownership. Maintainer approved narrow repair in LEGACY; no implementation bypass. |
+| 2026-10-07 | PRV handoff review | Passed | Luna PRV-1/2: six Python tests, Windows sync fixture, JSON/shell syntax, scoped field/line review, and whitespace passed. Shared Zed settings preserved. Commit awaits wiki ownership gate. |
+| 2026-10-07 | Privacy count-only scan | Passed | Zero private project/home matches; zero endpoint matches outside approved Git routing among non-sensitive tracked/new files. All sensitive-boundary paths excluded by classification. History unchanged. |
+| 2026-10-07 | PowerShell parser | Passed | Eight current scripts/fixtures parsed with zero errors via native Windows PowerShell. Recheck after source changes. |
+| 2026-10-07 | Native Windows command probe | Partial | No-profile lookup resolves starship, git, psmux; fzf, zoxide, nvim, eza, bat, glowm do not resolve. No live setup was run; platform limitations require final maintainer review. |
+| 2026-10-07 | Remaining baseline ownership | Approved repair | Full scan found docs/stow-packages.md unmapped. Maintainer approved narrow ownership repair; deleted legacy script entries will disappear after staging. |
+| 2026-10-07 | Maintainer pause | Paused at prior checkpoint | LEGACY-2 stopped with SIGINT, exit 130; uncommitted work preserved. |
+| 2026-10-07 | Resumed ownership follow-up | Accepted | LEGACY-3 reuses Terra/xhigh session drift-legacy-1, exited 0; exact two-file follow-up reviewed. Commit 04692b4 removes legacy scripts and repairs narrow ownership; retained Ansible font/TPM tasks inspected. Wiki audit, four wiki tests, scoped whitespace and execution-baseline range check passed. |
+| 2026-10-07 | Privacy commit | Passed | Commit 7b6077c contains only accepted PRV scope. Six Python privacy tests, native Windows sync fixture, Claude JSON and zsh -n pass. Bash parser was unsuitable for Zsh syntax; corrected to zsh -n. Wiki audit and full range check 48017de..HEAD pass after privacy documentation commit. CLN-006/007 remain open for Krew's inventory/phase gate. |
+| 2026-10-07 | WZT-1 dispatch | Running | Luna/xhigh owns only WZT allowed files; preceding source packets committed and shared writes serialized. |

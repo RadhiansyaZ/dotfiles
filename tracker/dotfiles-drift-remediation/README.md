@@ -1,6 +1,6 @@
 # Dotfiles drift remediation
 
-Status: `executing`
+Status: `paused`
 
 Baseline commit: `48017de`
 
