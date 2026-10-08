@@ -20,6 +20,21 @@ Follow-ups: narrow ownership repair for docs/package_management/ideas.md and doc
 
 ## Current state
 
+Current history is rebased onto main `b35203c` by the maintainer's separate linear-history direction. The prior replay below is superseded for ancestry, not content: before coordination updates, the full tree remained identical to pre-rebase `a05cecf`. Main is an ancestor, the branch range contains no merges and prospective main merge is conflict-free. All 34 tests and syntax/wiki/full-range/whitespace checks passed again. Historical commit IDs in the earlier evidence retain their original meaning; current equivalents are:
+
+| Packet | Historical accepted commit | Rebased commit |
+| --- | --- | --- |
+| LEGACY | 04692b4 | fcf1857 |
+| PRV | 7b6077c | 589eb56 |
+| WZT | ed7ef57 | cf5e4d9 |
+| CFG | 15508ad | 66e0610 |
+| SAFE | 5bff941 | 1e42b2b |
+| VERIFY | 8d1e2f6 | 0207142 |
+| KREW | 8e30227 | 09bd0da |
+| DOC | eb4b8b1 | d6df445 |
+
+The main skill-provisioning commit retained on this branch is `a4b3143`. Safety ref: `backup/remediation-before-linear-rebase-a05cecf`. Push only remediation with explicit lease against `a05cecfd36b01c24021b57dddccf08aeed8f46c8`, then verify final remote equality, main ancestry and clean worktree. No agent work remains pending.
+
 All implementation and DOC packets are accepted. DOC-2 exited 0 in the same verified Terra/xhigh session `drift-doc-1`; the eight-file documentation scope is committed in `eb4b8b1`. No agent is active. FIN-001 through FIN-009 available checks are complete with explicit platform limitations. FIN-010 maintainer acceptance is recorded: “Accept and push”, including all stated platform limitations. Ordinary push succeeded; remote equality was verified at `aa847bc4322fedc2c68303768e0a38cc20655b8d`. This coordination-only receipt is pushed normally and final equality checked before goal completion.
 
 - Goal milestones: inventory, workspace, handoffs, decisions, privacy, legacy, WezTerm, configuration delivery, Stow safety, setup verification, Krew and DOC complete; FIN-010 is accepted and the ordinary branch push succeeded.

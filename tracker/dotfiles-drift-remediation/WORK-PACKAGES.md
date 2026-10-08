@@ -38,14 +38,14 @@ Phase 0 was committed in `42b888a` and remains complete. PLAN.md phase statuses 
 
 | Packet | Model / effort | State | Predecessor |
 | --- | --- | --- | --- |
-| PRV | Luna / xhigh | accepted; committed 7b6077c | Approved DEC-001/005 |
-| WZT | Luna / xhigh | accepted; committed ed7ef57 | LEGACY |
-| CFG | Luna / xhigh | accepted; committed 15508ad | WZT |
-| SAFE | Luna / xhigh | accepted; committed 5bff941 | CFG |
-| VERIFY | Luna / xhigh | accepted; committed 8d1e2f6 | SAFE |
-| KREW | Luna / xhigh | accepted; committed 8e30227 | VERIFY; approved Unix-only scope |
-| LEGACY | Terra / xhigh | accepted; committed 04692b4 | Original PRV handoff; disjoint PRV-2 may continue |
-| DOC | Terra / xhigh | accepted; DOC-1/2 committed eb4b8b1 | All source packets |
+| PRV | Luna / xhigh | accepted; committed 589eb56 | Approved DEC-001/005 |
+| WZT | Luna / xhigh | accepted; committed cf5e4d9 | LEGACY |
+| CFG | Luna / xhigh | accepted; committed 66e0610 | WZT |
+| SAFE | Luna / xhigh | accepted; committed 1e42b2b | CFG |
+| VERIFY | Luna / xhigh | accepted; committed 0207142 | SAFE |
+| KREW | Luna / xhigh | accepted; committed 09bd0da | VERIFY; approved Unix-only scope |
+| LEGACY | Terra / xhigh | accepted; committed fcf1857 | Original PRV handoff; disjoint PRV-2 may continue |
+| DOC | Terra / xhigh | accepted; DOC-1/2 committed d6df445 | All source packets |
 
 LEGACY is scheduled immediately after PRV to repair the approved baseline wiki ownership gap before remaining source gates. KREW follows VERIFY; CLN-006 accepts KREW tooling evidence later.
 
