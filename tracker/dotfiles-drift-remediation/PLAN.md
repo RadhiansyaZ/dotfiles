@@ -1,6 +1,6 @@
 # Execution plan
 
-Execution uses the isolated `remediation/dotfiles-drift` worktree. `TRACKER.md`, `WORK-PACKAGES.md`, and `RESUME.md` record accepted commits, delegated ownership, checks and limitations. The phase work lists below preserve the approved rationale; all five implementation phases are accepted. Final documentation and available integration checks are accepted. FIN-010 maintainer acceptance includes recorded platform limitations. Ordinary branch push is the remaining integration action.
+Execution uses the isolated `remediation/dotfiles-drift` worktree. `TRACKER.md`, `WORK-PACKAGES.md`, and `RESUME.md` record accepted commits, delegated ownership, checks and limitations. The phase work lists below preserve the approved rationale; all five implementation phases are accepted. Final documentation and available integration checks are accepted. FIN-010 maintainer acceptance includes recorded platform limitations. Ordinary branch push succeeded; TRACKER.md records the verified remote receipt.
 
 ## Success criteria
 
