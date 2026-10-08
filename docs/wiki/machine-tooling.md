@@ -62,6 +62,7 @@ machine.
 | `zsh` | Configured only; assumed available | Installed | Not provisioned | Native Windows uses PowerShell. |
 | `stow` | Installed | Installed | Not provisioned | Windows uses symlinks/copies instead. |
 | `tmux` / TPM | Installed | Installed | Not provisioned | Use WSL for tmux. |
+| Herdr | Installed | Installed | Installed | Homebrew on macOS, the official curl installer on Linux/WSL, and the official PowerShell installer on Windows. |
 | `starship`, `fzf`, `zoxide` | Installed | Installed | Installed | Shared prompt behavior; PowerShell caches its initialization. |
 | `bat`, `fd`, `ripgrep`, `eza`, `jq`, `tree`, `htop` | Installed | Installed | `bat`, `fd`, `ripgrep`, `eza`, `jq` installed; `tree` and `htop` not provisioned | Linux exposes Debian names as `bat` and `fd` links. |
 | `gh`, `lazygit` | Installed | Installed | Installed | Linux obtains both from upstream releases/repositories. |
@@ -112,7 +113,7 @@ macOS-exclusive; the parity matrix identifies their other implementations.
 - Database support: `postgresql-client`, `sqitch`, and `libdbd-pg-perl`.
 - Linux release install behavior: latest Neovim is installed under `/opt` and linked to
   `/usr/local/bin/nvim`; the older APT Neovim package is removed.
-- Linux installs Zoxide, PNPM, UV, Starship, NVM, and AWS CLI through their upstream
+- Linux installs Herdr, Zoxide, PNPM, UV, Starship, NVM, and AWS CLI through their upstream
   installers rather than APT.
 
 ### Linux-specific compatibility rules
@@ -155,7 +156,7 @@ Windows-native editor, and desktop application workflow.
 
 `setup-windows.ps1` creates repository-backed symlinks for Git, the PowerShell profile,
 psmux, agent skills, Starship (from `starship/.config/starship.toml`), and WezTerm. On Unix,
-Stow delivers the Starship, Herdr, and WezTerm configurations to their home-relative config paths.
+Stow delivers the Starship, Herdr, and WezTerm configurations to their home-relative config paths. Windows setup links the shared Herdr configuration to `%USERPROFILE%\.config\herdr\config.toml`.
 It bootstraps PPM, the psmux plugin manager, so
 `C-a` followed by `I` installs the plugins declared in the linked psmux configuration. The
 WezTerm link deploys configuration only; setup does not install the application. It copies
@@ -283,7 +284,7 @@ source used by the Brewfile.
 | Formulae: shell and file tools | [bat](https://formulae.brew.sh/formula/bat), [curl](https://formulae.brew.sh/formula/curl), [eza](https://formulae.brew.sh/formula/eza), [fd](https://formulae.brew.sh/formula/fd), [fzf](https://formulae.brew.sh/formula/fzf), [htop](https://formulae.brew.sh/formula/htop), [jq](https://formulae.brew.sh/formula/jq), [ripgrep](https://formulae.brew.sh/formula/ripgrep), [rtk](https://formulae.brew.sh/formula/rtk), [starship](https://formulae.brew.sh/formula/starship), [tree](https://formulae.brew.sh/formula/tree), [zoxide](https://formulae.brew.sh/formula/zoxide) |
 | Formulae: Git and databases | [gh](https://formulae.brew.sh/formula/gh), [git-crypt](https://formulae.brew.sh/formula/git-crypt), [lazygit](https://formulae.brew.sh/formula/lazygit), [dbmate](https://formulae.brew.sh/formula/dbmate), [lazysql](https://formulae.brew.sh/formula/lazysql), [libpq](https://formulae.brew.sh/formula/libpq), [pass](https://formulae.brew.sh/formula/pass), [pgformatter](https://formulae.brew.sh/formula/pgformatter), [saml2aws](https://formulae.brew.sh/formula/saml2aws), [Sqitch tap](https://github.com/sqitchers/homebrew-sqitch) |
 | Formulae: languages and editors | [neovim](https://formulae.brew.sh/formula/neovim), [nvm](https://formulae.brew.sh/formula/nvm), [pnpm](https://formulae.brew.sh/formula/pnpm), [pre-commit](https://formulae.brew.sh/formula/pre-commit), [python@3.12](https://formulae.brew.sh/formula/python@3.12), [stow](https://formulae.brew.sh/formula/stow), [tmux](https://formulae.brew.sh/formula/tmux), [uv](https://formulae.brew.sh/formula/uv) |
-| Formulae: other | [htmlq](https://formulae.brew.sh/formula/htmlq), [mpv](https://formulae.brew.sh/formula/mpv), [OpenCode](https://formulae.brew.sh/formula/opencode) |
+| Formulae: other | [htmlq](https://formulae.brew.sh/formula/htmlq), [Herdr](https://formulae.brew.sh/formula/herdr), [mpv](https://formulae.brew.sh/formula/mpv), [OpenCode](https://formulae.brew.sh/formula/opencode) |
 | Casks | [Bruno](https://formulae.brew.sh/cask/bruno), [DBeaver Community](https://formulae.brew.sh/cask/dbeaver-community), [Google Chrome](https://formulae.brew.sh/cask/google-chrome), [TFLint tap/formula source](https://github.com/terraform-linters/homebrew-tap) |
 | VS Code extensions | [Swagger Viewer](https://marketplace.visualstudio.com/items?itemName=arjun.swagger-viewer), [ForgeCode](https://marketplace.visualstudio.com/items?itemName=forgecode.forge-vscode), [Go](https://marketplace.visualstudio.com/items?itemName=golang.go), [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python), [Python Debugger](https://marketplace.visualstudio.com/items?itemName=ms-python.debugpy), [Pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance), [Python Environments](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-python-envs), [Ansible](https://marketplace.visualstudio.com/items?itemName=redhat.ansible), [YAML](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml), [OpenAPI](https://marketplace.visualstudio.com/items?itemName=redocly.openapi-vs-code) |
 
@@ -307,7 +308,7 @@ release page, or installer documentation used by the Ansible task.
 
 | Installer path | Tools and source links |
 | --- | --- |
-| Download/install script or official archive | [Go downloads](https://go.dev/dl/), [Starship installer](https://starship.rs/install.sh), [Zoxide installer](https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh), [NVM installer](https://github.com/nvm-sh/nvm), [PNPM installer](https://pnpm.io/installation), [UV installer](https://docs.astral.sh/uv/getting-started/installation/), [AWS CLI v2](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html), [pre-commit](https://pre-commit.com/#install), [Nerd Fonts releases](https://github.com/ryanoasis/nerd-fonts/releases) |
+| Download/install script or official archive | [Go downloads](https://go.dev/dl/), [Herdr installer](https://herdr.dev/install.sh), [Starship installer](https://starship.rs/install.sh), [Zoxide installer](https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh), [NVM installer](https://github.com/nvm-sh/nvm), [PNPM installer](https://pnpm.io/installation), [UV installer](https://docs.astral.sh/uv/getting-started/installation/), [AWS CLI v2](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html), [pre-commit](https://pre-commit.com/#install), [Nerd Fonts releases](https://github.com/ryanoasis/nerd-fonts/releases) |
 | APT repository added by the playbook | [GitHub CLI Linux install source](https://github.com/cli/cli/blob/trunk/docs/install_linux.md), [eza Debian package source](https://github.com/eza-community/eza/blob/main/deb.asc) |
 | Latest GitHub release asset | [Neovim](https://github.com/neovim/neovim/releases/latest), [tree-sitter CLI](https://github.com/tree-sitter/tree-sitter/releases/latest), [Lazygit](https://github.com/jesseduffield/lazygit/releases/latest), [Lazysql](https://github.com/jorgerojas26/lazysql/releases/latest), [act](https://github.com/nektos/act/releases/latest), [actionlint](https://github.com/rhysd/actionlint/releases/latest), [htmlq](https://github.com/mgdm/htmlq/releases/latest), [saml2aws](https://github.com/Versent/saml2aws/releases/latest) |
 | Direct release binary | [dbmate](https://github.com/amacneil/dbmate/releases/latest) |

@@ -217,6 +217,20 @@
   when: linux_starship_check.rc != 0
   tags: [linux, packages]
 
+- name: Check Herdr installation
+  ansible.builtin.command: which herdr
+  register: linux_herdr_check
+  changed_when: false
+  failed_when: false
+  tags: [linux, packages]
+
+- name: Install Herdr when missing
+  ansible.builtin.shell: curl -fsSL https://herdr.dev/install.sh | sh
+  args:
+    executable: /bin/bash
+  when: linux_herdr_check.rc != 0
+  tags: [linux, packages]
+
 - name: Check zoxide installation
   ansible.builtin.command: which zoxide
   register: linux_zoxide_check

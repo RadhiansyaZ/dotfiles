@@ -156,7 +156,23 @@ if ($SkipPackages) {
     }
 }
 
-# --------------------------------------------------------------------------- 2b. glowm
+# --------------------------------------------------------------------------- 2b. Herdr
+if (Get-Command herdr -ErrorAction SilentlyContinue) {
+    Write-Ok "Already installed: herdr"
+} elseif ($SkipPackages) {
+    Write-Ok "SkipPackages set — skipping Herdr installation."
+} else {
+    Write-Step "Installing Herdr"
+    irm https://herdr.dev/install.ps1 | iex
+    Update-SessionPath
+    if (Get-Command herdr -ErrorAction SilentlyContinue) {
+        Write-Ok "Installed: herdr"
+    } else {
+        Write-Warn "Herdr was installed but is not on PATH. Open a new PowerShell session."
+    }
+}
+
+# --------------------------------------------------------------------------- 2c. glowm
 # glowm renders Mermaid through the Chrome package installed by the winget manifest.
 Write-Step "Installing glowm"
 if (-not (Get-Command go -ErrorAction SilentlyContinue)) {
@@ -213,6 +229,10 @@ Set-Symlink `
     -Target "$env:USERPROFILE\.config\starship.toml" `
     -Source "$RepoRoot\starship\.config\starship.toml"
 
+Set-Symlink `
+    -Target "$env:USERPROFILE\.config\herdr\config.toml" `
+    -Source "$RepoRoot\herdr\.config\herdr\config.toml"
+
 # WezTerm reads $HOME\.config\wezterm\wezterm.lua on Windows (HOME = %USERPROFILE%).
 # .config\wezterm\ parent is created by Set-Symlink if absent.
 Set-Symlink `
@@ -253,7 +273,7 @@ if (Test-Path $ppmEntry) {
 # --------------------------------------------------------------------------- 5. verify tools
 Write-Step "Verifying shell tools are on PATH"
 Update-SessionPath
-$critical = @("starship", "fzf", "zoxide", "git", "nvim", "eza", "bat", "psmux", "glowm")
+$critical = @("starship", "fzf", "zoxide", "git", "nvim", "eza", "bat", "psmux", "glowm", "herdr")
 $missing = @()
 foreach ($tool in $critical) {
     if (Get-Command $tool -ErrorAction SilentlyContinue) {

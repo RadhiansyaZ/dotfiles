@@ -12,11 +12,11 @@ last_reviewed: 2026-10-07
 
 [`setup.ps1`](../../setup.ps1) is the elevated Windows entry point. It ensures the WSL stage and runs [`setup-windows.ps1`](../../setup-windows.ps1) for native packages, configuration links, copy-based settings synchronization, and command checks. The Windows package manifest is [packages.winget.json](../../windows/packages/packages.winget.json). Native Windows setup installs psmux, links its [configuration](../../psmux/.psmux.conf) to `%USERPROFILE%\.psmux.conf`, and bootstraps PPM (the psmux plugin manager). psmux is native-Windows-only and is not provisioned in WSL. Start `psmux`, then press `C-a` followed by `I` to install the configured plugins. Setup links Starship from [its canonical configuration](../../starship/.config/starship.toml) to `%USERPROFILE%\.config\starship.toml`. WezTerm is configuration-only: setup links its shared config but does not install the application; the config selects WSL:Debian only on Windows.
 
-The manifest installs Google Chrome and setup installs `glowm` through the provisioned Go toolchain. In WezTerm, use `glowm-wezterm <file.md>` for the experimental inline-Mermaid path; the PowerShell wrapper scopes its iTerm2 terminal-detection override to that command.
+The manifest installs Google Chrome and setup installs `glowm` through the provisioned Go toolchain. Setup installs Herdr through its official PowerShell installer and links its configuration to `%USERPROFILE%\.config\herdr\config.toml`. In WezTerm, use `glowm-wezterm <file.md>` for the experimental inline-Mermaid path; the PowerShell wrapper scopes its iTerm2 terminal-detection override to that command.
 
 ## Guidance
 
-Use `setup-wsl.ps1` only for the WSL stage and `setup-windows.ps1` only for native provisioning. Use `-SkipPackages` only when deliberately skipping winget installation on a repeat run.
+Use `setup-wsl.ps1` only for the WSL stage and `setup-windows.ps1` only for native provisioning. Use `-SkipPackages` only when deliberately skipping winget and Herdr installation on a repeat run.
 
 ## Verification
 

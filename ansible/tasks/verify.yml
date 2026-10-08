@@ -36,6 +36,8 @@
       version_arg: --version
     - command: tmux
       version_arg: -V
+    - command: herdr
+      version_arg: --version
     - command: nvim
       version_arg: --version
     - command: pyenv

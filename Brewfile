@@ -25,6 +25,8 @@ brew "gh"
 brew "git-crypt"
 # Uses CSS selectors to extract bits content from HTML files
 brew "htmlq"
+# Runtime for coding-agent terminals
+brew "herdr"
 # Improved top (interactive process viewer)
 brew "htop"
 # Lightweight and flexible command-line JSON processor

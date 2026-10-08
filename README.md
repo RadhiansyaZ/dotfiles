@@ -28,13 +28,14 @@ Set-ExecutionPolicy -Scope Process Bypass -Force
 ./setup.ps1
 ```
 
-This ensures WSL2 and Debian are available, then provisions native Windows. It installs the
-winget manifest, creates configuration links (including psmux), copies Pi and Zed settings,
-and checks the shell tools. Open a new PowerShell session when it completes.
+This ensures WSL2 and Debian are available, then provisions native Windows. It imports the
+winget manifest, installs Herdr with its official PowerShell installer, creates configuration
+links, copies Pi and Zed settings, and checks the shell tools. Open a new PowerShell session
+when it completes.
 
 Use `./setup-wsl.ps1` for only the WSL stage, or `./setup-windows.ps1` for only native
-Windows. `setup-windows.ps1 -SkipPackages` skips winget on a repeat run but still links,
-synchronizes, and verifies configuration.
+Windows. `setup-windows.ps1 -SkipPackages` skips winget and Herdr installation on a repeat run
+but still links, synchronizes, and verifies configuration.
 
 > To configure the WSL distribution after `setup.ps1`, clone this repository inside WSL and
 > run `./setup.sh` there. Native Windows does not support tmux or Ghostty; psmux provides the
