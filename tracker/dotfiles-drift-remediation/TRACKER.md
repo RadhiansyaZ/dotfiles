@@ -2,7 +2,7 @@
 
 Last updated: `2026-10-07`
 
-Overall status: `running – DOC-1 Terra/xhigh active; integration checks underway`
+Overall status: `running – DOC-1 reviewed; DOC-2 narrow wording correction prepared`
 
 Execution baseline: `6be4fdf`; branch: `remediation/dotfiles-drift`.
 
@@ -123,7 +123,7 @@ The original 53-item inventory, single-owner mapping, and agent contracts are in
 | 2026-10-07 | VERIFY-2 handoff | Accepted | Resumed Luna/xhigh session drift-verify-1 exited 0. Sol reviewed only VERIFY-owned files and repeated seven controlled real-Ansible tests: tagged unsupported-family rejection before probes, all-present support, aggregate missing/nonzero failures, strict per-command version flags including `tmux -V`, and check-mode probes. Ansible syntax, wiki unit tests, staged audit/range check, and whitespace pass. |
 | 2026-10-07 | Setup phase commit | Passed | Accepted VERIFY scope committed in `8d1e2f6`; SET-003 through SET-007 are complete. |
 | 2026-10-07 | KREW-1 handoff | Initially unreviewed | Luna/xhigh session drift-krew-1 exited 0. It reports seven local mocked installer tests, task syntax, audit, Python compile, whitespace, and working-tree ownership passed. Source/docs remained uncommitted at handoff; superseded by the acceptance below. |
-| 2026-10-07 | DOC-1 dispatch | Running | Persistent session `drift-doc-1` records `openai-codex/gpt-5.6-terra` and effective `xhigh`. Initial direct script launch failed before dispatch because the local wrapper lacks executable permission; invoking it through Bash succeeded. Reconcile PID/exit and public-safe handoff before acceptance. |
+| 2026-10-07 | DOC-1 dispatch | Exited 0; correction required | Persistent session `drift-doc-1` records `openai-codex/gpt-5.6-terra` and effective `xhigh`. Initial direct script launch failed before dispatch because the local wrapper lacks executable permission; invoking it through Bash succeeded. Eight authorized doc files reviewed after exit 0. Four wiki tests/audit/committed range/working-tree responsibility/path checks/whitespace reported passed. Sol found `Ctrl-A` described as tmux-only although `psmux/.psmux.conf` also declares `prefix C-a`. DOC-2 must correct only the two overbroad sentences in machine-tooling/log before acceptance. |
 | 2026-10-07 | Integration fixtures | Passed | `python3 -m unittest discover -s tests -p 'test_*.py' -v`: 34 tests passed, including actual-task Krew/setup/Stow fixtures and privacy, configuration and wiki cases. No skipped tests. |
 | 2026-10-07 | Integration syntax and Stow | Passed | Ansible syntax; `bash -n` for all three tracked shell scripts; `zsh -n zsh/.zshrc`; combined GNU Stow `-nv --stow` dry-runs into empty temporary homes for all 16 native-Unix packages and 15 WSL packages excluding SSH. Both exit 0 and leave targets empty. Sensitive-boundary contents are not read/copied. ShellCheck, native Lua and native Unix WezTerm unavailable. |
 | 2026-10-07 | Integration native Windows | Passed with limitation | PowerShell 7.6.6: temporary-destination sync fixture and parser for eight tracked PowerShell scripts/fixture passed. Native Windows WezTerm explicit-config `show-keys` passed. No live provisioning or Windows package-install verification ran; earlier missing-command results remain limitations for FIN-010. |
