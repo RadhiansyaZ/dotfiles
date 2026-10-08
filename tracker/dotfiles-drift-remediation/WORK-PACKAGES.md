@@ -45,7 +45,7 @@ Phase 0 was committed in `42b888a` and remains complete. PLAN.md phase statuses 
 | VERIFY | Luna / xhigh | accepted; committed 8d1e2f6 | SAFE |
 | KREW | Luna / xhigh | accepted; committed 8e30227 | VERIFY; approved Unix-only scope |
 | LEGACY | Terra / xhigh | accepted; committed 04692b4 | Original PRV handoff; disjoint PRV-2 may continue |
-| DOC | Terra / xhigh | prepared for dispatch; DOC-1 | All source packets |
+| DOC | Terra / xhigh | accepted; DOC-1/2 committed eb4b8b1 | All source packets |
 
 LEGACY is scheduled immediately after PRV to repair the approved baseline wiki ownership gap before remaining source gates. KREW follows VERIFY; CLN-006 accepts KREW tooling evidence later.
 

@@ -2,7 +2,7 @@
 
 Last updated: `2026-10-07`
 
-Overall status: `running – DOC-1 reviewed; DOC-2 narrow wording correction prepared`
+Overall status: `awaiting FIN-010 maintainer acceptance – implementation/docs and available integration checks complete; no push yet`
 
 Execution baseline: `6be4fdf`; branch: `remediation/dotfiles-drift`.
 
@@ -81,15 +81,15 @@ The original 53-item inventory, single-owner mapping, and agent contracts are in
 
 ## Phase 6 – Integration
 
-- [ ] `FIN-001` Run Ansible syntax validation
-- [ ] `FIN-002` Run wiki unit tests
-- [ ] `FIN-003` Run wiki audit and changed-path validation
-- [ ] `FIN-004` Run Bash syntax and ShellCheck when available
-- [ ] `FIN-005` Run PowerShell parser and Windows setup checks when available
-- [ ] `FIN-006` Run Stow dry-runs for all Unix packages
-- [ ] `FIN-007` Run `git diff --check`
-- [ ] `FIN-008` Review tracked content for sensitive or machine-local data
-- [ ] `FIN-009` Update the wiki log and tracker evidence
+- [x] `FIN-001` Run Ansible syntax validation
+- [x] `FIN-002` Run wiki unit tests
+- [x] `FIN-003` Run wiki audit and changed-path validation
+- [x] `FIN-004` Run Bash syntax and ShellCheck when available
+- [x] `FIN-005` Run PowerShell parser and Windows setup checks when available
+- [x] `FIN-006` Run Stow dry-runs for all Unix packages
+- [x] `FIN-007` Run `git diff --check`
+- [x] `FIN-008` Review tracked content for sensitive or machine-local data
+- [x] `FIN-009` Update the wiki log and tracker evidence
 - [ ] `FIN-010` Complete final maintainer review
 
 ## Evidence log
@@ -123,7 +123,10 @@ The original 53-item inventory, single-owner mapping, and agent contracts are in
 | 2026-10-07 | VERIFY-2 handoff | Accepted | Resumed Luna/xhigh session drift-verify-1 exited 0. Sol reviewed only VERIFY-owned files and repeated seven controlled real-Ansible tests: tagged unsupported-family rejection before probes, all-present support, aggregate missing/nonzero failures, strict per-command version flags including `tmux -V`, and check-mode probes. Ansible syntax, wiki unit tests, staged audit/range check, and whitespace pass. |
 | 2026-10-07 | Setup phase commit | Passed | Accepted VERIFY scope committed in `8d1e2f6`; SET-003 through SET-007 are complete. |
 | 2026-10-07 | KREW-1 handoff | Initially unreviewed | Luna/xhigh session drift-krew-1 exited 0. It reports seven local mocked installer tests, task syntax, audit, Python compile, whitespace, and working-tree ownership passed. Source/docs remained uncommitted at handoff; superseded by the acceptance below. |
-| 2026-10-07 | DOC-1 dispatch | Exited 0; correction required | Persistent session `drift-doc-1` records `openai-codex/gpt-5.6-terra` and effective `xhigh`. Initial direct script launch failed before dispatch because the local wrapper lacks executable permission; invoking it through Bash succeeded. Eight authorized doc files reviewed after exit 0. Four wiki tests/audit/committed range/working-tree responsibility/path checks/whitespace reported passed. Sol found `Ctrl-A` described as tmux-only although `psmux/.psmux.conf` also declares `prefix C-a`. DOC-2 must correct only the two overbroad sentences in machine-tooling/log before acceptance. |
+| 2026-10-07 | DOC-1 dispatch | Exited 0; corrected by DOC-2 | Persistent session `drift-doc-1` records `openai-codex/gpt-5.6-terra` and effective `xhigh`. Initial direct script launch failed before dispatch because the local wrapper lacks executable permission; invoking it through Bash succeeded. Eight authorized doc files reviewed after exit 0. Four wiki tests/audit/committed range/working-tree responsibility/path checks/whitespace reported passed. Sol found `Ctrl-A` described as tmux-only although `psmux/.psmux.conf` also declares `prefix C-a`. DOC-2 must correct only the two overbroad sentences in machine-tooling/log before acceptance. |
+| 2026-10-07 | DOC-2 and final docs | Accepted | Same Terra/xhigh session `drift-doc-1` exited 0; exact two-sentence correction reviewed against tmux/psmux source. Sol reviewed all eight doc files, repeated four wiki tests/audit, staged full-range responsibility/whitespace, committed `eb4b8b1`, and repeated full-range/whitespace. No source/tests/tracker edits by DOC. |
+| 2026-10-07 | Final integration replay | Passed with explicit limits | After DOC acceptance, 34 Python tests passed again with no skips; Ansible syntax, wiki audit/full `48017de..HEAD` responsibility and full-range whitespace passed. Final count-only scan: 114 non-boundary files, six exclusions, zero unapproved removed-value matches and zero added-content secret-pattern flags. Earlier actual Windows parser/sync/WezTerm and empty-target Stow evidence applies to unchanged source. All 53 original items have exactly one inventory owner, with no missing or duplicate ownership. |
+| 2026-10-07 | FIN-001 through FIN-009 | Available checks complete | FIN-004 Bash/Zsh syntax passed; ShellCheck unavailable, not passed. FIN-005 PowerShell/parser/sync/explicit-config Windows WezTerm passed; native command lookup still lacks fzf/zoxide/nvim/eza/bat/glowm. No live setup, upstream Krew download/install, native macOS or Unix WezTerm application load ran. FIN-010 must accept these limitations; branch not pushed. |
 | 2026-10-07 | Integration fixtures | Passed | `python3 -m unittest discover -s tests -p 'test_*.py' -v`: 34 tests passed, including actual-task Krew/setup/Stow fixtures and privacy, configuration and wiki cases. No skipped tests. |
 | 2026-10-07 | Integration syntax and Stow | Passed | Ansible syntax; `bash -n` for all three tracked shell scripts; `zsh -n zsh/.zshrc`; combined GNU Stow `-nv --stow` dry-runs into empty temporary homes for all 16 native-Unix packages and 15 WSL packages excluding SSH. Both exit 0 and leave targets empty. Sensitive-boundary contents are not read/copied. ShellCheck, native Lua and native Unix WezTerm unavailable. |
 | 2026-10-07 | Integration native Windows | Passed with limitation | PowerShell 7.6.6: temporary-destination sync fixture and parser for eight tracked PowerShell scripts/fixture passed. Native Windows WezTerm explicit-config `show-keys` passed. No live provisioning or Windows package-install verification ran; earlier missing-command results remain limitations for FIN-010. |
