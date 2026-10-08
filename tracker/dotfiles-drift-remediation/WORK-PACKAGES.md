@@ -21,7 +21,7 @@ Execution baseline: `6be4fdf`. Audit baseline: `48017de`. Implementation runs in
 | LEGACY | CLN-004 remove fonts.sh; CLN-005 remove tpm.sh; CLN-006 ownership and tooling documentation | DEC-004; original PRV handoff; tooling edits from KREW contribute later evidence to CLN-006 |
 | Sol – integration | FIN-001 Ansible syntax; FIN-002 wiki tests; FIN-003 wiki audit/range check; FIN-004 shell checks; FIN-005 PowerShell/Windows checks; FIN-006 all Unix Stow dry-runs; FIN-007 whitespace; FIN-008 sanitized privacy review; FIN-009 wiki log/tracker evidence; FIN-010 maintainer review | All packets; DOC contributes authored log/docs to FIN-009 |
 
-Phase 0 was committed in `42b888a` and remains complete. PLAN.md's old in-progress status is stale. Later repository changes require rechecking line references and findings; do not implement from old line numbers alone.
+Phase 0 was committed in `42b888a` and remains complete. PLAN.md phase statuses are reconciled with accepted commits; TRACKER.md and RESUME.md carry current integration evidence. Later repository changes require rechecking line references and findings; do not implement from old line numbers alone.
 
 ## Shared agent contract
 

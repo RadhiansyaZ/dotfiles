@@ -1,6 +1,6 @@
 # Dotfiles drift remediation
 
-Status: `paused`
+Status: `in progress – implementation accepted; final documentation and integration review pending`
 
 Baseline commit: `48017de`
 

@@ -1,5 +1,7 @@
 # Execution plan
 
+Execution uses the isolated `remediation/dotfiles-drift` worktree. `TRACKER.md`, `WORK-PACKAGES.md`, and `RESUME.md` record accepted commits, delegated ownership, checks and limitations. The phase work lists below preserve the approved rationale; all five implementation phases are accepted. Final documentation, maintainer acceptance and ordinary branch push remain pending.
+
 ## Success criteria
 
 The remediation is complete when:
@@ -37,7 +39,7 @@ Exit gate: artifacts are reviewable, public-safe, and accepted as the execution 
 
 ## Phase 1 – Remove machine-local state
 
-Status: `ready`
+Status: `complete` – accepted `7b6077c`
 
 Depends on: approved DEC-001, DEC-005
 
@@ -60,7 +62,7 @@ Exit gate: current tracked content is public-safe and Windows synchronization re
 
 ## Phase 2 – Reconcile WezTerm provisioning
 
-Status: `ready`
+Status: `complete` – accepted `ed7ef57`; delivery verified under CFG
 
 Depends on: approved DEC-002 (cross-platform)
 
@@ -93,7 +95,7 @@ Exit gate: setup, active config, and documentation describe one consistent WezTe
 
 ## Phase 3 – Repair Unix configuration delivery
 
-Status: `ready` after Phase 2’s WezTerm decision
+Status: `complete` – accepted `15508ad`
 
 Work:
 
@@ -107,8 +109,9 @@ Work:
 Verification:
 
 ```sh
-stow --no-folding --target="$HOME" --dir="$PWD" -nv --restow starship
-stow --no-folding --target="$HOME" --dir="$PWD" -nv --restow herdr
+temporary_home=$(mktemp -d)
+stow --no-folding --target="$temporary_home" --dir="$PWD" -nv --stow starship herdr wezterm
+rmdir "$temporary_home"
 ansible-playbook -i ansible/inventory.ini ansible/playbook.yml --syntax-check
 ```
 
@@ -118,7 +121,7 @@ Exit gate: every selected package maps to the documented destination on its supp
 
 ## Phase 4 – Make setup safe and truthful
 
-Status: `ready`
+Status: `complete` – accepted `5bff941` and `8d1e2f6`
 
 Work:
 
@@ -140,7 +143,7 @@ Exit gate: setup preserves prior files, remains replayable, and cannot report fa
 
 ## Phase 5 – Resolve Krew and legacy-script drift
 
-Status: `ready`
+Status: `complete` – accepted `04692b4` and `8e30227`
 
 Depends on: approved DEC-003 (Unix Krew only; kubectl external), DEC-004 (remove scripts)
 
@@ -155,7 +158,7 @@ Work:
 Verification:
 
 ```sh
-python3 scripts/wiki_check.py check --base HEAD~1 --head HEAD
+python3 scripts/wiki_check.py check --base 48017de --head HEAD
 python3 scripts/wiki_check.py audit
 ```
 
@@ -165,7 +168,7 @@ Exit gate: Krew behavior and legacy entry points are explicit and reproducible.
 
 ## Phase 6 – Final integration verification
 
-Status: `pending`
+Status: `in progress` – DOC-1 and final integration/maintainer acceptance
 
 Work:
 
@@ -178,18 +181,19 @@ Required checks:
 
 ```sh
 ansible-playbook -i ansible/inventory.ini ansible/playbook.yml --syntax-check
-python3 -m unittest -v tests/test_wiki_check.py
+python3 -m unittest discover -s tests -p 'test_*.py' -v
 python3 scripts/wiki_check.py audit
-python3 scripts/wiki_check.py check --base origin/main --head HEAD
+python3 scripts/wiki_check.py check --base 48017de --head HEAD
 git diff --check
 ```
 
-Platform checks when available:
+Non-mutating platform checks when available:
 
 ```powershell
-./setup-windows.ps1 -SkipPackages
 Get-Command starship, fzf, zoxide, git, nvim, eza, bat, psmux, glowm
 ```
+
+Use the temporary-destination Windows sync fixture and parser checks recorded in TRACKER.md. Do not invoke setup against a live host for verification without explicit approval.
 
 ```sh
 command -v zsh stow tmux nvim pyenv starship
