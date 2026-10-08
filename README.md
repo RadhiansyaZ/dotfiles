@@ -52,7 +52,7 @@ synchronizes, and verifies configuration.
   ```
 - Windows setup reports missing tools. To check manually:
   ```powershell
-  Get-Command starship, fzf, psmux
+  Get-Command starship, fzf, zoxide, git, nvim, eza, bat, psmux, glowm
   ```
 - After setup, run `psmux`, then press `C-a` followed by `I` to install its configured plugins.
 - `sync-win.ps1` refreshes the Windows-local copies of Pi and Zed settings. When the WSL

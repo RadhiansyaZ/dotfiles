@@ -8,7 +8,7 @@ source_files:
   - ssh/.ssh/config
   - zed/.config/zed/settings.json
   - windows/sync-zed-settings.ps1
-last_reviewed: 2026-10-06
+last_reviewed: 2026-10-07
 ---
 # Privacy and sensitive boundaries
 

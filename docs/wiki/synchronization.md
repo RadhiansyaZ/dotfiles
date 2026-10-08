@@ -7,7 +7,7 @@ source_files:
   - copy-ssh-from-windows.sh
   - pi/.pi/agent/settings.json
   - zed/.config/zed/settings.json
-last_reviewed: 2026-10-06
+last_reviewed: 2026-10-07
 ---
 # Windows synchronization
 

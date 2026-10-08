@@ -212,10 +212,10 @@ Neither set is installed by the native Windows bootstrap.
   loading, and cached Starship/Zoxide initialization. It is not a Zsh replacement.
 - **tmux (macOS/Linux/WSL):** TPM with `tmux-sensible`, `tmux-resurrect`, and
   `tmux-continuum`; `Ctrl-A` is the prefix.
-- **WezTerm:** mirrors the tmux `Ctrl-A` leader. Its Windows target triple selects WSL
-  Debian as the default domain; macOS and Linux retain their native default. `glowm-wezterm`
-  temporarily selects glowm’s iTerm2 image path, which WezTerm supports; this is experimental,
-  so use `glowm --pdf` if rendering fails.
+- **WezTerm:** does not declare a custom leader; tmux and psmux use `Ctrl-A` as their prefix. Its
+  Windows target triple selects WSL Debian as the default domain; macOS and Linux retain their
+  native default. `glowm-wezterm` temporarily selects glowm’s iTerm2 image path, which
+  WezTerm supports; this is experimental, so use `glowm --pdf` if rendering fails.
 - **Neovim:** LazyVim bootstrapped by `lazy.nvim` on all three package-provisioned
   platforms. On Linux the latest upstream release is required for its runtime tree.
 - **Starship:** one shared configuration shows OS/host, directory, Git, Python, Go,
@@ -258,7 +258,7 @@ After a change, run the relevant setup path. The Unix playbook rejects unsupport
 operating systems and non-Debian Linux before provisioning, including tagged runs; setup
 dry-runs Stow and probes `zsh`, `stow`, `nvim`, and `pyenv` with `--version`, plus `tmux`
 with `-V`. Probes also run in Ansible check mode, aggregating all failures. Native Windows verifies
-`starship`, `fzf`, `zoxide`, `git`, `nvim`, `eza`, and `bat` after refreshing `PATH`. Before committing, run
+`starship`, `fzf`, `zoxide`, `git`, `nvim`, `eza`, `bat`, `psmux`, and `glowm` after refreshing `PATH`. Before committing, run
 `git diff --check`.
 
 ## 10. Installation source catalogue
