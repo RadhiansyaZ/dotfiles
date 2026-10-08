@@ -1,6 +1,6 @@
 # Execution plan
 
-Execution uses the isolated `remediation/dotfiles-drift` worktree. `TRACKER.md`, `WORK-PACKAGES.md`, and `RESUME.md` record accepted commits, delegated ownership, checks and limitations. The phase work lists below preserve the approved rationale; all five implementation phases are accepted. Final documentation and available integration checks are accepted. Maintainer acceptance and ordinary branch push remain pending.
+Execution uses the isolated `remediation/dotfiles-drift` worktree. `TRACKER.md`, `WORK-PACKAGES.md`, and `RESUME.md` record accepted commits, delegated ownership, checks and limitations. The phase work lists below preserve the approved rationale; all five implementation phases are accepted. Final documentation and available integration checks are accepted. FIN-010 maintainer acceptance includes recorded platform limitations. Ordinary branch push is the remaining integration action.
 
 ## Success criteria
 
@@ -168,7 +168,7 @@ Exit gate: Krew behavior and legacy entry points are explicit and reproducible.
 
 ## Phase 6 – Final integration verification
 
-Status: `awaiting maintainer acceptance` – DOC-1/2 accepted; FIN-001 through FIN-009 available checks complete
+Status: `complete` – DOC-1/2 accepted; FIN-001 through FIN-010 accepted with explicit platform limitations
 
 Work:
 

@@ -2,7 +2,7 @@
 
 Last updated: `2026-10-07`
 
-Overall status: `awaiting FIN-010 maintainer acceptance – implementation/docs and available integration checks complete; no push yet`
+Overall status: `FIN-010 accepted – all remediation gates complete; ordinary branch push next`
 
 Execution baseline: `6be4fdf`; branch: `remediation/dotfiles-drift`.
 
@@ -90,7 +90,7 @@ The original 53-item inventory, single-owner mapping, and agent contracts are in
 - [x] `FIN-007` Run `git diff --check`
 - [x] `FIN-008` Review tracked content for sensitive or machine-local data
 - [x] `FIN-009` Update the wiki log and tracker evidence
-- [ ] `FIN-010` Complete final maintainer review
+- [x] `FIN-010` Complete final maintainer review
 
 ## Evidence log
 
@@ -125,6 +125,7 @@ The original 53-item inventory, single-owner mapping, and agent contracts are in
 | 2026-10-07 | KREW-1 handoff | Initially unreviewed | Luna/xhigh session drift-krew-1 exited 0. It reports seven local mocked installer tests, task syntax, audit, Python compile, whitespace, and working-tree ownership passed. Source/docs remained uncommitted at handoff; superseded by the acceptance below. |
 | 2026-10-07 | DOC-1 dispatch | Exited 0; corrected by DOC-2 | Persistent session `drift-doc-1` records `openai-codex/gpt-5.6-terra` and effective `xhigh`. Initial direct script launch failed before dispatch because the local wrapper lacks executable permission; invoking it through Bash succeeded. Eight authorized doc files reviewed after exit 0. Four wiki tests/audit/committed range/working-tree responsibility/path checks/whitespace reported passed. Sol found `Ctrl-A` described as tmux-only although `psmux/.psmux.conf` also declares `prefix C-a`. DOC-2 must correct only the two overbroad sentences in machine-tooling/log before acceptance. |
 | 2026-10-07 | DOC-2 and final docs | Accepted | Same Terra/xhigh session `drift-doc-1` exited 0; exact two-sentence correction reviewed against tmux/psmux source. Sol reviewed all eight doc files, repeated four wiki tests/audit, staged full-range responsibility/whitespace, committed `eb4b8b1`, and repeated full-range/whitespace. No source/tests/tracker edits by DOC. |
+| 2026-10-07 | FIN-010 maintainer review | Accepted | Maintainer selected “Accept and push” after reviewing completed scope, all 53 single-owner items, passing fixtures/checks and explicit unavailable/live-platform limits. Historical metadata remains under DEC-001; original checkout edits remain excluded. Authorized ordinary push of `remediation/dotfiles-drift` to existing `origin`, no force or PR. |
 | 2026-10-07 | Final integration replay | Passed with explicit limits | After DOC acceptance, 34 Python tests passed again with no skips; Ansible syntax, wiki audit/full `48017de..HEAD` responsibility and full-range whitespace passed. Final count-only scan: 114 non-boundary files, six exclusions, zero unapproved removed-value matches and zero added-content secret-pattern flags. Earlier actual Windows parser/sync/WezTerm and empty-target Stow evidence applies to unchanged source. All 53 original items have exactly one inventory owner, with no missing or duplicate ownership. |
 | 2026-10-07 | FIN-001 through FIN-009 | Available checks complete | FIN-004 Bash/Zsh syntax passed; ShellCheck unavailable, not passed. FIN-005 PowerShell/parser/sync/explicit-config Windows WezTerm passed; native command lookup still lacks fzf/zoxide/nvim/eza/bat/glowm. No live setup, upstream Krew download/install, native macOS or Unix WezTerm application load ran. FIN-010 must accept these limitations; branch not pushed. |
 | 2026-10-07 | Integration fixtures | Passed | `python3 -m unittest discover -s tests -p 'test_*.py' -v`: 34 tests passed, including actual-task Krew/setup/Stow fixtures and privacy, configuration and wiki cases. No skipped tests. |

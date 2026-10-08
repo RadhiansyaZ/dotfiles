@@ -1,6 +1,6 @@
 # Dotfiles drift remediation
 
-Status: `awaiting maintainer acceptance – implementation, documentation and available checks accepted; push pending`
+Status: `accepted – all remediation and maintainer-review gates complete; ordinary branch push next`
 
 Baseline commit: `48017de`
 
