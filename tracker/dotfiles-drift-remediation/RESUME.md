@@ -20,7 +20,7 @@ Follow-ups: narrow ownership repair for docs/package_management/ideas.md and doc
 
 ## Current state
 
-KREW-1 is accepted after the fresh-session review. DOC-1 is prepared for dispatch; reconcile its local PID/exit before further work. Accepted source commits through setup verification are recorded below. No push has been made.
+KREW-1 is accepted after the fresh-session review. DOC-1 is active in `drift-doc-1` with verified Terra/xhigh identity; reconcile its local PID/exit before further work. Initial direct wrapper invocation failed on permissions before dispatch; Bash invocation succeeded. Accepted source commits through setup verification are recorded below. No push has been made.
 
 - Goal milestones: inventory, workspace, handoffs, decisions, privacy, legacy, WezTerm, configuration delivery, Stow safety, and setup verification and Krew complete; DOC is next.
 - LEGACY committed in 04692b4: fonts.sh/tpm.sh removed, retained Ansible tasks reviewed, narrow proposal/Stow-guide ownership repaired. Four wiki tests, audit, scoped whitespace, execution-baseline range check passed.
@@ -35,7 +35,8 @@ KREW-1 is accepted after the fresh-session review. DOC-1 is prepared for dispatc
 - Latest accepted source commit: 8d1e2f6 (VERIFY); setup verification is committed. No implementation agent may edit tracker files or stage source.
 - PRV-1/2, LEGACY-1/3 succeeded; LEGACY-2 exit 130 was superseded by the reconciled same-session follow-up. Never restart these accepted packets.
 - KREW-1 accepted in `8e30227`: Sol repeated seven real-task local-archive tests and independently checked executable-symlink installation detection, then syntax, four wiki tests, audit, staged full-range responsibility, whitespace and post-commit full range. No live provisioning ran. CLN-002/006/007 closed with Krew and LEGACY evidence.
-- Next: dispatch/reconcile DOC-1 Terra/xhigh, review final authored docs, then complete final phase gates/integration, maintainer acceptance, and ordinary branch push.
+- Sol integration so far: 34 Python tests passed; syntax for Ansible/all three Bash scripts/Zsh passed; temporary-target combined Stow dry-runs passed for 16 native packages and 15 WSL packages. Native Windows sync fixture, eight-script parser and explicit-config WezTerm load passed. Count-only privacy scan: 114 non-boundary tracked files, six boundary exclusions, zero unapproved matches; added-content secret-pattern flags zero. Repeat wiki/full-range/whitespace after DOC. ShellCheck, native Lua/Unix WezTerm and live provisioning remain unavailable/unexecuted.
+- Next: reconcile DOC-1 Terra/xhigh, review final authored docs, repeat final wiki/range/whitespace/content checks, obtain FIN-010 maintainer acceptance including limitations, and push the completed branch ordinarily. Do not push before acceptance.
 
 ## Available verification and limits
 
