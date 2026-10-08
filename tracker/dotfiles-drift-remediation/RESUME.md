@@ -20,9 +20,9 @@ Follow-ups: narrow ownership repair for docs/package_management/ideas.md and doc
 
 ## Current state
 
-VERIFY-2 is accepted after the fresh-session review. No agent is active. Accepted source commits through setup verification are recorded below. No push has been made.
+KREW-1 is accepted after the fresh-session review. DOC-1 is prepared for dispatch; reconcile its local PID/exit before further work. Accepted source commits through setup verification are recorded below. No push has been made.
 
-- Goal milestones: inventory, workspace, handoffs, decisions, privacy, legacy, WezTerm, configuration delivery, Stow safety, and setup verification complete; Krew is next.
+- Goal milestones: inventory, workspace, handoffs, decisions, privacy, legacy, WezTerm, configuration delivery, Stow safety, and setup verification and Krew complete; DOC is next.
 - LEGACY committed in 04692b4: fonts.sh/tpm.sh removed, retained Ansible tasks reviewed, narrow proposal/Stow-guide ownership repaired. Four wiki tests, audit, scoped whitespace, execution-baseline range check passed.
 - PRV committed in 7b6077c after the ownership gate passed. Sol repeated six privacy tests and the real native Windows sync fixture successfully; Claude JSON and zsh -n passed. Earlier accepted count-only scan and scoped settings review remain recorded in TRACKER.md. Bash is unsuitable for parsing the Zsh pattern syntax; corrected parser passed.
 - Full wiki changed-path responsibility check from 48017de to HEAD passes after the PRV documentation commit. The intermediate LEGACY-only range check had correctly required privacy-page updates, now committed.
@@ -34,8 +34,8 @@ VERIFY-2 is accepted after the fresh-session review. No agent is active. Accepte
 - VERIFY-2 resumed the same Luna/xhigh session and exited 0. It replaces that unaccepted handoff: `tmux` uses `-V`; other commands retain `--version`; mocks reject incorrect flags; seven controlled real-Ansible tests cover platform/tag rejection, all-present, aggregation, nonzero diagnostics, correct tmux flag, and check-mode probes. Sol repeated all seven tests, Ansible syntax, four wiki tests, staged wiki audit/full range, and whitespace successfully.
 - Latest accepted source commit: 8d1e2f6 (VERIFY); setup verification is committed. No implementation agent may edit tracker files or stage source.
 - PRV-1/2, LEGACY-1/3 succeeded; LEGACY-2 exit 130 was superseded by the reconciled same-session follow-up. Never restart these accepted packets.
-- KREW-1 Luna/xhigh exited 0 in session drift-krew-1 and is unreviewed. Its uncommitted scope is `ansible/tasks/common.yml`, new `ansible/tasks/krew.yml`, new Krew fixture/tests, and three Krew wiki pages. It reports seven local mocked installer tests, syntax, audit, Python compile, whitespace, and working-tree ownership passed; Sol must inspect the implementation and repeat the applicable checks before staging or accepting it.
-- Next fresh Sol session: reconcile KREW-1 diff against its packet, test actual tasks with controlled fixtures, stage only accepted files, run audit/full range and commit. Then complete DOC, final phase gates/integration, maintainer acceptance, and ordinary branch push. CLN-006/007 await Krew's inventory and cleanup phase gate.
+- KREW-1 accepted in `8e30227`: Sol repeated seven real-task local-archive tests and independently checked executable-symlink installation detection, then syntax, four wiki tests, audit, staged full-range responsibility, whitespace and post-commit full range. No live provisioning ran. CLN-002/006/007 closed with Krew and LEGACY evidence.
+- Next: dispatch/reconcile DOC-1 Terra/xhigh, review final authored docs, then complete final phase gates/integration, maintainer acceptance, and ordinary branch push.
 
 ## Available verification and limits
 
@@ -61,7 +61,7 @@ The maintainer requests fresh Sol sessions around 40% context usage. Begin hando
 
 1. Find the worktree for the branch with `git worktree list`; operate only there.
 2. Read repository instructions, this checkpoint, WORK-PACKAGES.md, TRACKER.md, and DECISIONS.md. Inspect status/recent commits against packet evidence.
-3. Reconcile local runtime .pid/.exit and final events before starting any agent. No packet is active. VERIFY-1 exit 0 is reconciled but unaccepted; VERIFY-2 prompt is prepared and not dispatched. Same session drift-verify-1 must be resumed after goal-resume. SAFE-2 exit 0 is accepted; SAFE-1 exit 130 was superseded. CFG-1 and WZT-1 exit 0 are accepted. LEGACY-3 exit 0 was accepted; its predecessor LEGACY-2 exit 130 needs no further retry.
+3. Reconcile local runtime .pid/.exit and final events before starting any agent. DOC-1 is next; inspect its PID/exit before dispatch to avoid duplicate work. VERIFY-1 is superseded by accepted VERIFY-2, so do not resume it. KREW-1 is accepted. SAFE-2 exit 0 is accepted; SAFE-1 exit 130 was superseded. CFG-1 and WZT-1 exit 0 are accepted. LEGACY-3 exit 0 was accepted; its predecessor LEGACY-2 exit 130 needs no further retry.
 4. Verified models are openai-codex/gpt-6-luna and openai-codex/gpt-5.6-terra; effective effort xhigh. Built-in codemode may batch checks. No substitutions without approval.
 5. For fresh packets, the local dispatch.sh records PID/exit and rejects duplicate runs. Existing packet prompts are prepared. Resume follow-ups with the recorded session, not an unverified new attempt.
 6. Agents may not stage, commit, edit tracker files, push, or provision hosts. Sol validates scope/results and explicitly stages only accepted files.

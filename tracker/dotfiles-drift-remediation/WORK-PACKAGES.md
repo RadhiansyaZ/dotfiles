@@ -42,10 +42,10 @@ Phase 0 was committed in `42b888a` and remains complete. PLAN.md's old in-progre
 | WZT | Luna / xhigh | accepted; committed ed7ef57 | LEGACY |
 | CFG | Luna / xhigh | accepted; committed 15508ad | WZT |
 | SAFE | Luna / xhigh | accepted; committed 5bff941 | CFG |
-| VERIFY | Luna / xhigh | unaccepted; VERIFY-2 correction prepared, paused | SAFE |
-| KREW | Luna / xhigh | pending | VERIFY; approved Unix-only scope |
+| VERIFY | Luna / xhigh | accepted; committed 8d1e2f6 | SAFE |
+| KREW | Luna / xhigh | accepted; committed 8e30227 | VERIFY; approved Unix-only scope |
 | LEGACY | Terra / xhigh | accepted; committed 04692b4 | Original PRV handoff; disjoint PRV-2 may continue |
-| DOC | Terra / xhigh | pending | All source packets |
+| DOC | Terra / xhigh | prepared for dispatch; DOC-1 | All source packets |
 
 LEGACY is scheduled immediately after PRV to repair the approved baseline wiki ownership gap before remaining source gates. KREW follows VERIFY; CLN-006 accepts KREW tooling evidence later.
 

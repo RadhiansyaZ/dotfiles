@@ -2,7 +2,7 @@
 
 Last updated: `2026-10-07`
 
-Overall status: `paused – KREW-1 handoff awaiting fresh Sol review`
+Overall status: `running – KREW-1 accepted; DOC handoff next`
 
 Execution baseline: `6be4fdf`; branch: `remediation/dotfiles-drift`.
 
@@ -72,12 +72,12 @@ The original 53-item inventory, single-owner mapping, and agent contracts are in
 ## Phase 5 – Krew and legacy scripts
 
 - [x] `CLN-001` Resolve DEC-003
-- [ ] `CLN-002` Implement and document the selected Krew scope
+- [x] `CLN-002` Implement and document the selected Krew scope
 - [x] `CLN-003` Resolve DEC-004
 - [x] `CLN-004` Remove or document `fonts.sh`
 - [x] `CLN-005` Remove or document `tpm.sh`
-- [ ] `CLN-006` Update wiki ownership and tooling inventory
-- [ ] `CLN-007` Verify and commit Phase 5
+- [x] `CLN-006` Update wiki ownership and tooling inventory
+- [x] `CLN-007` Verify and commit Phase 5
 
 ## Phase 6 – Integration
 
@@ -122,4 +122,5 @@ The original 53-item inventory, single-owner mapping, and agent contracts are in
 | 2026-10-07 | Fresh-session checkpoint | Paused | Approximately 39% Sol context. No active agent. VERIFY-2 correction prompt prepared locally, not dispatched; resume recorded drift-verify-1 session after goal-resume in a fresh Sol session. Require valid tmux flag and strict argument-checking fixtures before acceptance. |
 | 2026-10-07 | VERIFY-2 handoff | Accepted | Resumed Luna/xhigh session drift-verify-1 exited 0. Sol reviewed only VERIFY-owned files and repeated seven controlled real-Ansible tests: tagged unsupported-family rejection before probes, all-present support, aggregate missing/nonzero failures, strict per-command version flags including `tmux -V`, and check-mode probes. Ansible syntax, wiki unit tests, staged audit/range check, and whitespace pass. |
 | 2026-10-07 | Setup phase commit | Passed | Accepted VERIFY scope committed in `8d1e2f6`; SET-003 through SET-007 are complete. |
-| 2026-10-07 | KREW-1 handoff | Unreviewed | Luna/xhigh session drift-krew-1 exited 0. It reports seven local mocked installer tests, task syntax, audit, Python compile, whitespace, and working-tree ownership passed. Source/docs remain uncommitted; fresh Sol review is required before acceptance. |
+| 2026-10-07 | KREW-1 handoff | Initially unreviewed | Luna/xhigh session drift-krew-1 exited 0. It reports seven local mocked installer tests, task syntax, audit, Python compile, whitespace, and working-tree ownership passed. Source/docs remained uncommitted at handoff; superseded by the acceptance below. |
+| 2026-10-07 | KREW-1 Sol review | Accepted | Seven real-task local-archive tests passed, covering four platform/architecture mappings, prerequisites, custom/default root, repeat/no-upgrade, rejection and installer-failure cleanup. A separate temporary-fixture probe confirmed detection of an executable installation symlink matching Krew's layout without Git/download. Allowed seven-file diff reviewed. Ansible syntax, four wiki tests, audit, staged full-range ownership and whitespace passed. Commit `8e30227`; post-commit full `48017de..HEAD` wiki check passed. CLN-006 includes LEGACY narrow ownership repair `04692b4`; CLN-007 closes both reviewed cleanup scopes. No live installer or host provisioning ran. |
