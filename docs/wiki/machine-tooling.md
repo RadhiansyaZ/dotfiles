@@ -5,6 +5,7 @@ source_files:
   - ansible/group_vars/all.yml
   - ansible/playbook.yml
   - ansible/tasks/verify.yml
+  - ansible/tasks/common.yml
   - ansible/tasks/linux.yml
   - ansible/tasks/macos.yml
   - windows/packages/packages.winget.json
@@ -57,6 +58,7 @@ machine.
 | Tool or capability | macOS | Debian/Ubuntu + WSL | Native Windows | Difference to know |
 | --- | --- | --- | --- | --- |
 | `git` | Manual prerequisite (Xcode tooling normally supplies it) | Manual prerequisite | Installed | Unix playbooks do not install Git explicitly. |
+| Krew | Installed | Installed | Not provisioned | Requires Git; `kubectl` v1.12+ is external and not installed here. |
 | `zsh` | Configured only; assumed available | Installed | Not provisioned | Native Windows uses PowerShell. |
 | `stow` | Installed | Installed | Not provisioned | Windows uses symlinks/copies instead. |
 | `tmux` / TPM | Installed | Installed | Not provisioned | Use WSL for tmux. |
@@ -248,6 +250,7 @@ The repository remains canonical, and Windows copies flow from it only.
 | Shared npm, Go, Stow, font, or Linux package definition | `ansible/group_vars/all.yml` | `Brewfile` inventory lines, if applicable; this document |
 | Linux installer/release behavior | `ansible/tasks/linux.yml` and its included task files | This document |
 | macOS installer behavior | `ansible/tasks/macos.yml` | This document |
+| Shared Unix installer behavior, including Krew | `ansible/tasks/common.yml` and included task files | This document and Unix provisioning |
 | Native Windows package | `windows/packages/packages.winget.json` | This document |
 | Windows links/copy policy | `setup-windows.ps1`, `sync-win.ps1`, and `windows/sync-*.ps1` | `README.md`, `AGENTS.md`, and this document |
 
@@ -308,6 +311,14 @@ release page, or installer documentation used by the Ansible task.
 | APT repository added by the playbook | [GitHub CLI Linux install source](https://github.com/cli/cli/blob/trunk/docs/install_linux.md), [eza Debian package source](https://github.com/eza-community/eza/blob/main/deb.asc) |
 | Latest GitHub release asset | [Neovim](https://github.com/neovim/neovim/releases/latest), [tree-sitter CLI](https://github.com/tree-sitter/tree-sitter/releases/latest), [Lazygit](https://github.com/jesseduffield/lazygit/releases/latest), [Lazysql](https://github.com/jorgerojas26/lazysql/releases/latest), [act](https://github.com/nektos/act/releases/latest), [actionlint](https://github.com/rhysd/actionlint/releases/latest), [htmlq](https://github.com/mgdm/htmlq/releases/latest), [saml2aws](https://github.com/Versent/saml2aws/releases/latest) |
 | Direct release binary | [dbmate](https://github.com/amacneil/dbmate/releases/latest) |
+
+### Shared Unix: Krew
+
+The shared Ansible task installs Krew from the latest official archive matching Darwin/Linux and the host architecture. Git is a prerequisite. `kubectl` v1.12+ must be installed separately for Krew use; native Windows Krew and kubectl provisioning are excluded.
+
+| Installer path | Tool and source |
+| --- | --- |
+| Matching official release archive | [Krew installation guide](https://krew.sigs.k8s.io/docs/user-guide/setup/install/) |
 
 ### Shared Unix language tools
 
