@@ -40,5 +40,11 @@ objects or arrays.
 
 ## Verification
 
+- The Unix playbook supports Darwin and Debian-family Linux; it rejects other operating systems
+  and Linux families before provisioning, including tagged runs.
+- At the end of setup, it probes `zsh`, `stow`, `nvim`, and `pyenv` with `--version`, and
+  `tmux` with `-V`. These non-mutating probes also run in Ansible check mode; all failures are
+  collected and missing commands are reported in one final failure.
 - `ansible-playbook -i ansible/inventory.ini ansible/playbook.yml --syntax-check`
+- `python3 -m unittest -v tests/test_setup_verification.py`
 - `git diff --check`

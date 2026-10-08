@@ -11,6 +11,14 @@
     is_wsl: "{{ 'microsoft' in (ansible_facts.kernel | default('') | lower) }}"
   tags: [always]
 
+- name: Install Krew on supported Unix hosts
+  ansible.builtin.include_tasks:
+    file: krew.yml
+    apply:
+      tags: [common, krew]
+  when: ansible_facts.system in ['Darwin', 'Linux']
+  tags: [common, krew]
+
 - name: Compute effective stow packages
   # On WSL, ssh config is deployed natively (0600 real file) instead of stowed off /mnt/c,
   # where DrvFs reports world-writable perms that OpenSSH rejects. Native Linux/macOS keep
@@ -50,29 +58,57 @@
   register: stow_conflict_stats
   tags: [stow]
 
-- name: Remove plain-file stow conflicts
-  ansible.builtin.file:
-    path: "{{ item.item }}"
-    state: absent
+- name: Check plain-file stow conflict backup paths
+  ansible.builtin.stat:
+    path: "{{ item.item }}.pre-stow"
+    follow: false
+  loop: "{{ stow_conflict_stats.results }}"
+  register: stow_conflict_backup_stats
+  tags: [stow]
+
+- name: Refuse to replace an existing stow conflict backup
+  ansible.builtin.fail:
+    msg: "Refusing to back up {{ item.item }} because {{ item.item }}.pre-stow already exists. Resolve the backup before stowing."
+  loop: "{{ stow_conflict_stats.results }}"
+  loop_control:
+    index_var: stow_conflict_index
+  when:
+    - item.stat.exists
+    - item.stat.isreg
+    - not item.stat.islnk
+    - stow_conflict_backup_stats.results[stow_conflict_index].stat.exists
+  tags: [stow]
+
+- name: Back up plain-file stow conflicts
+  ansible.builtin.command:
+    argv:
+      - mv
+      - -n
+      - "{{ item.item }}"
+      - "{{ item.item }}.pre-stow"
+    creates: "{{ item.item }}.pre-stow"
   loop: "{{ stow_conflict_stats.results }}"
   when:
     - item.stat.exists
     - item.stat.isreg
     - not item.stat.islnk
+    - not ansible_check_mode
+  changed_when: true
   tags: [stow]
 
 - name: Run stow dry-run validation
   ansible.builtin.command:
-    argv: "{{ stow_common_args + ['-nv', '--restow', item] }}"
+    argv: "{{ stow_common_args + ['-nv', '--stow', item] }}"
   loop: "{{ effective_stow_packages }}"
   changed_when: false
   tags: [stow]
 
 - name: Stow dotfile packages
   ansible.builtin.command:
-    argv: "{{ stow_common_args + ['--restow', item] }}"
+    argv: "{{ stow_common_args + ['-v', '--stow', item] }}"
   loop: "{{ effective_stow_packages }}"
-  changed_when: true
+  register: stow_result
+  changed_when: "'LINK:' in (stow_result.stdout + stow_result.stderr)"
   tags: [stow]
 
 - name: Deploy ssh config natively on WSL

@@ -6,28 +6,26 @@ The repository stows with `--no-folding` (`stow_common_args`). Stow creates real
 
 ## Resolve conflicts before stowing
 
-Never stow over an existing target. Resolve every conflict first:
+Never stow over an existing target. Dry-run a package from the repository root and inspect conflicts before resolving them:
 
-1. Dry-run the package from the repository root:
+```sh
+stow -nv --no-folding --target="$HOME" --dir="$PWD" --restow <package>
+```
 
-   ```sh
-   stow -nv --no-folding --target="$HOME" --dir="$PWD" --restow <package>
-   ```
+For each conflict, inspect the target with `ls -l <target>` and compare it with `diff -u <target> <package>/<path>`. Resolve by case:
 
-2. For each reported conflict, inspect the target with `ls -l <target>` and compare it with `diff -u <target> <package>/<path>`. Then resolve by case:
+| Target state | Action |
+| --- | --- |
+| Regular file listed in `stow_conflict_files` | Provisioning moves it to `<target>.pre-stow` before stowing, preserving its permissions. If that backup path already exists, provisioning stops before Stow runs and leaves both files intact. Inspect and resolve the collision manually. |
+| Other regular file | Merge wanted changes into the repository copy, excluding secrets and machine-local values. Then move the target aside or ask the user. |
+| Symlink to somewhere outside this repository | Find what owns it before removing it. The regular-file backup task does not remove symlinks; Stow may report the conflict. |
+| Directory where the package has a file, or the reverse | Stop and ask the user. |
 
-   | Target state | Action |
-   | --- | --- |
-   | Regular file, identical to the repository copy | Remove the target. |
-   | Regular file, different from the repository copy | Merge any wanted changes into the repository copy, excluding secrets and machine-local values. Then remove the target. If unsure, move it aside (`mv <target> <target>.pre-stow`) and ask the user. |
-   | Symlink to somewhere outside this repository | Find what owns it (another tool or an old dotfiles setup) before removing it. |
-   | Directory where the package has a file, or the reverse | Stop and ask the user. |
+Re-run the dry run until it reports no conflicts, then stow. Do not use `stow --adopt`; it overwrites the repository copy with the host file.
 
-3. Re-run the dry run until it reports no conflicts, then stow.
+Some applications recreate settings as regular files (Pi and Claude Code, for example). Their configured conflict paths are backed up as `<target>.pre-stow`; a later run refuses to overwrite an existing backup, so resolve or rename that backup before provisioning again.
 
-Do not use `stow --adopt`. It overwrites the repository copy with the host file.
-
-Some applications recreate their settings file as a regular file on first run (Pi and Claude Code do this). For those, add the target path to `stow_conflict_files` in `ansible/group_vars/all.yml` so provisioning removes it before stowing. That task deletes the file without a backup, so add a path only after the repository copy is authoritative and the host copy holds nothing worth keeping.
+Provisioning uses `stow --stow` rather than `--restow` so already-correct links are not unlinked and recreated on every run. Consequently, it does not automatically remove links for paths later removed from a package. Review those changes with a `--restow` dry run and use a deliberate cleanup when needed.
 
 ## Choose the package scope
 
@@ -45,7 +43,8 @@ Track specific files when the directory mixes configuration with application sta
 
 Examples:
 
-- `claude/.claude/` tracks `settings.json`, `statusline-command.sh`, `CLAUDE.md`, and `agents/`. `settings.local.json`, credentials, sessions, and caches stay machine-local.
+- `claude/.claude/` tracks `settings.json`, `statusline-command.sh`, `CLAUDE.md`, `agents/`, and `skills/`. `settings.local.json`, credentials, sessions, and caches stay machine-local.
+  - `claude/.claude/skills/` holds one relative symlink per skill that Claude Code should load from `~/.agents/skills/` (`../../../../.agents/skills/<name>`). Add or remove a link to select skills, then restow `claude`. Stow a package that provides the target (`agents`, or the skills CLI for untracked skills) first, or the link dangles. Other skills in `~/.claude/skills/` stay machine-local.
 - `pi/.pi/agent/` tracks `settings.json`, `mcp.json`, and `AGENTS.md`. `auth.json`, sessions, and package directories stay machine-local.
 
 Before deciding, run the application once and list its directory (`ls -la <app-dir>`) to see what it writes there. When in doubt, track specific files.

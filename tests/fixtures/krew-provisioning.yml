@@ -1,0 +1,21 @@
+- name: Krew provisioning fixture
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    ansible_facts:
+      system: "{{ lookup('env', 'KREW_TEST_SYSTEM') }}"
+      architecture: "{{ lookup('env', 'KREW_TEST_ARCH') }}"
+      env:
+        HOME: "{{ lookup('env', 'HOME') }}"
+        KREW_ROOT: "{{ lookup('env', 'KREW_ROOT') }}"
+        PATH: "{{ lookup('env', 'KREW_TEST_PATH') }}"
+    ansible_remote_tmp: "{{ ansible_facts.env.HOME }}/.ansible/tmp"
+    krew_release_base_url: "{{ lookup('env', 'KREW_TEST_RELEASE_BASE_URL') }}"
+    krew_temp_parent: "{{ lookup('env', 'KREW_TEST_TEMP_PARENT') }}"
+  environment:
+    KREW_TEST_FAIL: "{{ lookup('env', 'KREW_TEST_FAIL') }}"
+    KREW_TEST_LOG: "{{ lookup('env', 'KREW_TEST_LOG') }}"
+  tasks:
+    - name: Load shared setup tasks
+      ansible.builtin.import_tasks: ../../ansible/tasks/common.yml

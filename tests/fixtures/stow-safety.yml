@@ -1,0 +1,30 @@
+---
+- name: Stow safety fixture
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    ansible_facts:
+      kernel: Linux
+      env:
+        HOME: "{{ lookup('env', 'HOME') }}"
+    dotfiles_dir: "{{ lookup('env', 'DOTFILES_ROOT') }}"
+    stow_packages:
+      - zsh
+    stow_conflict_files:
+      - "{{ ansible_facts.env.HOME }}/.zshrc"
+    stow_common_args:
+      - stow
+      - --no-folding
+      - "--target={{ ansible_facts.env.HOME }}"
+      - "--dir={{ dotfiles_dir }}"
+  pre_tasks:
+    - name: Assert isolated non-WSL fixture facts
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.kernel == 'Linux'
+          - ansible_facts.env.HOME == lookup('env', 'HOME')
+      tags: [stow]
+  tasks:
+    - name: Run production common tasks
+      ansible.builtin.import_tasks: ../../ansible/tasks/common.yml

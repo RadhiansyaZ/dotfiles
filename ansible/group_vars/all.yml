@@ -11,12 +11,15 @@ stow_packages:
   - ghostty
   - git
   - gnupg
+  - herdr
   - nvim
   - opencode
   - pi
   - postgresql
   - ssh
+  - starship
   - tmux
+  - wezterm
   - zed
   - zsh
 
@@ -26,23 +29,24 @@ stow_common_args:
   - --target={{ ansible_facts.env.HOME }}
   - --dir={{ dotfiles_dir }}
 
+# Regular files at these targets are moved to <path>.pre-stow; an existing backup stops stowing.
 stow_conflict_files:
   - "{{ ansible_facts.env.HOME }}/.zshrc"
   - "{{ ansible_facts.env.HOME }}/.homebrew.zshrc"
   - "{{ ansible_facts.env.HOME }}/.gdt.zshrc"
-  # Pi writes real settings.json/mcp.json on first run; clear them so stow can
-  # symlink the repo copies. auth.json/sessions/npm/git/bin stay machine-local.
+  # Pi writes real settings.json/mcp.json on first run; back them up before
+  # stowing the repo copies. auth.json/sessions/npm/git/bin stay machine-local.
   - "{{ ansible_facts.env.HOME }}/.pi/agent/settings.json"
   - "{{ ansible_facts.env.HOME }}/.pi/agent/mcp.json"
   - "{{ ansible_facts.env.HOME }}/.pi/agent/AGENTS.md"
-  # Claude Code writes real settings.json/statusline/CLAUDE.md on first run; clear
-  # them so stow can symlink the repo copies. settings.local.json, credentials,
+  # Claude Code writes real settings.json/statusline/CLAUDE.md on first run; back
+  # them up before stowing the repo copies. settings.local.json, credentials,
   # cache, sessions and other state stay machine-local (not in the claude package).
   - "{{ ansible_facts.env.HOME }}/.claude/settings.json"
   - "{{ ansible_facts.env.HOME }}/.claude/statusline-command.sh"
   - "{{ ansible_facts.env.HOME }}/.claude/CLAUDE.md"
   # skills CLI writes a real lockfile at $XDG_STATE_HOME/skills on first run
-  # (set in zsh/.zshrc); clear it so stow can symlink it to the repo-tracked
+  # (set in zsh/.zshrc); back it up before stowing the repo-tracked
   # agents/.agents/.skill-lock.json instead, keeping one lockfile in sync.
   - "{{ ansible_facts.env.HOME }}/.local/state/skills/.skill-lock.json"
 

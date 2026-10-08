@@ -16,8 +16,6 @@
     {"path": "sync-win.ps1", "classification": "document", "pages": ["docs/wiki/synchronization.md"], "rationale": "Windows copy synchronization is documented."},
     {"path": "windows/**", "classification": "document", "pages": ["docs/wiki/windows-provisioning.md", "docs/wiki/synchronization.md", "docs/wiki/machine-tooling.md"], "rationale": "Windows packages, profile, copy helpers, and tooling inventory are documented."},
     {"path": "Brewfile", "classification": "document", "pages": ["docs/wiki/unix-provisioning.md", "docs/wiki/machine-tooling.md"], "rationale": "macOS package inventory and cross-platform tooling differences are documented."},
-    {"path": "fonts.sh", "classification": "document", "pages": ["docs/wiki/unix-provisioning.md"], "rationale": "Font setup is part of Unix provisioning."},
-    {"path": "tpm.sh", "classification": "document", "pages": ["docs/wiki/unix-provisioning.md"], "rationale": "TPM setup is part of Unix provisioning."},
     {"path": "copy-ssh-from-windows.sh", "classification": "document", "pages": ["docs/wiki/synchronization.md"], "rationale": "The one-way SSH import helper is documented."},
     {"path": "agents/**", "classification": "document", "pages": ["docs/wiki/configuration-packages.md"], "rationale": "Agent skills are a tracked Stow package."},
     {"path": "claude/**", "classification": "document", "pages": ["docs/wiki/configuration-packages.md"], "rationale": "Claude configuration is a tracked package."},
@@ -42,8 +40,8 @@
     {"path": "docs/idea-artifacts/DESIGN.md", "classification": "document", "pages": ["docs/wiki/architecture.md"], "rationale": "The wiki design informs its architecture."},
     {"path": "docs/idea-artifacts/PLAN.md", "classification": "document", "pages": ["docs/wiki/maintenance.md"], "rationale": "The implementation plan informs maintenance."},
     {"path": "docs/idea-artifacts/RFC.md", "classification": "document", "pages": ["docs/wiki/architecture.md"], "rationale": "The wiki RFC informs its architecture."},
-    {"path": "docs/package_management/ideas.md", "classification": "document", "pages": ["docs/wiki/configuration-packages.md"], "rationale": "The package-management proposal informs configuration package guidance."},
-    {"path": "docs/stow-packages.md", "classification": "document", "pages": ["docs/wiki/configuration-packages.md"], "rationale": "Stow package rules govern repository-managed configuration."},
+    {"path": "docs/package_management/ideas.md", "classification": "document", "pages": ["docs/wiki/machine-tooling.md", "docs/wiki/configuration-packages.md"], "rationale": "The package-management proposal informs tooling maintenance without changing current provisioning."},
+    {"path": "docs/stow-packages.md", "classification": "document", "pages": ["docs/wiki/unix-provisioning.md", "docs/wiki/configuration-packages.md"], "rationale": "Stow package scope and conflict handling are part of Unix provisioning."},
     {"path": "README.md", "classification": "document", "pages": ["docs/wiki/setup-and-verification.md"], "rationale": "The setup entry point is documented."},
     {"path": "LICENSE", "classification": "generated-or-vendored", "pages": [], "rationale": "License text does not require operational prose."}
   ]

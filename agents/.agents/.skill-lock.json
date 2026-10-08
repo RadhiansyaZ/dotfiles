@@ -26,9 +26,10 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/mattpocock/skills.git",
       "skillPath": "skills/productivity/handoff/SKILL.md",
-      "skillFolderHash": "3f7df8e717e41dfd6eacd03d47319a2e01248ffb",
+      "skillFolderHash": "ce24892bd2d4b9e7fd5ac9b95c03175e18bef388",
+      "pluginName": "mattpocock-skills",
       "installedAt": "2026-07-08T04:55:46.283Z",
-      "updatedAt": "2026-07-12T12:13:40.291Z"
+      "updatedAt": "2026-10-07T09:29:41.892Z"
     },
     "caveman": {
       "source": "JuliusBrussee/caveman",

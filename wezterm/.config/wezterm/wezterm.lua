@@ -1,7 +1,7 @@
 -- WezTerm configuration.
 --
--- Lives at ~/.config/wezterm/wezterm.lua (stow target on Linux/macOS; symlinked
--- into %USERPROFILE%\.config\wezterm on Windows by windows/setup-windows.ps1).
+-- Lives at ~/.config/wezterm/wezterm.lua (stowed on Linux/macOS; linked into
+-- %USERPROFILE%\.config\wezterm by setup-windows.ps1 on Windows).
 --
 -- Docs: https://wezterm.org/config/files.html
 
@@ -12,7 +12,9 @@ local config = wezterm.config_builder()
 config.color_scheme = "Catppuccin Mocha"
 config.font = wezterm.font_with_fallback({ "JetBrains Mono", "Fira Code", "DengXian" })
 config.font_size = 11
-config.default_domain = "WSL:Debian"
+if wezterm.target_triple:find("windows", 1, true) then
+	config.default_domain = "WSL:Debian"
+end
 
 -- The installed Windows WezTerm build misreports shifted printable keys through
 -- Kitty keyboard mode in WSL multiplexers. Use standard terminal input instead.

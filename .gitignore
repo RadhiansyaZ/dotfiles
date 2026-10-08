@@ -1,1 +1,3 @@
 **/__pycache__/**
+/zed/.config/zed/settings_backup.json
+/wezterm/.config/wezterm/wezterm.lua.bak

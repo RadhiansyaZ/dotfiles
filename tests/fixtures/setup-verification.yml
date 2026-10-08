@@ -1,0 +1,27 @@
+- name: Setup verification fixture
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    ansible_facts:
+      system: "{{ lookup('env', 'SETUP_VERIFY_SYSTEM') }}"
+      os_family: "{{ lookup('env', 'SETUP_VERIFY_FAMILY') }}"
+      env:
+        HOME: "{{ lookup('env', 'HOME') }}"
+        PATH: "{{ lookup('env', 'SETUP_VERIFY_PATH') }}"
+    dotfiles_dir: "{{ lookup('env', 'DOTFILES_ROOT') }}"
+    ansible_remote_tmp: "{{ ansible_facts.env.HOME }}/.ansible/tmp"
+  pre_tasks:
+    - name: Validate platform before platform-specific tasks
+      ansible.builtin.import_tasks: ../../ansible/tasks/verify.yml
+      vars:
+        verify_platform: true
+        verify_commands: false
+      tags: [always]
+  tasks:
+    - name: Verify critical commands
+      ansible.builtin.import_tasks: ../../ansible/tasks/verify.yml
+      vars:
+        verify_platform: false
+        verify_commands: true
+      tags: [verify]

@@ -1,0 +1,84 @@
+---
+- name: Select Krew release asset
+  ansible.builtin.set_fact:
+    krew_os: "{{ 'darwin' if ansible_facts.system == 'Darwin' else 'linux' }}"
+    krew_arch: >-
+      {{ 'amd64' if ansible_facts.architecture == 'x86_64'
+         else 'arm64' if ansible_facts.architecture in ['arm64', 'aarch64']
+         else 'unsupported' }}
+    krew_root: "{{ ansible_facts.env.KREW_ROOT | default(ansible_facts.env.HOME ~ '/.krew', true) }}"
+  tags: [common, krew]
+
+- name: Reject unsupported Krew architecture
+  ansible.builtin.fail:
+    msg: "Unsupported Krew architecture: {{ ansible_facts.architecture }}. Supported: x86_64, arm64, aarch64."
+  when: krew_arch == 'unsupported'
+  tags: [common, krew]
+
+- name: Set Krew release asset name
+  ansible.builtin.set_fact:
+    krew_asset: "krew-{{ krew_os }}_{{ krew_arch }}"
+  tags: [common, krew]
+
+- name: Check for an existing Krew installation
+  ansible.builtin.stat:
+    path: "{{ krew_root }}/bin/kubectl-krew"
+    follow: false
+  register: krew_installation
+  changed_when: false
+  tags: [common, krew]
+
+- name: Install Krew when missing
+  when: not (krew_installation.stat.exists and krew_installation.stat.executable)
+  block:
+    - name: Check Git prerequisite for Krew
+      ansible.builtin.command:
+        argv: [git, --version]
+      environment:
+        PATH: "{{ ansible_facts.env.PATH }}"
+      register: krew_git_check
+      changed_when: false
+      failed_when: false
+
+    - name: Require Git before installing Krew
+      ansible.builtin.fail:
+        msg: "Git is required to install Krew. Install Git and rerun setup."
+      when: krew_git_check.rc != 0
+
+    - name: Create temporary Krew installation directory
+      ansible.builtin.tempfile:
+        state: directory
+        prefix: krew-
+        path: "{{ krew_temp_parent | default(omit) }}"
+      register: krew_temp
+
+    - name: Download and install Krew
+      block:
+        - name: Download latest matching Krew release archive
+          ansible.builtin.get_url:
+            url: "{{ krew_release_base_url | default('https://github.com/kubernetes-sigs/krew/releases/latest/download') }}/{{ krew_asset }}.tar.gz"
+            dest: "{{ krew_temp.path }}/{{ krew_asset }}.tar.gz"
+            mode: "0644"
+
+        - name: Extract Krew installer
+          ansible.builtin.unarchive:
+            src: "{{ krew_temp.path }}/{{ krew_asset }}.tar.gz"
+            dest: "{{ krew_temp.path }}"
+            remote_src: true
+
+        - name: Install Krew plugin manager
+          ansible.builtin.command:
+            argv:
+              - "./{{ krew_asset }}"
+              - install
+              - krew
+            chdir: "{{ krew_temp.path }}"
+          environment:
+            KREW_ROOT: "{{ krew_root }}"
+          changed_when: true
+      always:
+        - name: Remove temporary Krew installation files
+          ansible.builtin.file:
+            path: "{{ krew_temp.path }}"
+            state: absent
+  tags: [common, krew]

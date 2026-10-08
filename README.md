@@ -42,13 +42,17 @@ synchronizes, and verifies configuration.
 
 ## Verify and synchronize
 
-- Unix setup dry-runs Stow and probes `zsh`, `stow`, `tmux`, `nvim`, and `pyenv`. To check manually:
+- Unix setup rejects unsupported operating systems and non-Debian Linux before provisioning,
+  including tagged playbook runs. It dry-runs Stow, then probes `zsh`, `stow`, `nvim`, and
+  `pyenv` with `--version`, and `tmux` with `-V`. These non-mutating probes also run in Ansible
+  check mode; one aggregate failure reports all missing commands and probe diagnostics. To check
+  manually:
   ```sh
   command -v zsh stow tmux nvim pyenv
   ```
 - Windows setup reports missing tools. To check manually:
   ```powershell
-  Get-Command starship, fzf, psmux
+  Get-Command starship, fzf, zoxide, git, nvim, eza, bat, psmux, glowm
   ```
 - After setup, run `psmux`, then press `C-a` followed by `I` to install its configured plugins.
 - `sync-win.ps1` refreshes the Windows-local copies of Pi and Zed settings. When the WSL

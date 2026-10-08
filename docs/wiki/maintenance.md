@@ -7,7 +7,7 @@ source_files:
   - docs/idea-artifacts/PLAN.md
   - tracker/README.md
   - .gitattributes
-last_reviewed: 2026-09-25
+last_reviewed: 2026-10-07
 ---
 # Maintenance workflow
 

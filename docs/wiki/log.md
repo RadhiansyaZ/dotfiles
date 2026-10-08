@@ -3,7 +3,7 @@ title: Wiki log
 source_files:
   - docs/wiki/README.md
   - docs/wiki/maintenance.md
-last_reviewed: 2026-09-25
+last_reviewed: 2026-10-07
 ---
 # Wiki log
 
@@ -24,3 +24,9 @@ This is an append-only, chronological record of significant wiki maintenance. It
 - Added [index.md](index.md) as the content-oriented catalog for the operational wiki.
 - Established this log for significant wiki maintenance and validation events.
 - Updated the navigation and maintenance guidance to keep both records current.
+
+## [2026-10-07] maintenance | Reconciled drift-remediation documentation
+
+- Reconciled documentation for current-tree privacy cleanup, one-way canonical Windows settings copies, cross-platform WezTerm configuration delivery, Stow conflict handling, Unix-only Krew, critical-command verification, and removed legacy helper scripts.
+- Corrected the WezTerm description: the shared configuration does not declare a `Ctrl-A` leader; tmux and psmux use `Ctrl-A` as their prefix.
+- Native Windows PowerShell parsing and explicit-config WezTerm loading passed through WSL interop. Native Unix application loading and live provisioning remain unexecuted.

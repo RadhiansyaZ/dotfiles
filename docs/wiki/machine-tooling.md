@@ -3,12 +3,16 @@ title: Machine tooling comparison
 source_files:
   - Brewfile
   - ansible/group_vars/all.yml
+  - ansible/playbook.yml
+  - ansible/tasks/verify.yml
+  - ansible/tasks/common.yml
   - ansible/tasks/linux.yml
   - ansible/tasks/macos.yml
   - windows/packages/packages.winget.json
   - setup-windows.ps1
   - sync-win.ps1
-last_reviewed: 2026-08-05
+  - docs/package_management/ideas.md
+last_reviewed: 2026-10-07
 ---
 # Machine tooling comparison
 
@@ -54,6 +58,7 @@ machine.
 | Tool or capability | macOS | Debian/Ubuntu + WSL | Native Windows | Difference to know |
 | --- | --- | --- | --- | --- |
 | `git` | Manual prerequisite (Xcode tooling normally supplies it) | Manual prerequisite | Installed | Unix playbooks do not install Git explicitly. |
+| Krew | Installed | Installed | Not provisioned | Requires Git; `kubectl` v1.12+ is external and not installed here. |
 | `zsh` | Configured only; assumed available | Installed | Not provisioned | Native Windows uses PowerShell. |
 | `stow` | Installed | Installed | Not provisioned | Windows uses symlinks/copies instead. |
 | `tmux` / TPM | Installed | Installed | Not provisioned | Use WSL for tmux. |
@@ -138,7 +143,7 @@ macOS-exclusive; the parity matrix identifies their other implementations.
 
 Native Windows does **not** provision Zsh, Stow, tmux, TPM, Docker completion, Unix
 shell plugins, the shared Go helper-tool set other than `glowm`, Node LTS, or npm global agent tools. It installs psmux as a
-native PowerShell terminal multiplexer. It also lacks the
+native PowerShell terminal multiplexer; psmux is native-Windows-only and is not provisioned in WSL. It also lacks the
 Linux/macOS release-based tools `act`, `actionlint`, `dbmate`, `htmlq`, `lazysql`,
 `saml2aws`, and `tree-sitter`.
 
@@ -149,11 +154,12 @@ Windows-native editor, and desktop application workflow.
 ### Windows configuration model
 
 `setup-windows.ps1` creates repository-backed symlinks for Git, the PowerShell profile,
-psmux, agent skills, Starship, and WezTerm. It bootstraps PPM, the psmux plugin manager, so
-`C-a` followed by `I` installs the plugins declared in the linked psmux configuration. It also pre-clones the WezTerm plugin tree
-(`resurrect.wezterm` and its `dev.wezterm` dependency) into `%APPDATA%/wezterm/plugins`
-with the system `git`, because WezTerm's bundled libgit2 cannot clone plugins on Windows.
-It copies Pi and Zed settings as real local files:
+psmux, agent skills, Starship (from `starship/.config/starship.toml`), and WezTerm. On Unix,
+Stow delivers the Starship, Herdr, and WezTerm configurations to their home-relative config paths.
+It bootstraps PPM, the psmux plugin manager, so
+`C-a` followed by `I` installs the plugins declared in the linked psmux configuration. The
+WezTerm link deploys configuration only; setup does not install the application. It copies
+Pi and Zed settings as real local files:
 
 | Application | Canonical source | Windows destination | Why copied instead of linked |
 | --- | --- | --- | --- |
@@ -172,7 +178,7 @@ application separately on any machine where it is needed.
 | Application/configuration | macOS | Linux/WSL | Native Windows | Notes |
 | --- | --- | --- | --- | --- |
 | Ghostty | Configured only | Configured only | Not provisioned | The tracked Ghostty file currently contains only template comments. |
-| WezTerm | Configured only | Configured only | Configured only | Windows link defaults tabs/splits to the Debian WSL domain. |
+| WezTerm | Configured only | Configured only | Configured only | Shared config is deployed by Stow on Unix and linked on Windows; setup does not install WezTerm. |
 | Zed | Configured only | Configured only | Installed + copied config | Zed is the preferred configured editor where available. |
 | Claude Code | Configured only | Configured only | Not provisioned | Credentials and local state are intentionally excluded. |
 | Pi | Configured; executable installed via npm | Configured; executable installed via npm | Configured only | Windows needs a separate Pi/Node installation. |
@@ -206,9 +212,10 @@ Neither set is installed by the native Windows bootstrap.
   loading, and cached Starship/Zoxide initialization. It is not a Zsh replacement.
 - **tmux (macOS/Linux/WSL):** TPM with `tmux-sensible`, `tmux-resurrect`, and
   `tmux-continuum`; `Ctrl-A` is the prefix.
-- **WezTerm:** mirrors the tmux `Ctrl-A` leader. On Windows it opens new panes/tabs in
-  WSL Debian by default. `glowm-wezterm` temporarily selects glowm’s iTerm2 image path,
-  which WezTerm supports; this is experimental, so use `glowm --pdf` if rendering fails.
+- **WezTerm:** does not declare a custom leader; tmux and psmux use `Ctrl-A` as their prefix. Its
+  Windows target triple selects WSL Debian as the default domain; macOS and Linux retain their
+  native default. `glowm-wezterm` temporarily selects glowm’s iTerm2 image path, which
+  WezTerm supports; this is experimental, so use `glowm --pdf` if rendering fails.
 - **Neovim:** LazyVim bootstrapped by `lazy.nvim` on all three package-provisioned
   platforms. On Linux the latest upstream release is required for its runtime tree.
 - **Starship:** one shared configuration shows OS/host, directory, Git, Python, Go,
@@ -243,12 +250,15 @@ The repository remains canonical, and Windows copies flow from it only.
 | Shared npm, Go, Stow, font, or Linux package definition | `ansible/group_vars/all.yml` | `Brewfile` inventory lines, if applicable; this document |
 | Linux installer/release behavior | `ansible/tasks/linux.yml` and its included task files | This document |
 | macOS installer behavior | `ansible/tasks/macos.yml` | This document |
+| Shared Unix installer behavior, including Krew | `ansible/tasks/common.yml` and included task files | This document and Unix provisioning |
 | Native Windows package | `windows/packages/packages.winget.json` | This document |
 | Windows links/copy policy | `setup-windows.ps1`, `sync-win.ps1`, and `windows/sync-*.ps1` | `README.md`, `AGENTS.md`, and this document |
 
-After a change, run the relevant setup path. Unix setup dry-runs Stow and probes `zsh`,
-`stow`, `tmux`, and `nvim`; native Windows verifies `starship`, `fzf`, `zoxide`, `git`,
-`nvim`, `eza`, and `bat` after refreshing `PATH`. Before committing, run
+After a change, run the relevant setup path. The Unix playbook rejects unsupported
+operating systems and non-Debian Linux before provisioning, including tagged runs; setup
+dry-runs Stow and probes `zsh`, `stow`, `nvim`, and `pyenv` with `--version`, plus `tmux`
+with `-V`. Probes also run in Ansible check mode, aggregating all failures. Native Windows verifies
+`starship`, `fzf`, `zoxide`, `git`, `nvim`, `eza`, `bat`, `psmux`, and `glowm` after refreshing `PATH`. Before committing, run
 `git diff --check`.
 
 ## 10. Installation source catalogue
@@ -301,6 +311,14 @@ release page, or installer documentation used by the Ansible task.
 | APT repository added by the playbook | [GitHub CLI Linux install source](https://github.com/cli/cli/blob/trunk/docs/install_linux.md), [eza Debian package source](https://github.com/eza-community/eza/blob/main/deb.asc) |
 | Latest GitHub release asset | [Neovim](https://github.com/neovim/neovim/releases/latest), [tree-sitter CLI](https://github.com/tree-sitter/tree-sitter/releases/latest), [Lazygit](https://github.com/jesseduffield/lazygit/releases/latest), [Lazysql](https://github.com/jorgerojas26/lazysql/releases/latest), [act](https://github.com/nektos/act/releases/latest), [actionlint](https://github.com/rhysd/actionlint/releases/latest), [htmlq](https://github.com/mgdm/htmlq/releases/latest), [saml2aws](https://github.com/Versent/saml2aws/releases/latest) |
 | Direct release binary | [dbmate](https://github.com/amacneil/dbmate/releases/latest) |
+
+### Shared Unix: Krew
+
+The shared Ansible task installs Krew from the latest official archive matching Darwin/Linux and the host architecture. Git is a prerequisite. `kubectl` v1.12+ must be installed separately for Krew use; native Windows Krew and kubectl provisioning are excluded.
+
+| Installer path | Tool and source |
+| --- | --- |
+| Matching official release archive | [Krew installation guide](https://krew.sigs.k8s.io/docs/user-guide/setup/install/) |
 
 ### Shared Unix language tools
 
