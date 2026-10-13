@@ -45,7 +45,7 @@ Examples:
 
 - `claude/.claude/` tracks `settings.json`, `statusline-command.sh`, `CLAUDE.md`, `agents/`, and `skills/`. `settings.local.json`, credentials, sessions, and caches stay machine-local.
   - `claude/.claude/skills/` holds one relative symlink per skill that Claude Code should load from `~/.agents/skills/` (`../../../../.agents/skills/<name>`). Add or remove a link to select skills, then restow `claude`. Stow a package that provides the target (`agents`, or the skills CLI for untracked skills) first, or the link dangles. Other skills in `~/.claude/skills/` stay machine-local.
-- `pi/.pi/agent/` tracks `settings.json`, `mcp.json`, and `AGENTS.md`. `auth.json`, sessions, and package directories stay machine-local.
+- `pi/.pi/agent/` tracks `settings.json`, `mcp.json`, `AGENTS.md`, and `extensions/pi-lens.json`. The lens config enables deferred formatting and disables autofix and the commit guard. `auth.json`, sessions, package directories, and lens caches/logs stay machine-local. An existing `~/.pi-lens/config.json` takes precedence over the tracked lens config; merge wanted settings and move it aside to use the tracked copy.
 
 Before deciding, run the application once and list its directory (`ls -la <app-dir>`) to see what it writes there. When in doubt, track specific files.
 

@@ -1,3 +1,4 @@
+import json
 import re
 import shutil
 import subprocess
@@ -57,6 +58,35 @@ class ConfigDeliveryTests(unittest.TestCase):
                     self.assertEqual(result.returncode, 0, output)
                     self.assertIn(f"LINK: {target} => ", output)
                     self.assertEqual(list(home.iterdir()), [])
+
+    @unittest.skipUnless(shutil.which("stow"), "GNU Stow is unavailable")
+    def test_pi_lens_config_is_stowed_without_runtime_state(self):
+        config_path = ".pi/agent/extensions/pi-lens.json"
+        source = ROOT / "pi" / config_path
+        config = json.loads(source.read_text(encoding="utf-8"))
+        self.assertEqual(config["format"], {"enabled": True, "mode": "deferred"})
+        self.assertFalse(config["autofix"]["enabled"])
+        self.assertFalse(config["actionableWarnings"]["autoFix"]["enabled"])
+        self.assertFalse(config["guard"]["enabled"])
+        settings = json.loads((ROOT / "pi/.pi/agent/settings.json").read_text(encoding="utf-8"))
+        self.assertIn("npm:pi-lens", settings["packages"])
+        self.assertIn(config_path, GROUP_VARS.read_text(encoding="utf-8"))
+        self.assertIn(
+            '"extensions\\pi-lens.json"',
+            (ROOT / "windows/sync-pi-settings.ps1").read_text(encoding="utf-8"),
+        )
+        with tempfile.TemporaryDirectory() as temp_dir:
+            home = Path(temp_dir)
+            result = subprocess.run(
+                [shutil.which("stow"), "--no-folding", f"--target={home}",
+                 f"--dir={ROOT}", "--stow", "pi"],
+                capture_output=True, text=True, check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            target = home / config_path
+            self.assertTrue(target.is_symlink())
+            self.assertEqual(target.resolve(), source)
+            self.assertFalse((home / ".pi-lens").exists())
 
     def test_windows_starship_source_resolves_to_relocated_file(self):
         source = ROOT / "starship/.config/starship.toml"

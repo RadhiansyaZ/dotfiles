@@ -15,6 +15,7 @@ source_files:
   - agents/.agents/skills/artifact-driven-development/SKILL.md
   - docs/package_management/ideas.md
   - docs/stow-packages.md
+  - pi/.pi/agent/extensions/pi-lens.json
 last_reviewed: 2026-10-08
 ---
 # Configuration packages
@@ -30,6 +31,13 @@ WezTerm uses one shared configuration across platforms. Unix hosts deploy it thr
 ## WezTerm Mermaid preview
 
 `zsh/.zshrc` and the native Windows PowerShell profile provide `glowm-wezterm`. It is an experimental wrapper that makes `glowm` select its iTerm2 inline-image path, which WezTerm implements. It must be run directly in WezTerm and needs the provisioned Chrome or Chromium browser; use `glowm --pdf` if inline rendering fails.
+
+## Pi lens
+
+The Pi Stow package includes `extensions/pi-lens.json`, enabling deferred formatting
+and disabling autofix and the experimental commit guard. Lens caches, logs, and tool
+binaries remain machine-local. An existing `~/.pi-lens/config.json` takes precedence;
+merge wanted settings and move it aside to use the tracked configuration.
 
 ## Constraints
 

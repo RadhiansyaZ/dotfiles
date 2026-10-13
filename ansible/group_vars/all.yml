@@ -39,6 +39,7 @@ stow_conflict_files:
   - "{{ ansible_facts.env.HOME }}/.pi/agent/settings.json"
   - "{{ ansible_facts.env.HOME }}/.pi/agent/mcp.json"
   - "{{ ansible_facts.env.HOME }}/.pi/agent/AGENTS.md"
+  - "{{ ansible_facts.env.HOME }}/.pi/agent/extensions/pi-lens.json"
   # Claude Code writes real settings.json/statusline/CLAUDE.md on first run; back
   # them up before stowing the repo copies. settings.local.json, credentials,
   # cache, sessions and other state stay machine-local (not in the claude package).

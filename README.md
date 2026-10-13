@@ -102,6 +102,18 @@ the global guidance from `~/.claude/CLAUDE.md`; Pi receives a linked copy at
 - **Durability:** vendor a third-party skill when its upstream source might disappear; a
   lockfile cannot restore a deleted or moved repository.
 
+## Pi lens
+
+Pi settings declare `npm:pi-lens`; Pi restores the package on startup. The tracked
+`pi/.pi/agent/extensions/pi-lens.json` enables deferred formatting and disables
+autofix and the experimental commit guard. Unix setup deploys it through Stow;
+Windows setup and `sync-win.ps1` copy it with the other Pi settings.
+
+An existing `~/.pi-lens/config.json` overrides this file. Merge wanted settings and
+move that file aside to use the shared configuration. Project configuration can
+re-enable autofix; launch `pi --no-autofix` to enforce disabling it. Restart Pi or
+run `/reload` after changing the configuration.
+
 ## Repository map
 
 | Path | Purpose |

@@ -1,0 +1,17 @@
+{
+  "format": {
+    "enabled": true,
+    "mode": "deferred"
+  },
+  "autofix": {
+    "enabled": false
+  },
+  "actionableWarnings": {
+    "autoFix": {
+      "enabled": false
+    }
+  },
+  "guard": {
+    "enabled": false
+  }
+}

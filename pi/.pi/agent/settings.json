@@ -11,7 +11,8 @@
     "npm:pi-ask-user",
     "npm:pi-web-access",
     "npm:pi-agent-browser-native",
-    "npm:pi-goal-x"
+    "npm:pi-goal-x",
+    "npm:pi-lens"
   ],
   "enabledModels": [
     "openai-codex/gpt-6-astra",

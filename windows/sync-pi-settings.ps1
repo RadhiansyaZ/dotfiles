@@ -9,7 +9,7 @@
     fragile pattern that broke Zed's settings UI, so Pi gets genuine local copies instead of
     symlinks — this script re-syncs them from the canonical files in the WSL repo.
 
-    Only settings.json and mcp.json are synced. auth.json (secrets), sessions\, npm\, git\ and
+    Only settings.json, mcp.json, and extensions\pi-lens.json are synced. auth.json (secrets), sessions\, npm\, git\ and
     bin\*.exe stay machine-local and are never touched. Pi rebuilds npm\ and git\ from the
     packages list on its next run.
 
@@ -53,8 +53,8 @@ if (-not (Test-Path -LiteralPath $DestDir)) {
     New-Item -ItemType Directory -Path $DestDir -Force | Out-Null
 }
 
-# Only these two files are shared. Everything else in .pi\agent stays machine-local.
-$files = @("settings.json", "mcp.json")
+# Only these files are shared. Everything else in .pi\agent stays machine-local.
+$files = @("settings.json", "mcp.json", "extensions\pi-lens.json")
 
 foreach ($name in $files) {
     $source = Join-Path $SourceDir $name
@@ -63,6 +63,11 @@ foreach ($name in $files) {
     if (-not (Test-Path -LiteralPath $source)) {
         Write-Output "SKIP-missing-src $name"
         continue
+    }
+
+    $destParent = Split-Path -Parent $dest
+    if (-not (Test-Path -LiteralPath $destParent)) {
+        New-Item -ItemType Directory -Path $destParent -Force | Out-Null
     }
 
     # Drop a leftover symlink from the old approach so we write a real file in its place.

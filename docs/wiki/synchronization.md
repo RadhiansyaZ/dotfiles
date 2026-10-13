@@ -6,12 +6,18 @@ source_files:
   - windows/sync-zed-settings.ps1
   - copy-ssh-from-windows.sh
   - pi/.pi/agent/settings.json
+  - pi/.pi/agent/extensions/pi-lens.json
   - zed/.config/zed/settings.json
 last_reviewed: 2026-10-07
 ---
 # Windows synchronization
 
 [`sync-win.ps1`](../../sync-win.ps1) copies canonical Pi and Zed settings to Windows-local application locations through the helpers in [windows/](../../windows/). It is intended to be invoked from PowerShell through the repository's WSL UNC path when WSL is canonical.
+
+The Pi helper copies `settings.json`, `mcp.json`, and `extensions/pi-lens.json`,
+creating the destination extensions directory when needed. Other Pi files remain
+machine-local. A Windows-local `~/.pi-lens/config.json` overrides the copied lens
+configuration; merge wanted settings and move it aside to use the shared defaults.
 
 ## Safety boundary
 

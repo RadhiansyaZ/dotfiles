@@ -53,6 +53,20 @@ try {
     Assert-Equal ([IO.File]::ReadAllText("$destination.bak")) "local-before-first-sync" "Later sync replaced the first backup"
     Assert-Equal ([IO.File]::ReadAllText($source)) $sourceText "Sync modified its canonical source"
 
+    $piSource = Join-Path $work "pi-canonical"
+    $piDest = Join-Path $work "pi-local"
+    New-Item -ItemType Directory -Path (Join-Path $piSource "extensions") -Force | Out-Null
+    $lensText = '{"autofix":{"enabled":false},"format":{"enabled":true,"mode":"deferred"}}'
+    [IO.File]::WriteAllText((Join-Path $piSource "extensions/pi-lens.json"), $lensText)
+    $piHelper = Join-Path $repoRoot "windows/sync-pi-settings.ps1"
+    & $piHelper -SourceDir $piSource -DestDir $piDest | Out-Null
+    $lensDest = Join-Path $piDest "extensions/pi-lens.json"
+    Assert-Equal ([IO.File]::ReadAllText($lensDest)) $lensText "Lens configuration was not copied"
+    $lensWrite = (Get-Item -LiteralPath $lensDest).LastWriteTimeUtc
+    & $piHelper -SourceDir $piSource -DestDir $piDest | Out-Null
+    Assert-Equal (Get-Item -LiteralPath $lensDest).LastWriteTimeUtc $lensWrite "Repeat lens sync rewrote the destination"
+    Assert-True (-not (Test-Path (Join-Path $piDest "auth.json"))) "Pi sync created authentication state"
+
     $wrapperRoot = Join-Path $work "wrapper"
     $mockDir = Join-Path $wrapperRoot "windows"
     New-Item -ItemType Directory -Path $mockDir -Force | Out-Null
