@@ -54,9 +54,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/planetscale/database-skills.git",
       "skillPath": "skills/postgres/SKILL.md",
-      "skillFolderHash": "d88c9e1d9ef50949b8ce4fde20629a31378afe8e",
+      "skillFolderHash": "9589f4be80426a42d37030e186dceed734043eaa",
       "installedAt": "2026-04-23T04:11:29.492Z",
-      "updatedAt": "2026-04-23T04:11:29.492Z"
+      "updatedAt": "2026-10-13T13:15:51.280Z"
     },
     "skill-creator": {
       "source": "anthropics/skills",
@@ -107,15 +107,6 @@
       "pluginName": "document-skills",
       "installedAt": "2026-04-25T04:44:31.327Z",
       "updatedAt": "2026-04-25T04:44:31.327Z"
-    },
-    "claude-api": {
-      "source": "anthropics/skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/anthropics/skills.git",
-      "skillPath": "skills/claude-api/SKILL.md",
-      "skillFolderHash": "a4c392286cdd8ad4ac28c13c7d2543895c6b94cf",
-      "installedAt": "2026-04-25T04:44:32.123Z",
-      "updatedAt": "2026-07-12T12:13:44.016Z"
     },
     "canvas-design": {
       "source": "anthropics/skills",
