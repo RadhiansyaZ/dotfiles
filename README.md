@@ -94,6 +94,9 @@ the global guidance from `~/.claude/CLAUDE.md`; Pi receives a linked copy at
   selection, and cache-aware handoffs. In Pi, run `/skill:artifact-driven-development`
   with your request and artifact directory; use `/reload` after installing or editing it.
   It includes templates and approval gates, with no API runner or automatic model switching.
+- **BMAD preview:** shared v7 preview skills are recorded in the global lockfile.
+  See [BMAD setup and usage](docs/bmad.md) to restore them on another machine and
+  initialize BMAD in a separate project. Installation is a manual step after dotfiles setup.
 - **Third-party skills:** ignored after installation. Their Git source, path, and folder hash
   are recorded in `.skill-lock.json`; restore them on a new machine with the skills CLI using
   that lockfile.

@@ -9,7 +9,7 @@ source_files:
   - ansible/tasks/verify.yml
   - ansible/group_vars/all.yml
   - docs/wiki/machine-tooling.md
-last_reviewed: 2026-10-08
+last_reviewed: 2026-10-13
 ---
 # Setup and verification
 
@@ -18,6 +18,13 @@ Run [`./setup.sh`](../../setup.sh) as a normal user on macOS, Debian/Ubuntu, or 
 ## Verification
 
 The Unix playbook supports Darwin and Debian-family Linux. It rejects other operating systems and non-Debian Linux before provisioning, including tagged runs. Setup dry-runs Stow, then probes `zsh`, `stow`, `herdr`, `nvim`, and `pyenv` with `--version`, and `tmux` with `-V`. These non-mutating probes also run in Ansible check mode; one final failure reports every missing command and each failed probe's diagnostic. Manually check with `command -v zsh stow tmux herdr nvim pyenv`. Native Windows setup installs Herdr through its official PowerShell installer and reports shell-tool availability; manually use `Get-Command starship, fzf, zoxide, git, nvim, eza, bat, psmux, glowm, herdr` from PowerShell. In WezTerm, run `glowm-wezterm <file.md>` against a file containing Mermaid and use `glowm --pdf <file.md>` as the fallback. The cross-platform, difference-first tooling inventory is [machine tooling comparison](machine-tooling.md).
+
+## BMAD setup after provisioning
+
+Provisioning does not download BMAD skills. After deploying the `agents` package,
+follow [BMAD shared skills](../bmad.md) to restore them manually, then run
+`bmad setup` in each target project. The guide includes a small-change workflow,
+official references, and checks for moving from the preview to stable v7.
 
 ## Stow conflict handling
 

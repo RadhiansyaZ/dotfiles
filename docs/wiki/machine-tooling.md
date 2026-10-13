@@ -232,7 +232,9 @@ Neither set is installed by the native Windows bootstrap.
 - **Claude Code:** its statusline shows the current workspace, Git branch, active Kubernetes
   context and namespace, model, context remaining, cost, and applicable rate limits.
 - **Skills:** the `agents` Stow package contains a lockfile for restoring third-party skills.
-  Installed third-party skill directories remain ignored.
+  Installed third-party skill directories remain ignored. BMAD v7 preview skills are
+  recorded there; [BMAD setup and usage](../bmad.md) documents the manual restore
+  command and separate per-project initialization. Provisioning does not download them.
 
 ## 8. Shared configuration versus machine-local state
 

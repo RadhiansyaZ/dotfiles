@@ -504,6 +504,303 @@
       "skillFolderHash": "67042ed7910d4177a9000e0679e78b0346060927",
       "installedAt": "2026-10-08T15:03:15.016Z",
       "updatedAt": "2026-10-08T15:03:15.016Z"
+    },
+    "bmad": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad/SKILL.md",
+      "skillFolderHash": "974b458ef3adc6140ab6510728caed72b14e45d2",
+      "installedAt": "2026-10-13T13:31:35.164Z",
+      "updatedAt": "2026-10-13T13:31:35.164Z"
+    },
+    "bmad-advanced-elicitation": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-advanced-elicitation/SKILL.md",
+      "skillFolderHash": "b1419fb8dc482d11b3211444a4c1826408771e9d",
+      "installedAt": "2026-10-13T13:31:35.165Z",
+      "updatedAt": "2026-10-13T13:31:35.165Z"
+    },
+    "bmad-agent-analyst": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-agent-analyst/SKILL.md",
+      "skillFolderHash": "b175ba83458a952a3683171825d8d533df0d2f11",
+      "installedAt": "2026-10-13T13:31:35.166Z",
+      "updatedAt": "2026-10-13T13:31:35.166Z"
+    },
+    "bmad-agent-architect": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-agent-architect/SKILL.md",
+      "skillFolderHash": "235a9fe0f1ddde2ae35501658a2d93711076179c",
+      "installedAt": "2026-10-13T13:31:35.168Z",
+      "updatedAt": "2026-10-13T13:31:35.168Z"
+    },
+    "bmad-agent-dev": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-agent-dev/SKILL.md",
+      "skillFolderHash": "9223d643033225a08a3b2297b60c45fa99525864",
+      "installedAt": "2026-10-13T13:31:35.171Z",
+      "updatedAt": "2026-10-13T13:31:35.171Z"
+    },
+    "bmad-agent-pm": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-agent-pm/SKILL.md",
+      "skillFolderHash": "8a6cc0d2b317492cbc9277bd83f8f534adfa6f93",
+      "installedAt": "2026-10-13T13:31:35.174Z",
+      "updatedAt": "2026-10-13T13:31:35.174Z"
+    },
+    "bmad-agent-ux-designer": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-agent-ux-designer/SKILL.md",
+      "skillFolderHash": "cb5a86768e88999e22e868b695a55e46e63f4263",
+      "installedAt": "2026-10-13T13:31:35.175Z",
+      "updatedAt": "2026-10-13T13:31:35.175Z"
+    },
+    "bmad-architecture": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-architecture/SKILL.md",
+      "skillFolderHash": "40ee14afb23f9d33bd507bc86204bba965e581f9",
+      "installedAt": "2026-10-13T13:31:35.176Z",
+      "updatedAt": "2026-10-13T13:31:35.176Z"
+    },
+    "bmad-brainstorming": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-brainstorming/SKILL.md",
+      "skillFolderHash": "006908653e67b79e09b8c390fde1843bd85a2293",
+      "installedAt": "2026-10-13T13:31:35.178Z",
+      "updatedAt": "2026-10-13T13:31:35.178Z"
+    },
+    "bmad-build": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-build/SKILL.md",
+      "skillFolderHash": "ffd5a92efee3d1925af76652e6a75e825d4de01f",
+      "installedAt": "2026-10-13T13:31:35.180Z",
+      "updatedAt": "2026-10-13T13:31:35.180Z"
+    },
+    "bmad-build-auto": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-build-auto/SKILL.md",
+      "skillFolderHash": "78af8d5a95eb5b759ba3b8529684ef07f6a275d8",
+      "installedAt": "2026-10-13T13:31:35.182Z",
+      "updatedAt": "2026-10-13T13:31:35.182Z"
+    },
+    "bmad-code-review": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-code-review/SKILL.md",
+      "skillFolderHash": "50d21fc0f7a0c1f630c055b78e1a6015c4aea5b9",
+      "installedAt": "2026-10-13T13:31:35.185Z",
+      "updatedAt": "2026-10-13T13:31:35.185Z"
+    },
+    "bmad-correct-course": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-correct-course/SKILL.md",
+      "skillFolderHash": "2845542f4fc8a206e6a30c3c2a57de273275648d",
+      "installedAt": "2026-10-13T13:31:35.188Z",
+      "updatedAt": "2026-10-13T13:31:35.188Z"
+    },
+    "bmad-customize": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-customize/SKILL.md",
+      "skillFolderHash": "bd545388038e366aee9132b64773eb8daa7186c3",
+      "installedAt": "2026-10-13T13:31:35.191Z",
+      "updatedAt": "2026-10-13T13:31:35.191Z"
+    },
+    "bmad-deep-recon": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-deep-recon/SKILL.md",
+      "skillFolderHash": "52ef0a31a3f304f40929f31365e333e46438c9ee",
+      "installedAt": "2026-10-13T13:31:35.194Z",
+      "updatedAt": "2026-10-13T13:31:35.194Z"
+    },
+    "bmad-eval": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-eval/SKILL.md",
+      "skillFolderHash": "5de139a93d8c55c223add7bd743b28b6600244be",
+      "installedAt": "2026-10-13T13:31:35.197Z",
+      "updatedAt": "2026-10-13T13:31:35.197Z"
+    },
+    "bmad-forge-idea": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-forge-idea/SKILL.md",
+      "skillFolderHash": "e943bbaf546f50e94bf68a22d87d66b8b54ad6a9",
+      "installedAt": "2026-10-13T13:31:35.207Z",
+      "updatedAt": "2026-10-13T13:31:35.207Z"
+    },
+    "bmad-party-mode": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-party-mode/SKILL.md",
+      "skillFolderHash": "00a7972670d73ecbfa73512a49939904219c3326",
+      "installedAt": "2026-10-13T13:31:35.209Z",
+      "updatedAt": "2026-10-13T13:31:35.209Z"
+    },
+    "bmad-prd": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-prd/SKILL.md",
+      "skillFolderHash": "88b705bb3324bf7dd5c6d6c8006112cf0d6a89e5",
+      "installedAt": "2026-10-13T13:31:35.211Z",
+      "updatedAt": "2026-10-13T13:31:35.211Z"
+    },
+    "bmad-prfaq": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-prfaq/SKILL.md",
+      "skillFolderHash": "04f66b95737981b7ca572820562ee7cf15df0eab",
+      "installedAt": "2026-10-13T13:31:35.213Z",
+      "updatedAt": "2026-10-13T13:31:35.213Z"
+    },
+    "bmad-product-brief": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-product-brief/SKILL.md",
+      "skillFolderHash": "2e1d7f44c843c1ae9783d1b66175526b0e0e7be2",
+      "installedAt": "2026-10-13T13:31:35.214Z",
+      "updatedAt": "2026-10-13T13:31:35.214Z"
+    },
+    "bmad-project-context": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-project-context/SKILL.md",
+      "skillFolderHash": "8c03692a1c2474f97489e655d7dc19254bff4efc",
+      "installedAt": "2026-10-13T13:31:35.217Z",
+      "updatedAt": "2026-10-13T13:31:35.217Z"
+    },
+    "bmad-qa-generate-e2e-tests": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-qa-generate-e2e-tests/SKILL.md",
+      "skillFolderHash": "39e805b0154cdde8441fcda563dc8139cf212fe5",
+      "installedAt": "2026-10-13T13:31:35.220Z",
+      "updatedAt": "2026-10-13T13:31:35.220Z"
+    },
+    "bmad-retrospective": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-retrospective/SKILL.md",
+      "skillFolderHash": "e3a1c534ac6b71a92a0581769f2ee6ad573aaa46",
+      "installedAt": "2026-10-13T13:31:35.223Z",
+      "updatedAt": "2026-10-13T13:31:35.223Z"
+    },
+    "bmad-review": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-review/SKILL.md",
+      "skillFolderHash": "48e772f782b9fce6d7ee7d04db78a9b4164f8d32",
+      "installedAt": "2026-10-13T13:31:35.224Z",
+      "updatedAt": "2026-10-13T13:31:35.224Z"
+    },
+    "bmad-spec": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-spec/SKILL.md",
+      "skillFolderHash": "5b89abea0e67cb4d3a8547be381c5d886026208d",
+      "installedAt": "2026-10-13T13:31:35.227Z",
+      "updatedAt": "2026-10-13T13:31:35.227Z"
+    },
+    "bmad-ticket": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-ticket/SKILL.md",
+      "skillFolderHash": "681d94fb346a254c106966e4c9cbe645b149272e",
+      "installedAt": "2026-10-13T13:31:35.230Z",
+      "updatedAt": "2026-10-13T13:31:35.230Z"
+    },
+    "bmad-toolsmith": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-toolsmith/SKILL.md",
+      "skillFolderHash": "f2a326c929bab843cb1346b7aa53731ed35580cf",
+      "installedAt": "2026-10-13T13:31:35.234Z",
+      "updatedAt": "2026-10-13T13:31:35.234Z"
+    },
+    "bmad-ux": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-ux/SKILL.md",
+      "skillFolderHash": "7425579cb59abb5fe122d19c8624b04de65ec2ec",
+      "installedAt": "2026-10-13T13:31:35.235Z",
+      "updatedAt": "2026-10-13T13:31:35.235Z"
+    },
+    "bmad-walkthrough": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmad-walkthrough/SKILL.md",
+      "skillFolderHash": "6c3067378a2c02a5786ada865baa4d1c9bec58d5",
+      "installedAt": "2026-10-13T13:31:35.239Z",
+      "updatedAt": "2026-10-13T13:31:35.239Z"
+    },
+    "bmod-core-tools": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmod-core-tools/SKILL.md",
+      "skillFolderHash": "5193171aa61d9d5a94dd634ce04d15a36ac730ad",
+      "installedAt": "2026-10-13T13:31:35.243Z",
+      "updatedAt": "2026-10-13T13:31:35.243Z"
+    },
+    "bmod-method": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmod-method/SKILL.md",
+      "skillFolderHash": "33ef5e03fd5372fe94b2f14935bef4a76ef1efce",
+      "installedAt": "2026-10-13T13:31:35.247Z",
+      "updatedAt": "2026-10-13T13:31:35.247Z"
+    },
+    "bmod-toolsmith": {
+      "source": "bmad-code-org/BMAD-METHOD",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/bmad-code-org/BMAD-METHOD.git",
+      "skillPath": "skills/bmod-toolsmith/SKILL.md",
+      "skillFolderHash": "ef012bafe2a6ae81fe9db016c649758334e3c364",
+      "installedAt": "2026-10-13T13:31:35.248Z",
+      "updatedAt": "2026-10-13T13:31:35.248Z"
     }
   },
   "dismissed": {

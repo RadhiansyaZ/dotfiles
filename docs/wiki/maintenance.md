@@ -7,7 +7,7 @@ source_files:
   - docs/idea-artifacts/PLAN.md
   - tracker/README.md
   - .gitattributes
-last_reviewed: 2026-10-07
+last_reviewed: 2026-10-13
 ---
 # Maintenance workflow
 
@@ -22,6 +22,12 @@ Repository behavior is authoritative; update wiki pages to describe a source cha
 5. Append a dated entry to the [wiki log](log.md) for significant wiki maintenance, validation, or queue-resolution events; use `## [YYYY-MM-DD] <kind> | <summary>`.
 6. Run `python3 scripts/wiki_check.py audit` and `git diff --check`.
 7. In review, verify source-backed claims against their linked files.
+
+## BMAD skills
+
+[AGENTS.md](../../AGENTS.md) routes BMAD installation, per-project usage, and
+stable-release transition guidance to [BMAD shared skills](../bmad.md). Keep that
+guide aligned with the official release and setup instructions when updating skills.
 
 ## Constraints
 
