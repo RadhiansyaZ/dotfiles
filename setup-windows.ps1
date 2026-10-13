@@ -233,10 +233,9 @@ Set-Symlink `
     -Target "$env:USERPROFILE\.config\herdr\config.toml" `
     -Source "$RepoRoot\herdr\.config\herdr\config.toml"
 
-# WezTerm reads $HOME\.config\wezterm\wezterm.lua on Windows (HOME = %USERPROFILE%).
-# .config\wezterm\ parent is created by Set-Symlink if absent.
+# WezTerm reads .wezterm.lua from the Windows user profile.
 Set-Symlink `
-    -Target "$env:USERPROFILE\.config\wezterm\wezterm.lua" `
+    -Target "$env:USERPROFILE\.wezterm.lua" `
     -Source "$RepoRoot\wezterm\.config\wezterm\wezterm.lua"
 
 # Pi and Zed settings are deliberately copied rather than symlinked: both applications write

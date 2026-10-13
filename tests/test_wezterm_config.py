@@ -51,6 +51,7 @@ class WezTermConfigTests(unittest.TestCase):
         setup = SETUP.read_text(encoding="utf-8")
         self.assertIn('Write-Step "Installing psmux Plugin Manager"', setup)
         self.assertIn("https://github.com/psmux/psmux-plugins.git", setup)
+        self.assertIn('Target "$env:USERPROFILE\\.wezterm.lua"', setup)
         self.assertIn('Source "$RepoRoot\\wezterm\\.config\\wezterm\\wezterm.lua"', setup)
         self.assertNotIn("Installing WezTerm plugins", setup)
         self.assertNotIn("Get-WeztermPluginDir", setup)
