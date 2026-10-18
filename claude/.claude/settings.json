@@ -33,7 +33,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus",
+  "model": "sonnet",
   "hooks": {
     "PreToolUse": [
       {
@@ -166,5 +166,6 @@
       "**Trusted repo**: The git repository the agent started in (its working directory, the current repository root) and its configured remote(s) — none configured, so pushes have no default destination. When the repo's public/private visibility is given, use it to scope what is OK to commit or push there: confidential material is fine in a private repo; in a public one, only that repo's own work is — and content ported, repointed, or first read from outside this session's repo is not its own work, whoever directed the port. Visibility scopes confidential material only: secrets and sensitive data (personal & entrusted) are never cleared into any repo by its visibility",
       "**Org-specific CLIs**: None configured (only pwd seen in this project's transcripts; agent-browser, pi, alembic seen in shell history but not org-specific)"
     ]
-  }
+  },
+  "skipWorkflowUsageWarning": true
 }
