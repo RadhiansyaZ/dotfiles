@@ -98,8 +98,12 @@ the global guidance from `~/.claude/CLAUDE.md`; Pi receives a linked copy at
   See [BMAD setup and usage](docs/bmad.md) to restore them on another machine and
   initialize BMAD in a separate project. Installation is a manual step after dotfiles setup.
 - **Third-party skills:** ignored after installation. Their Git source, path, and folder hash
-  are recorded in `.skill-lock.json`; restore them on a new machine with the skills CLI using
-  that lockfile.
+  are recorded in `.skill-lock.json`. After setup on a new machine, load the global lockfile:
+  ```sh
+  cd ~/.agents
+  npx skills experimental_install
+  ```
+  This restores the third-party skills into the global skills directory.
 - **Syncing third-party skills:** run `npx skills update --global --yes`, then review and
   commit the resulting lockfile change. Do not commit the restored skill directories.
 - **Durability:** vendor a third-party skill when its upstream source might disappear; a
