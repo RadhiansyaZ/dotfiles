@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "1.3.0",
   "theme": "dark",
-  "defaultProvider": "openai-codex",
+  "defaultProvider": "openai",
   "defaultModel": "gpt-5.6-terra",
   "defaultThinkingLevel": "medium",
   "defaultTools": [
@@ -12,13 +12,18 @@
     "npm:pi-web-access",
     "npm:pi-agent-browser-native",
     "npm:pi-goal-x",
-    "npm:pi-lens"
+    "npm:pi-lens",
+    "npm:pi-subagents"
   ],
   "enabledModels": [
     "openai-codex/gpt-6-astra",
     "openai-codex/gpt-6-luna",
-    "openai-codex/gpt-6-sol",
     "openai-codex/gpt-6.1-sol",
-    "openai-codex/gpt-5.6-terra"
-  ]
+    "openai-codex/gpt-5.6-terra",
+    "openai/gpt-6.1-sol",
+    "openai/gpt-6-astra",
+    "openai/gpt-6-luna",
+    "openai/gpt-5.6-terra"
+  ],
+  "deviceId": "0835daa4-5ccb-4bb9-a92d-3ec3bdf5be04"
 }
