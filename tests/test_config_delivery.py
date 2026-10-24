@@ -70,6 +70,7 @@ class ConfigDeliveryTests(unittest.TestCase):
         self.assertFalse(config["guard"]["enabled"])
         settings = json.loads((ROOT / "pi/.pi/agent/settings.json").read_text(encoding="utf-8"))
         self.assertIn("npm:pi-lens", settings["packages"])
+        self.assertIn("npm:pi-vision-handoff", settings["packages"])
         self.assertIn(config_path, GROUP_VARS.read_text(encoding="utf-8"))
         self.assertIn(
             '"extensions\\pi-lens.json"',
