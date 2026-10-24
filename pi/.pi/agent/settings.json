@@ -2,8 +2,8 @@
   "lastChangelogVersion": "1.4.0",
   "theme": "dark",
   "defaultProvider": "openai",
-  "defaultModel": "gpt-5.6-terra",
-  "defaultThinkingLevel": "medium",
+  "defaultModel": "gpt-6-luna",
+  "defaultThinkingLevel": "max",
   "defaultTools": [
     "+codemode"
   ],
@@ -25,6 +25,44 @@
     "deepseek/deepseek-flash",
     "deepseek/deepseek-v4-pro"
   ],
+  "subagents": {
+    "defaultModel": "openai/gpt-6-luna",
+    "defaultThinking": "max",
+    "agentOverrides": {
+      "worker": {
+        "model": "openai/gpt-6-luna",
+        "thinking": "max"
+      },
+      "reviewer": {
+        "model": "openai/gpt-6-luna",
+        "thinking": "max"
+      },
+      "oracle": {
+        "model": "openai/gpt-6-luna",
+        "thinking": "max"
+      },
+      "evidence-auditor": {
+        "model": "openai/gpt-6-luna",
+        "thinking": "max"
+      },
+      "researcher": {
+        "model": "openai/gpt-6-luna",
+        "thinking": "max"
+      },
+      "delegate": {
+        "model": "openai/gpt-5.6-terra",
+        "thinking": "high"
+      },
+      "scout": {
+        "model": "openai/gpt-5.6-terra",
+        "thinking": "high"
+      },
+      "explore": {
+        "model": "openai/gpt-5.6-terra",
+        "thinking": "high"
+      }
+    }
+  },
   "deviceId": "0835daa4-5ccb-4bb9-a92d-3ec3bdf5be04",
   "hideThinkingBlock": true
 }
