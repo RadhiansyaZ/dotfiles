@@ -7,6 +7,10 @@
 - **Risky actions**: Before a risky file edit or destructive command, explain what it will do and why.
 - **Generated artifacts**: In reports, docs, code files, and written deliverables, use en dashes (–). Avoid em dash punctuation, negative parallelism, rhetorical contrastive phrasing, analogies, and metaphors. Base structure on genuine analysis. Do not impose groups of three to create apparent depth.
 
+## Skill Activation
+
+- **BMAD is opt-in**: Do not invoke any `bmad-*` skill from task content alone. Use BMAD only when the user explicitly requests BMAD or explicitly names a BMAD skill, agent, or workflow. Generic requests to build, review, plan, write a PRD, create a ticket, or similar work are not BMAD requests.
+
 ## Coding Principles
 
 Apply these when writing, reviewing, or refactoring code. Bias toward caution over speed – use judgment on trivial tasks.
