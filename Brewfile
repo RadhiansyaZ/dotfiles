@@ -63,6 +63,8 @@ brew "ripgrep"
 brew "rtk"
 # Login and retrieve AWS temporary credentials using a SAML IDP
 brew "saml2aws"
+# Non-interactive ssh password auth
+brew "sshpass"
 # Cross-shell prompt for astronauts
 brew "starship"
 # Organize software neatly under a single directory tree (e.g. /usr/local)

@@ -124,6 +124,7 @@ linux_cli_packages:
   - libdbd-pg-perl
   - pass
   - git-crypt
+  - sshpass
   - pyenv
   - python3
   - python3-pip
