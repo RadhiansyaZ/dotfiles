@@ -22,6 +22,7 @@ Preserve that separation: repository files are canonical; Pi and Zed settings ar
 - `docs/stow-packages.md` — Stow conflict resolution and package-scope rules for macOS and Linux.
 - `docs/bmad.md` – BMAD preview shared-skill installation, restoration, and per-project usage.
 - `docs/package_management/ideas.md` – package lifecycle proposal, structured catalogue options, and reproducibility trade-offs.
+- `docs/codemode-vs-context-mode.md` – Pi codemode, Claude Code plugin options, and what replacing context-mode would cover.
 - `docs/` — detailed documentation, including `docs/wiki/machine-tooling.md` for cross-platform package and tooling inventory.
 - `docs/wiki/` — source-backed operational wiki; use `python3 scripts/wiki_check.py check --base origin/main --head HEAD` and `python3 scripts/wiki_check.py audit` after source changes.
 
