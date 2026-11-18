@@ -10,3 +10,5 @@
 # .skill-lock.json.
 !artifact-driven-development/
 !artifact-driven-development/**
+!feature-map/
+!feature-map/**

@@ -13,6 +13,7 @@ source_files:
   - claude/.claude/settings.json
   - agents/.agents/skills/.gitignore
   - agents/.agents/skills/artifact-driven-development/SKILL.md
+  - agents/.agents/skills/feature-map/SKILL.md
   - docs/package_management/ideas.md
   - docs/stow-packages.md
   - pi/.pi/agent/extensions/pi-lens.json
@@ -48,3 +49,5 @@ The repository is canonical. On macOS and Linux, Stow is the only mechanism for 
 For the detailed cross-platform, difference-first tool inventory, use [machine tooling comparison](machine-tooling.md). Global agent guidance is canonical at [agents/.agents/AGENTS.md](../../agents/.agents/AGENTS.md), installed at `~/.agents/AGENTS.md`, imported by Claude Code, and linked into Pi's agent directory. Agent-skill lockfiles record third-party skill sources, including the Herdr control skill and BMAD v7 preview skills; restored third-party directories are not committed. See [BMAD shared skills](../bmad.md) for manual restoration, per-project setup, and stable-release transition guidance.
 
 The allowlisted local [artifact-driven-development skill](../../agents/.agents/skills/artifact-driven-development/SKILL.md) provides alignment, design, and implementation prompt templates, explicit approval gates, manual model-routing guidance, and cache-aware handoffs. It has no API runner or automatic model switching. It is installed through the existing `agents` Stow package; Pi discovers `~/.agents/skills/` and can reload updated skills with `/reload`.
+
+The allowlisted local [feature-map skill](../../agents/.agents/skills/feature-map/SKILL.md) builds a read-only, as-built feature map of one or more codebases: business journeys, technical call graphs cited to `file:line`, and one offline HTML. It runs an alignment gate, reads a `git archive` snapshot, and tiers subagents by task (Haiku, Sonnet, Opus) with a default of three at once. It bundles Python scripts plus vendored `marked` and `mermaid` (about 2.6 MB) so the HTML opens offline. It is installed through the `agents` package and exposed to Claude Code by the `claude/.claude/skills/feature-map` link; invoke it manually with `/feature-map`.

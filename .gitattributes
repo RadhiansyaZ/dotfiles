@@ -20,3 +20,6 @@
 
 # git-crypt encrypted secrets — keep as binary, no EOL/text normalization.
 postgresql/** filter=git-crypt diff=git-crypt -text
+
+# Vendored upstream bundles: keep byte-for-byte, skip whitespace checks and text diffs.
+agents/.agents/skills/*/assets/vendor/** -whitespace -diff linguist-vendored

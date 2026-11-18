@@ -94,6 +94,10 @@ the global guidance from `~/.claude/CLAUDE.md`; Pi receives a linked copy at
   selection, and cache-aware handoffs. In Pi, run `/skill:artifact-driven-development`
   with your request and artifact directory; use `/reload` after installing or editing it.
   It includes templates and approval gates, with no API runner or automatic model switching.
+- **Feature map:** the local [`feature-map`](agents/.agents/skills/feature-map/SKILL.md)
+  skill builds a read-only, as-built feature map of one or more codebases – business journeys
+  and technical call graphs cited to `file:line` – rendered into one offline HTML. In Claude
+  Code, run `/feature-map <dir> [<dir>...] [--ref <prd>] [--parallel N]`.
 - **BMAD preview:** shared v7 preview skills are recorded in the global lockfile.
   See [BMAD setup and usage](docs/bmad.md) to restore them on another machine and
   initialize BMAD in a separate project. Installation is a manual step after dotfiles setup.
